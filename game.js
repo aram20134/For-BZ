@@ -1,3 +1,4 @@
+$(document).ready(function() {
 const dino = document.getElementById("dino");
 const cactus = document.getElementById("cactus");
 
@@ -19,5 +20,8 @@ let isAlive = setInterval (function() {
     
     if (cactusLeft < 100 && cactusLeft > 0 && dinoTop >= 140) {
         alert("Неудачно");
+        location.reload()
     }
 }, 10)
+
+});

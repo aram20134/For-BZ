@@ -2,11 +2,13 @@ html, body {
     margin: 0;
     padding: 0;
     height: 100%;
-    background-color: rgb(0, 0, 0);
+    background-color: rgb(40, 40, 40);
+    font-family: fantasy;
 }
+
 .content {
     display: flex;
-    background-color: rgb(0, 0, 0);
+    background-color: rgb(40, 40, 40);
     position: relative;
     max-width: 1200px;
     min-width: 600px;
@@ -38,6 +40,9 @@ html, body {
     position: relative;
     top: 110px;
     left: 1180px;
+    
+}
+.cactus {
     animation: cactusMove 1.7s infinite linear;
 }
 @keyframes cactusMove {
@@ -67,4 +72,95 @@ html, body {
     100% {
         top: 150px;
     }
+}
+
+/* MENU */
+
+.menu-content {
+    height: 300px;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    margin: auto;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.menu {
+    height: 300px;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    margin: auto;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.legion {
+    display: flex;
+    position: relative;
+    border: 2px solid rgb(0, 0, 0);
+    padding: 30px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    transition: border 1s linear;
+    cursor: pointer;
+}
+.menu-btn {
+    width: 200px;
+    height: 50px;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: 2px solid #ff0000;
+    margin: 10px;
+    color: red;
+    letter-spacing: 3px;
+    font-size: 25px;
+}
+
+.a41 {
+    border: 5px solid green;
+    transition: border 1s linear;
+
+    background-image: url(img/41/41.png);
+    background-position: -7px;
+
+}
+.a212 {
+    border: 5px solid rgb(131, 111, 0);
+    transition: border 1s linear;
+
+    background-image: url(img/212/212.png);
+    background-position: -7px;
+}
+.a501 {
+    border: 5px solid rgb(31, 0, 170);
+    transition: border 1s linear;
+
+    background-image: url(img/501/501.png);
+    background-position: -7px;
+}
+.CT {
+    border: 5px solid rgb(185, 185, 185);
+    transition: border 1s linear;
+
+    background-image: url(img/CT/CT.png);
+    background-size: cover;
+    background-size: cover;
+}
+.not-active {
+    display: none;
+    opacity: 0;
+}
+.active {
+    display: block;
+    opacity: 1;
 }
