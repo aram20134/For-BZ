@@ -29,5 +29,54 @@ let isAlive = setInterval (function() {
 
     // MENU
 
-    $('.menu')
+    function removeActive () {
+        $('.legion').removeClass('a212-active')
+        $('.legion').removeClass('a501-active')
+        $('.legion').removeClass('a41-active')
+        $('.legion').removeClass('CT-active')
+        $('.legion').removeClass('GVARD-active')
+        $('.legion').removeClass('IPK-active')
+        $('.legion').removeClass('MED-active')
+        $('.legion').removeClass('TRENER-active')
+        $('.legion').removeClass('ODISB-active')
+    }
+
+    $('.legion').click(function() {
+        if($(this).hasClass("a41")) {
+            removeActive();
+            $(this).toggleClass('a41-active');
+        }
+        if($(this).hasClass("a212")) {
+            removeActive();
+            $(this).toggleClass('a212-active');
+        }
+        if($(this).hasClass("a501")) {
+            removeActive();
+            $(this).toggleClass('a501-active');
+        }
+        if($(this).hasClass("CT")) {
+            removeActive();
+            $(this).toggleClass('CT-active');
+        }
+        if($(this).hasClass("GVARD")) {
+            removeActive();
+            $(this).toggleClass('GVARD-active');
+        }
+        if($(this).hasClass("IPK")) {
+            removeActive();
+            $(this).toggleClass('IPK-active');
+        }
+        if($(this).hasClass("MED")) {
+            removeActive();
+            $(this).toggleClass('MED-active');
+        }
+        if($(this).hasClass("TRENER")) {
+            removeActive();
+            $(this).toggleClass('TRENER-active');
+        }
+        if($(this).hasClass("ODISB")) {
+            removeActive();
+            $(this).toggleClass('ODISB-active');
+        }
+    });
 });

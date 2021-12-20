@@ -40,7 +40,7 @@ html, body {
     position: relative;
     top: 110px;
     left: 1180px;
-    
+    animation: cactusMove 1.7s infinite linear;
 }
 .cactus {
     animation: cactusMove 1.7s infinite linear;
@@ -157,6 +157,9 @@ html, body {
 .a212:hover {
     border: 5px solid rgb(131, 111, 0);
 }
+.a212-active {
+    border: 5px solid rgb(131, 111, 0);
+}
 .a501 {
     
     transition: border 0.1s linear;
@@ -165,6 +168,9 @@ html, body {
     background-size: cover;
 }
 .a501:hover {
+    border: 5px solid rgb(31, 0, 170);
+}
+.a501-active {
     border: 5px solid rgb(31, 0, 170);
 }
 .CT {
@@ -177,6 +183,9 @@ html, body {
 .CT:hover {
     border: 5px solid rgb(185, 185, 185);
 }
+.CT-active {
+    border: 5px solid rgb(185, 185, 185);
+}
 .GVARD {
     
     transition: border 0.1s linear;
@@ -185,6 +194,9 @@ html, body {
     background-size: cover;
 }
 .GVARD:hover {
+    border: 5px solid rgb(15, 14, 14);
+}
+.GVARD-active {
     border: 5px solid rgb(15, 14, 14);
 }
 .IPK {
@@ -197,6 +209,9 @@ html, body {
 .IPK:hover {
     border: 5px solid yellow;
 }
+.IPK-active {
+    border: 5px solid yellow;
+}
 .MED {
     
     transition: border 0.1s linear;
@@ -205,6 +220,9 @@ html, body {
     background-size: cover;
 }
 .MED:hover {
+    border: 5px solid pink;
+}
+.MED-active {
     border: 5px solid pink;
 }
 .TRENER {
@@ -217,6 +235,9 @@ html, body {
 .TRENER:hover {
     border: 5px solid gray;
 }
+.TRENER-active {
+    border: 5px solid gray;
+}
 .ODISB {
     
     transition: border 0.1s linear;
@@ -225,6 +246,9 @@ html, body {
     background-size: cover;
 }
 .ODISB:hover {
+    border: 5px solid rgb(0, 194, 201);
+}
+.ODISB-active {
     border: 5px solid rgb(0, 194, 201);
 }
 .not-active {
