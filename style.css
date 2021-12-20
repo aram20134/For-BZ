@@ -22,6 +22,7 @@ html, body {
     background-color: rgb(255, 255, 255);
     border-bottom: 2px solid white;
     margin: auto;
+    transition: all 0.5s ease-in-out;
 }
 #dino {
     width: 50px;
@@ -86,6 +87,8 @@ html, body {
     align-items: center;
     justify-content: space-around;
     flex-wrap: wrap;
+    transition: all 0.5s ease-in-out;
+    opacity: 1;
 }
 .menu {
     height: 300px;
@@ -127,11 +130,68 @@ html, body {
     transition: all 0.1s linear;
     background-color: transparent;
 }
-.menu-btn:hover {
+.menu-btn:hover::after {
+    content: "";
+    background: red;
+    position: absolute;
+    width: 100px;
+    height: 2px;
+    top: 60px;
+    transition: all 0.1s linear;
+}
+.menu-btn-a41 {
     transition: all 0.1s linear;
     color: white;
     border: 2px solid green;
     background-color: green;
+}
+.menu-btn-a501 {
+    transition: all 0.1s linear;
+    color: white;
+    border: 2px solid blue;
+    background-color: blue;
+}
+.menu-btn-a212 {
+    transition: all 0.1s linear;
+    color: white;
+    border: 2px solid orange;
+    background-color: orange;
+}
+.menu-btn-CT {
+    transition: all 0.1s linear;
+    color: black;
+    border: 2px solid #b9b9b9;
+    background-color: #b9b9b9;
+}
+.menu-btn-GVARD {
+    transition: all 0.1s linear;
+    color: white;
+    border: 2px solid #0f0e0e;
+    background-color: #0f0e0e;
+}
+.menu-btn-IPK {
+    transition: all 0.1s linear;
+    color: black;
+    border: 2px solid yellow;
+    background-color: yellow;
+}
+.menu-btn-MED {
+    transition: all 0.1s linear;
+    color: BLACK;
+    border: 2px solid pink;
+    background-color: pink;
+}
+.menu-btn-TRENER {
+    transition: all 0.1s linear;
+    color: white;
+    border: 2px solid gray;
+    background-color: gray;
+}
+.menu-btn-ODISB {
+    transition: all 0.1s linear;
+    color: black;
+    border: 2px solid #00c2c9;
+    background-color: #00c2c9;
 }
 
 .a41 {
@@ -155,10 +215,10 @@ html, body {
     background-size: cover;
 }
 .a212:hover {
-    border: 5px solid rgb(131, 111, 0);
+    border: 5px solid orange;
 }
 .a212-active {
-    border: 5px solid rgb(131, 111, 0);
+    border: 5px solid orange;
 }
 .a501 {
     
@@ -168,10 +228,10 @@ html, body {
     background-size: cover;
 }
 .a501:hover {
-    border: 5px solid rgb(31, 0, 170);
+    border: 5px solid blue;
 }
 .a501-active {
-    border: 5px solid rgb(31, 0, 170);
+    border: 5px solid blue;
 }
 .CT {
     
@@ -181,10 +241,10 @@ html, body {
     background-size: cover;
 }
 .CT:hover {
-    border: 5px solid rgb(185, 185, 185);
+    border: 5px solid #b9b9b9;
 }
 .CT-active {
-    border: 5px solid rgb(185, 185, 185);
+    border: 5px solid #b9b9b9;
 }
 .GVARD {
     
@@ -194,10 +254,10 @@ html, body {
     background-size: cover;
 }
 .GVARD:hover {
-    border: 5px solid rgb(15, 14, 14);
+    border: 5px solid #0f0e0e;
 }
 .GVARD-active {
-    border: 5px solid rgb(15, 14, 14);
+    border: 5px solid #0f0e0e;
 }
 .IPK {
     
@@ -246,16 +306,23 @@ html, body {
     background-size: cover;
 }
 .ODISB:hover {
-    border: 5px solid rgb(0, 194, 201);
+    border: 5px solid #00c2c9;
 }
 .ODISB-active {
     border: 5px solid rgb(0, 194, 201);
 }
-.not-active {
-    display: none;  
+
+.not-active2 {
     opacity: 0;
+    transition: all 0.5s ease-in-out;
+}
+.not-active {
+    display: none;
+    opacity: 0;
+    
 }
 .active {
     display: block;
     opacity: 1;
+    transition: all 0.5s ease-in-out;
 }
