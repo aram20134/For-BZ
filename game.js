@@ -1,4 +1,7 @@
 $(document).ready(function() {
+
+    // GAME
+
 const dino = document.getElementById("dino");
 const cactus = document.getElementById("cactus");
 
@@ -24,4 +27,7 @@ let isAlive = setInterval (function() {
     }
 }, 10)
 
+    // MENU
+
+    $('.menu')
 });
