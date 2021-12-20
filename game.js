@@ -123,13 +123,38 @@ let isAlive = setInterval (function() {
             if($(this).hasClass('menu-btn-a41')) {
                 SelectedLeg = 1;
                 activeGame();
-
             }
             if($(this).hasClass('menu-btn-a212')) {
                 SelectedLeg = 2;
+                activeGame();
             }
             if($(this).hasClass('menu-btn-a501')) {
                 SelectedLeg = 3;
+                activeGame();
+            }
+            if($(this).hasClass('menu-btn-CT')) {
+                SelectedLeg = 4;
+                activeGame();
+            }
+            if($(this).hasClass('menu-btn-GVARD')) {
+                SelectedLeg = 5;
+                activeGame();
+            }
+            if($(this).hasClass('menu-btn-IPK')) {
+                SelectedLeg = 6;
+                activeGame();
+            }
+            if($(this).hasClass('menu-btn-MED')) {
+                SelectedLeg = 7;
+                activeGame();
+            }
+            if($(this).hasClass('menu-btn-TRENER')) {
+                SelectedLeg = 8;
+                activeGame();
+            }
+            if($(this).hasClass('menu-btn-ODISB')) {
+                SelectedLeg = 9;
+                activeGame();
             }
         }));
     });
