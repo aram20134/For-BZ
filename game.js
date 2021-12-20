@@ -40,43 +40,97 @@ let isAlive = setInterval (function() {
         $('.legion').removeClass('TRENER-active')
         $('.legion').removeClass('ODISB-active')
     }
+    function removeActiveBtn () {
+        $('.menu-btn').removeClass('menu-btn-a41')
+        $('.menu-btn').removeClass('menu-btn-a501')
+        $('.menu-btn').removeClass('menu-btn-a212')
+        $('.menu-btn').removeClass('menu-btn-CT')
+        $('.menu-btn').removeClass('menu-btn-GVARD')
+        $('.menu-btn').removeClass('menu-btn-MED')
+        $('.menu-btn').removeClass('menu-btn-TRENER')
+        $('.menu-btn').removeClass('menu-btn-ODISB')
+        $('.menu-btn').removeClass('menu-btn-IPK')
+    }
+
 
     $('.legion').click(function() {
         if($(this).hasClass("a41")) {
             removeActive();
             $(this).toggleClass('a41-active');
+            removeActiveBtn();
+            $('.menu-btn').addClass('menu-btn-a41');
         }
         if($(this).hasClass("a212")) {
             removeActive();
             $(this).toggleClass('a212-active');
+            removeActiveBtn();
+            $('.menu-btn').addClass('menu-btn-a212');
         }
         if($(this).hasClass("a501")) {
             removeActive();
             $(this).toggleClass('a501-active');
+            removeActiveBtn();
+            $('.menu-btn').addClass('menu-btn-a501')
         }
         if($(this).hasClass("CT")) {
             removeActive();
             $(this).toggleClass('CT-active');
+            removeActiveBtn();
+            $('.menu-btn').addClass('menu-btn-CT')
         }
         if($(this).hasClass("GVARD")) {
             removeActive();
             $(this).toggleClass('GVARD-active');
+            removeActiveBtn();
+            $('.menu-btn').addClass('menu-btn-GVARD')
         }
         if($(this).hasClass("IPK")) {
             removeActive();
             $(this).toggleClass('IPK-active');
+            removeActiveBtn();
+            $('.menu-btn').addClass('menu-btn-IPK')
         }
         if($(this).hasClass("MED")) {
             removeActive();
             $(this).toggleClass('MED-active');
+            removeActiveBtn();
+            $('.menu-btn').addClass('menu-btn-MED')
         }
         if($(this).hasClass("TRENER")) {
             removeActive();
             $(this).toggleClass('TRENER-active');
+            removeActiveBtn();
+            $('.menu-btn').addClass('menu-btn-TRENER')
         }
         if($(this).hasClass("ODISB")) {
             removeActive();
             $(this).toggleClass('ODISB-active');
+            removeActiveBtn();
+            $('.menu-btn').addClass('menu-btn-ODISB')
         }
+
+        function activeGame () {
+            $('.menu-content').addClass('not-active2');
+            setTimeout(function() {
+                $('.menu-content').addClass('not-active');
+                $('.game').removeClass('not-active').addClass('active');
+            }, 1000);
+            
+        }
+
+            SelectedLeg = 0;
+        if($('.menu-btn').click(function() {
+            if($(this).hasClass('menu-btn-a41')) {
+                SelectedLeg = 1;
+                activeGame();
+
+            }
+            if($(this).hasClass('menu-btn-a212')) {
+                SelectedLeg = 2;
+            }
+            if($(this).hasClass('menu-btn-a501')) {
+                SelectedLeg = 3;
+            }
+        }));
     });
 });
