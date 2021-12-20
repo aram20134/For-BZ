@@ -104,7 +104,7 @@ html, body {
 .legion {
     display: flex;
     position: relative;
-    border: 2px solid rgb(0, 0, 0);
+    border: 0px solid rgb(0, 0, 0);
     padding: 30px;
     border-radius: 50%;
     width: 50px;
