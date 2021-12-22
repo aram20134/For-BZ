@@ -33,7 +33,6 @@ h1 {
     font-weight: bold;
 }
 
-
 .content {
     display: flex;
     background-color: rgb(40, 40, 40);
@@ -126,6 +125,7 @@ h1 {
     transition: all 0.5s ease-in-out;
     opacity: 1;
     box-shadow: 10px 5px 120px rgb(98, 98, 98);
+    border-radius: 30px;
 }
 .menu {
     height: 300px;
@@ -137,6 +137,7 @@ h1 {
     align-items: center;
     justify-content: space-around;
     flex-wrap: wrap;
+    border-radius: 30px;
 }
 .legion {
     display: flex;
