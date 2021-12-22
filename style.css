@@ -8,6 +8,32 @@ html, body {
 h1 {
     color: white;
 }
+/* @media screen and (min-width: 1400px) {
+    
+} */
+
+#btn-logo {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-image: url(logo.png);
+    background-size: 100px 100px;
+    margin: 20px;
+    cursor: pointer;
+    animation: logo 5s infinite linear;
+}
+#text-logo {
+    display: flex;
+    position: absolute;
+    max-width: 20%;
+    left: 140px;
+    top: 35px;
+    text-transform: uppercase;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
 
 .content {
     display: flex;
@@ -15,7 +41,7 @@ h1 {
     position: relative;
     max-width: 1200px;
     min-width: 600px;
-    height: 100%;
+    height: 50%;
     margin: 0 auto;
 
 }
@@ -77,6 +103,14 @@ h1 {
         top: 150px;
     }
 }
+@keyframes logo {
+    0% {
+        transform: rotateZ(0deg);
+    }
+    100% {
+        transform: rotateZ(360deg);
+    }
+}
 
 /* MENU */
 
@@ -92,7 +126,7 @@ h1 {
     flex-wrap: wrap;
     transition: all 0.5s ease-in-out;
     opacity: 1;
-    box-shadow: 10px 5px 100px rgb(98, 98, 98);
+    box-shadow: 10px 5px 120px rgb(98, 98, 98);
 }
 .menu {
     height: 300px;
