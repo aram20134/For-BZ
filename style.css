@@ -276,7 +276,7 @@ html, body {
     
     transition: border 0.1s linear;
 
-    background-image: url(img/med);
+    background-image: url(img/MED/MED.png);
     background-size: cover;
 }
 .MED:hover {
@@ -289,7 +289,7 @@ html, body {
     
     transition: border 0.1s linear;
 
-    background-image: url(img/TRENER);
+    background-image: url(img/TRENER/TRENER.png);
     background-size: cover;
 }
 .TRENER:hover {
@@ -302,7 +302,7 @@ html, body {
     
     transition: border 0.1s linear;
 
-    background-image: url(img/TRENER);
+    background-image: url(img/ODISB/ODISB.png);
     background-size: cover;
 }
 .ODISB:hover {
