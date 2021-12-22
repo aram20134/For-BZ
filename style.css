@@ -5,6 +5,9 @@ html, body {
     background-color: rgb(40, 40, 40);
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
+h1 {
+    color: white;
+}
 
 .content {
     display: flex;
@@ -80,7 +83,7 @@ html, body {
 .menu-content {
     height: 300px;
     width: 100%;
-    background-color: rgb(85, 85, 85);
+    background-color: rgb(46 46 46);
     margin: auto;
     display: flex;
     position: relative;
@@ -89,11 +92,12 @@ html, body {
     flex-wrap: wrap;
     transition: all 0.5s ease-in-out;
     opacity: 1;
+    box-shadow: 10px 5px 100px rgb(98, 98, 98);
 }
 .menu {
     height: 300px;
     width: 100%;
-    background-color: rgb(85, 85, 85);
+    background-color: rgb(46 46 46);
     margin: auto;
     display: flex;
     position: relative;
@@ -153,7 +157,7 @@ html, body {
 }
 .menu-btn-a212 {
     transition: all 0.1s linear;
-    color: white;
+    color: black;
     border: 2px solid orange;
     background-color: orange;
 }
