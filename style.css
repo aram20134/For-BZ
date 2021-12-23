@@ -8,9 +8,6 @@ html, body {
 h1 {
     color: white;
 }
-/* @media screen and (min-width: 1400px) {
-    
-} */
 
 #btn-logo {
     position: absolute;
@@ -364,3 +361,12 @@ h1 {
     opacity: 1;
     transition: all 0.5s ease-in-out;
 }
+
+@media screen and (max-width: 1800px) {
+    #text-logo {
+        display: none;
+    }
+    #btn-logo {
+        display: none;
+    }
+} 
