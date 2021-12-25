@@ -1,13 +1,38 @@
 <?php
-$title="[BZ1] Главная"; // название формы
-require __DIR__ . '/header.php'; // подключаем шапку проекта
-require "db.php"; // подключаем файл для соединения с БД
+$title="[SWRP] Главная";
+require __DIR__ . '/header.php';
+require "db.php";
 ?>
-<div class="content">
+<?php
+    $serverid = "7448";
+
+$url="https://api.trackyserver.com/widget/index.php?id=".$server_id;
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_URL,$url);
+$result=json_decode(curl_exec($ch), true);
+curl_close($ch);
+ ?>
+    <div class="online-log">
+        <div class="box-online first map-anaxes">
+            <div class="text-ivent">
+                <!-- Карта: <script type='text/javascript'>document.write(api.mapname);</script>  -->
+                <?php echo $result['playerscount']; ?>
+            </div>
+            <div class="text-online">
+                <!-- <script type='text/javascript'>document.write(api.players +' / '+ api.maxplayers);</script>  -->
+            </div>
+        </div>  
+        <div class="box-online second map-anaxes">
+            
+        </div>
+    </div>
+    <div class="content">
         <div class="head-logo">
-            <a href="#" id="btn-logo"></a>
-            <p id="text-logo">STAR WARS RP PHASE I</p>
-            <a href="#" id="btn-logo"></a>
+            
+            <!-- <a href="#" id="btn-logo"></a> -->
+            <p id="text-logo">STAR WARS RP NGG</p>
+            <!-- <a href="#" id="btn-logo"></a> -->
         </div>
         <div class="menu-content">
             <h3>Добро пожаловать!</h3>

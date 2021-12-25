@@ -24,7 +24,7 @@ h3 {
     position: relative;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
 }
 #btn-logo {
     position: relative;
@@ -51,8 +51,8 @@ h3 {
     display: flex;
     background-color: rgb(40, 40, 40);
     position: relative;
-    max-width: 1200px;
-    min-width: 600px;
+    max-width: 50%;
+    min-width: 20%;
     height: 50%;
     margin: 0 auto;
     flex-direction: column;
@@ -73,7 +73,7 @@ h3 {
 .menu-content {
     height: 500px;
     width: 100%;
-    background-color: rgb(46 46 46);
+    background-color: #2e2e2e;
     margin: auto;
     display: flex;
     position: relative;
@@ -82,7 +82,7 @@ h3 {
     flex-wrap: nowrap;
     transition: all 0.5s ease-in-out;
     opacity: 1;
-    box-shadow: 10px 5px 120px rgb(98, 98, 98);
+    box-shadow: 10px 5px 120px #626262;
     border-radius: 30px;
     flex-direction: column;
 }
@@ -93,4 +93,108 @@ h3 {
     padding: 20px;
     font-size: 20px;
     margin: 0;
+}
+
+
+/* ONLINE LOG */
+
+.online-log {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+
+}
+.server-title {
+    display: flex;
+    margin: 0;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+}
+.box-online {
+    position: relative;
+    width: 100%;
+    max-width: 350px;
+    height: 150px;
+    margin: 50px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 10px 0px 25px #626262;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+.first::after {
+    content: 'Русский StarWars Phase 1 | Быстрая загрузка';
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    display: flex;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+}
+.second::after {
+    content: 'Русский StarWars Phase 2 | Быстрая загрузка';
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    display: flex;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.map-anaxes {
+    background-image: url(anaxes.png);
+    background-size: cover;
+}
+
+.text-ivent {
+    display: flex;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px;
+    background: rgb(0, 0, 0, 0.6);
+}
+
+.text-online {
+    display: flex;
+    background-color: aqua;
+    justify-content: flex-end;
+    font-size: 15px;
+    font-weight: bold;
+    color: black;
+    padding: 5px;
+    border-radius: 10px;
+    margin: 10px;
+    
+}
+
+@media screen and (max-width: 768px) {
+    #btn-logo {
+        position: relative;
+        width: 50px;
+        height: 50px;
+        background-image: url(logo.png);
+        background-size: 50px 50px;
+        margin: 0px 10px 10px 10px;
+        cursor: pointer;
+        animation: logo 5s infinite linear;
+    }
+    #text-logo {
+        font-size: 35px;
+    }
+    .menu-content h3 {
+        font-size: 25px;
+    }
+    .content {
+        min-width: 90%;
+    }
+    .menu-content {
+        height: 250%;
+    }
 }
