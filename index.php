@@ -23,7 +23,7 @@ curl_close($ch);
                 <!-- <script type='text/javascript'>document.write(api.players +' / '+ api.maxplayers);</script>  -->
             </div>
         </div>  
-        <div class="box-online second map-anaxes">
+        <div class="box-online second map-corelia">
             
         </div>
     </div>

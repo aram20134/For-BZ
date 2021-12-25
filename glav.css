@@ -151,6 +151,10 @@ h3 {
     background-image: url(anaxes.png);
     background-size: cover;
 }
+.map-corelia {
+    background-image: url(corelia.png);
+    background-size: cover;
+}
 
 .text-ivent {
     display: flex;
