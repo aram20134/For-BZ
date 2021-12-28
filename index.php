@@ -16,15 +16,13 @@ curl_close($ch);
     <div class="online-log">
         <div class="box-online first map-anaxes">
             <div class="text-ivent">
-                <!-- Карта: <script type='text/javascript'>document.write(api.mapname);</script>  -->
-                <?php echo $result['playerscount']; ?>
+                
             </div>
             <div class="text-online">
-                <!-- <script type='text/javascript'>document.write(api.players +' / '+ api.maxplayers);</script>  -->
+                <?php echo $result['playerscount']; ?>
             </div>
         </div>  
         <div class="box-online second map-corelia">
-            
         </div>
     </div>
     <div class="content">
