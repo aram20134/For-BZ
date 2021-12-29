@@ -6,27 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>[SWRP] Главная</title>
     <link rel="stylesheet" href="glav.css">
-    <link rel="shortcut icon" href="logo.png" type="image/png">
-    <script type='text/javascript' src='https://garrys-servers.ru/web/api/631/'></script>
+    <link rel="shortcut icon" href="img/logo.png" type="image/png">
+    <script src="jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
-    <div class="online-log">
-        <div class="box-online first map-anaxes">
-            <div class="text-ivent">
-                Карта: <script type='text/javascript'>document.write(api.mapname);</script> 
-            </div>
-            <div class="text-online">
-                <script type='text/javascript'>document.write(api.players +' / '+ api.maxplayers);</script> 
-            </div>
-        </div>  ru-starwars-7448
-        <div class="box-online second map-anaxes">
-            
-        </div>
-    </div>
     <div class="content">
         <div class="head-logo">
-            
             <!-- <a href="#" id="btn-logo"></a> -->
             <p id="text-logo">STAR WARS RP NGG</p>
             <!-- <a href="#" id="btn-logo"></a> -->
@@ -38,7 +24,28 @@
                 Если у вас есть вопросы, предложения или вы нашли баг, обратитесь к Fish'у #3493.
             </p>
         </div>
+        <h1 class="online-head">СТАТУС СЕРВЕРОВ</h1>
+        <div class="online-log">
+        	<p class="name-server">
+                Русский StarWars Phase 1 | Быстрая загрузка
+            </p>
+            <div class="box-online first map-anaxes">
+                <div class="description">ПОДРОБНЕЕ</div>
+                <div class="text-online">
+                	<img src="img/CT/CT.png" class="ico">128/128<?php echo $result['playerscount']; ?>
+                </div>
+            </div>  
+            <p class="name-server">
+                Русский StarWars Phase 2 | Быстрая загрузка
+            </p>
+            <div class="box-online second map-corelia">
+                <div class="description">ПОДРОБНЕЕ</div>
+            	<div class="text-online">
+                	<img src="img/CT/CT.png" class="ico">128/128<?php echo $result['playerscount']; ?>
+                </div>
+            </div>
+        </div>
     </div>
+    <script src="main.js"></script>
 </body>
-<script src="jquery-3.6.0.min.js"></script>
 </html>
