@@ -141,6 +141,8 @@ h3 {
     justify-content: flex-end;
     align-items: flex-end;
     overflow: hidden;
+    border: solid 2px rgb(255, 255, 255);
+    border-radius: 10px;
     transition: all 0.3s linear;
 }
 .description {
@@ -156,7 +158,7 @@ h3 {
     opacity: 0;
     transition: opacity 0.3s, visibility 0.3s;
 }
-.box-online:hover .description {
+.box-online-hover .description {
     visibility: visible;
     opacity: 1;
 }
@@ -169,12 +171,47 @@ h3 {
     background-image: url(phase2/corelia.png);
     background-size: cover;
 }
-.box-online:hover {
+.box-online-hover {
     cursor: pointer;
     box-shadow: 0px 0px 15px #626262;
     background-image: none;
-    background-color: #252525;
-    transition: all 0.3s linear;
+    background-color: black;
+    transition: all 0.3s ease-in-out;
+    transform: translate(10px, 10px);
+}
+.active-server {
+    transform: rotateX(180deg);
+    background-image: none;
+    background-color: black;
+    cursor: pointer;
+}
+.desc-content1 {
+    display: flex;
+    visibility: visible;
+    color: white;
+    font-size: 20px;
+    transform: rotateX(180deg);
+    position: absolute;
+    left: 10px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.desc-content2 {
+    display: flex;
+    visibility: visible;
+    color: white;
+    font-size: 20px;
+    transform: rotateX(180deg);
+    position: absolute;
+    left: 10px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.not-active {
+    display: none;
+    visibility: hidden;
+}
+.active {
+    display: flex;
+    visibility: visible;
 }
 
 .text-ivent {
@@ -186,7 +223,20 @@ h3 {
     background: rgb(0, 0, 0, 0.6);
 }
 
-.text-online {
+.text-online1 {
+    display: flex;
+    background-color:mediumblue;
+    justify-content: flex-end;
+    font-size: 20px;
+    color: white;
+    padding: 5px;
+    border-radius: 10px;
+    margin: 10px;
+    text-shadow: 0px 0px 5px white;
+    letter-spacing: 2px;
+    align-items: center;
+}
+.text-online2 {
     display: flex;
     background-color:mediumblue;
     justify-content: flex-end;

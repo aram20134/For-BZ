@@ -25,7 +25,6 @@ curl_close($ch2);
  ?>
     <div class="content">
         <div class="head-logo">
-            
             <!-- <a href="#" id="btn-logo"></a> -->
             <p id="text-logo">STAR WARS RP NGG</p>
             <!-- <a href="#" id="btn-logo"></a> -->
@@ -39,14 +38,30 @@ curl_close($ch2);
         </div>
         <h1 class="online-head">СТАТУС СЕРВЕРОВ</h1>
         <div class="online-log">
+        	<p class="name-server">
+                Русский StarWars Phase 1 | Быстрая загрузка
+            </p>
             <div class="box-online first map-anaxes">
-                <div class="text-online">
-                	<?php echo $result['playerscount']; ?>
+                <div class="description">ПОДРОБНЕЕ</div>
+                <div class="desc-content1 not-active">
+                    Карта: <?php echo $result['map']; ?> <br>
+                    Кол-во игроков: <?php echo $result['playerscount']; ?>
+                </div>
+                <div class="text-online1">
+                	<img src="img/CT/CT.png" class="ico"><?php echo $result['playerscount']; ?>
                 </div>
             </div>  
+            <p class="name-server">
+                Русский StarWars Phase 2 | Быстрая загрузка
+            </p>
             <div class="box-online second map-corelia">
-            	<div class="text-online">
-                	<?php echo $result2['playerscount']; ?>
+                <div class="description">ПОДРОБНЕЕ</div>
+                <div class="desc-content2 not-active">
+                    Карта: <?php echo $result2['map']; ?> <br>
+                    Кол-во игроков: <?php echo $result2['playerscount']; ?> <br>
+                </div>
+            	<div class="text-online2">
+                	<img src="img/CT/CT.png" class="ico"><?php echo $result2['playerscount']; ?>
                 </div>
             </div>
         </div>
