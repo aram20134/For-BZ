@@ -1,22 +1,9 @@
 <?php
-$title="[SWRP] Главная";
+$title="[SWRP] Phase 1";
 require "db.php";
 require __DIR__ . '/header.php';
 ?>
-<!-- Yandex.Metrika counter -->
-<script type="text/javascript" >
-   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
-   ym(87038010, "init", {
-        clickmap:true,
-        trackLinks:true,
-        accurateTrackBounce:true
-   });
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/87038010" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
 <?php
 // ПЕРВЫЙ СЕРВЕР
 $url="https://api.trackyserver.com/widget/index.php?id=7448";
@@ -85,7 +72,7 @@ if ($result2['map'] == "rp_corellia_ngg_winter") {
 	$nabo2 = "1";
 }
 ?>
- <script src="jquery-3.6.0.min.js"></script>
+<script src="jquery-3.6.0.min.js"></script>
 <!--SCRYPT-->
     <script>
     // PRELOADER
@@ -101,16 +88,7 @@ if ($result2['map'] == "rp_corellia_ngg_winter") {
     
     
     $(document).ready(function () {
-    	$('.first').hover(function () {
-        	if(!$(this).hasClass('active-server')) {
-            	$(this).toggleClass('box-online-hover');
-        	}
-    	});
-    	$('.second').hover(function () {
-        	if(!$(this).hasClass('active-server')) {
-    		$(this).toggleClass('box-online-hover');
-        	}
-    	});
+    	
     var map = '<?php echo $map ?>';
     var map2 = '<?php echo $map2 ?>';
     
@@ -142,6 +120,7 @@ if ($result2['map'] == "rp_corellia_ngg_winter") {
     } else if (map == "Naboo") {
     	$('.first').toggleClass('map-naboo');
     }
+    	
     if (map2 == "Corellia") {
     	$('.second').toggleClass('map-corellia');
     } else if (map2 == "Tatooine" && sim2 == "1") {
@@ -163,58 +142,23 @@ if ($result2['map'] == "rp_corellia_ngg_winter") {
     }
 });
     </script>
-<!--SCRYPT-->
-<!--STOP HERE--> <!--STOP HERE--> <!--STOP HERE-->
-    <div class="content">
 
-        <div class="menu-content">
-            <h3>Добро пожаловать!</h3>
-            <p>Это эксперементальная версия сайта, неофициально связанная с проектами SWRP NGG. Данный сайт представляет из себя комплекс взаимосвязанных фреймворков, позволяющих в будущем сделать сайт многофункциональным центром. На данный момент сайту выделен уклон на первый сервер и реализацию небольшой игры, аналога игры динозавра с гугл хрома.
-                <br><br>
-                Если у вас есть вопросы, предложения или вы нашли баг, обратитесь к Fish'у #3493.
-            </p>
+
+<div class ="content">
+	<p class="name-server">
+        Русский StarWars Phase 1 | Быстрая загрузка
+    </p>
+    <div class="box-online first">
+        <div class="text-online1">
+        	<img src="img/planet5.png" class="ico"><?php echo $map; ?>
         </div>
-        <h1 class="online-head">СТАТУС СЕРВЕРОВ</h1>
-        <div class="online-log">
-        	<p class="name-server">
-                Русский StarWars Phase 1 | Быстрая загрузка
-            </p>
-            <a href="swrp1" style="display:inherit;width:100%;justify-content:center;">
-            <div class="box-online first">
-                <div class="description">ПОДРОБНЕЕ</div>
-                <!--<div class="desc-content1 not-active">-->
-                <!--    Карта: <?php echo $map; ?> <br>-->
-                <!--    Кол-во игроков: <?php echo $result['playerscount']; ?>-->
-                <!--</div>-->
-                <div class="text-online1">
-                	<img src="img/planet5.png" class="ico"><?php echo $map; ?>
-                </div>
-                <div class="text-online1">
-                	<img src="img/phase1/clone1.png" class="ico2"><?php echo $result['playerscount']; ?>
-                </div>
-            </div>
-            </a>
-            <p class="name-server">
-                Русский StarWars Phase 2 | Быстрая загрузка
-            </p>
-            <a href="swrp2" style="display:inherit;width:100%;justify-content:center;">
-            <div class="box-online second">
-                <div class="description">ПОДРОБНЕЕ</div>
-                <!--<div class="desc-content2 not-active">-->
-                <!--    Карта: <?php echo $result2['map']; ?> <br>-->
-                <!--    Кол-во игроков: <?php echo $result2['playerscount']; ?> <br>-->
-                <!--</div>-->
-                <div class="text-online2">
-                	<img src="img/planet3.png" class="ico"><?php echo $map2; ?>
-                </div>
-            	<div class="text-online2">
-                	<img src="img/phase2/clone2.png" class="ico2"><?php echo $result2['playerscount']; ?>
-                </div>
-            </div>
-            </a>
+        <div class="text-online1">
+        	<img src="img/phase1/clone1.png" class="ico2"><?php echo $result['playerscount']; ?>
         </div>
-    </div>
-<!--STOP HERE--> <!--STOP HERE--> <!--STOP HERE-->
+	</div>
+	<h1>Игроки на сервере</h1>
+</div>
+
 <?php 
 require __DIR__ . '/footer.php'; 
 ?>
