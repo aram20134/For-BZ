@@ -3,8 +3,8 @@
 require "libs/rb.php";
 
 // Подключаемся к БД
-R::setup( 'mysql:host=localhost;dbname=cr94782_swrp',
-        'cr94782_swrp', 'Vardanyan20134' );
+R::setup( 'mysql:host=localhost;',
+        '', '' );
 
 // Проверка подключения к БД
 if(!R::testConnection()) die('No DB connection!');
