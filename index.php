@@ -52,13 +52,15 @@ if ($result['map'] == "rp_anaxes_ngg_winter") {
 	$map = "Naboo";
 } elseif ($result['map'] == "ngg_sw_m4") {
 	$map = "Tatooine";
-	$sim1 = 1;
+	$sim1 = "1";
 } elseif ($result['map'] == "ngg_sw_m7") {
 	$map = "Geonosis";
-	$sim1 = "1";
+	$gen1 = "1";
 } elseif ($result['map'] == "ngg_sw_m5") {
 	$map = "Naboo";
 	$nabo1 = "1";
+} elseif ($result['map'] == "ngg_sw_m13") {
+	$map = "Mygeeto";
 } else {
 	$map = "Anaxes";
 }
@@ -76,13 +78,17 @@ if ($result2['map'] == "rp_corellia_ngg_winter") {
 	$map2 = "Naboo";
 } elseif ($result2['map'] == "ngg_sw_m4") {
 	$map2 = "Tatooine";
-	$sim2 = 1;
+	$sim2 = "1";
 } elseif ($result2['map'] == "ngg_sw_m7") {
 	$map2 = "Geonosis";
-	$sim2 = "1";
+	$gen2 = "1";
 } elseif ($result2['map'] == "ngg_sw_m5") {
 	$map2 = "Naboo";
 	$nabo2 = "1";
+} elseif ($result2['map'] == "ngg_sw_m13") {
+	$map2 = "Mygeeto";
+} else {
+	$map2 = "Corellia";
 }
 ?>
  <script src="jquery-3.6.0.min.js"></script>
@@ -141,6 +147,8 @@ if ($result2['map'] == "rp_corellia_ngg_winter") {
     	$('.first').toggleClass('map-takodana');
     } else if (map == "Naboo") {
     	$('.first').toggleClass('map-naboo');
+    } else if (map == "Mygeeto") {
+    	$('.first').toggleClass('map-naboo');
     }
     if (map2 == "Corellia") {
     	$('.second').toggleClass('map-corellia');
@@ -158,8 +166,10 @@ if ($result2['map'] == "rp_corellia_ngg_winter") {
     	$('.second').toggleClass('map-tatooine'); 
     } else if (map2 == "Takodana") {
     	$('.second').toggleClass('map-takodana');
-    } else if (map == "Geonosis") {
+    } else if (map2 == "Geonosis") {
     	$('.second').toggleClass('map-geonosis');
+    } else if (map2 == "Mygeeto") {
+    	$('.second').toggleClass('map-mygeeto');
     }
 });
     </script>
@@ -169,7 +179,7 @@ if ($result2['map'] == "rp_corellia_ngg_winter") {
 
         <div class="menu-content">
             <h3>Добро пожаловать!</h3>
-            <p>Это эксперементальная версия сайта, неофициально связанная с проектами SWRP NGG. Данный сайт представляет из себя комплекс взаимосвязанных фреймворков, позволяющих в будущем сделать сайт многофункциональным центром. На данный момент сайту выделен уклон на первый сервер и реализацию небольшой игры, аналога игры динозавра с гугл хрома.
+            <p>Это эксперементальная версия сайта, неофициально связанная с проектами SWRP NGG. Главной его функцией является отображение статуса серверов и отображение информации об игроках на сервере. В будущем он может стать чем-то большим.
                 <br><br>
                 Если у вас есть вопросы, предложения или вы нашли баг, обратитесь к Fish'у #3493.
             </p>

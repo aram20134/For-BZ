@@ -7,7 +7,7 @@ ob_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php echo $title; ?></title>
-	<link rel="stylesheet" href="glav.css?60">
+<link rel="stylesheet" href="glav.css?71">
     <link rel="shortcut icon" href="img/logo.png" type="image/png">
 </head>
 <body>
@@ -23,7 +23,7 @@ ob_start();
         	if(isset($_SESSION['logged_user'])) {
         		$a = " | ";
         		echo '<a href ="profile" class ="reg-head">'. $_SESSION['logged_user']->number.$a.$_SESSION['logged_user']->name. '</a>';
-        		echo '<a href ="logout" class ="reg-head"> Выйти </a>';
+        		echo '<a href ="logout" class ="reg-logout"> Выйти </a>';
         	} else {
         		echo '<a href="login" class="reg-head">Войти</a>';
         		echo '<a href="signup" class="reg-head">Зарегистрироваться</a>';

@@ -119,8 +119,9 @@ if ($result2['map'] == "rp_corellia_ngg_winter") {
     	$('.first').toggleClass('map-takodana');
     } else if (map == "Naboo") {
     	$('.first').toggleClass('map-naboo');
+    } else if (map == "Mygeeto") {
+    	$('.first').toggleClass('map-naboo');
     }
-    	
     if (map2 == "Corellia") {
     	$('.second').toggleClass('map-corellia');
     } else if (map2 == "Tatooine" && sim2 == "1") {
@@ -137,8 +138,10 @@ if ($result2['map'] == "rp_corellia_ngg_winter") {
     	$('.second').toggleClass('map-tatooine'); 
     } else if (map2 == "Takodana") {
     	$('.second').toggleClass('map-takodana');
-    } else if (map == "Geonosis") {
+    } else if (map2 == "Geonosis") {
     	$('.second').toggleClass('map-geonosis');
+    } else if (map2 == "Mygeeto") {
+    	$('.second').toggleClass('map-mygeeto');
     }
 });
     </script>
@@ -157,6 +160,35 @@ if ($result2['map'] == "rp_corellia_ngg_winter") {
         </div>
 	</div>
 	<h1>Игроки на сервере</h1>
+	<div class ="players">
+			<?php
+			foreach($result['playerslist'] as $player) {
+				$user = R::findOne('usersbz', 'steamid = ?', [$player['name']]);
+				if ($player['name'] == $user['steamid']) {
+					// echo '<a href="" class="find">';
+					$a = " | ";
+					$output = $user['number'].$a.$user['name'].$a.$user['legion'].$a.$user['rang'];
+					
+					// echo '</a>';
+					
+					if ($output == $user['number'].$a.$user['name'].$a."(NULL)".$a.$user['rang']) {
+						$output = $user['number'].$a.$user['name'].$a.$user['rang'];
+						echo '<a href="" class="find">';
+						echo $output;
+						echo '</a>';
+					} elseif ($output != " |  |  | ") {
+						echo '<a href="" class="find">';
+						echo $output;
+						echo '</a>';
+					}
+				} else {
+					echo '<a href="" class="none">';
+					echo $player['name'];
+					echo '</a>';
+				}
+			}
+			?>
+	</div>
 </div>
 
 <?php 

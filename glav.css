@@ -120,6 +120,20 @@ li {
     margin: 15px;
     transition: background-color 0.3s linear;
 }
+.reg-logout {
+	display: flex;
+    font-size: 20px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 15px;
+    transition: background-color 0.3s linear;
+}
+.reg-logout:hover {
+	background-color: darkred;
+}
 .reg-head:hover {
     background-color: purple;
 }
@@ -150,7 +164,7 @@ li {
 /* MENU */
 
 .menu-content {
-    min-height: 300px;
+    min-height: auto;
     width: 95%;
     background-color: #2e2e2e;
     margin: 0 auto;
@@ -279,6 +293,10 @@ li {
 }
 .map-naboo2 {
 	background-image: url(img/ivents/naboo2.png);
+    background-size: cover;
+}
+.map-mygeeto {
+	background-image: url(img/ivents/mygeeto.png);
     background-size: cover;
 }
 .box-online-hover {
@@ -461,7 +479,7 @@ form div p:nth-child(4) {
 	cursor: pointer;
     box-shadow: 0px 0px 15px #626262;
     transition: all 0.3s ease-in-out;
-    transform: translate(10px, 10px);
+    transform: translate(5px, 5px);
 }
 .btn-reg:after, .btn-reg:before {
 	position:absolute;
@@ -544,6 +562,7 @@ label:hover {
     box-shadow: 0px 0px 30px #626262;
     padding:20px;
     cursor:pointer;
+    align-items:center;
 }
 .prof-info {
 	display:flex;
@@ -612,7 +631,7 @@ nav ul {
 	box-shadow: 0px 0px 30px #626262;
 	transition:0.3s;
 	justify-content:center;
-	display:flex;
+	display: flex;
 }
 .choice2 {
 	border:2px solid white;
@@ -653,14 +672,6 @@ nav ul {
 	transition:0.3s;
 	box-shadow: 0px 0px 30px #626262;
 }
-.active-ul {
-	display:flex;
-	flex-direction:column;
-	justify-content:center;
-	transition:0.3s;
-	text-align:center;
-	box-shadow: 0px 0px 30px #626262;
-}
 .ch-leg li:hover {
 	background-color:purple;
 	border-radius:15px;
@@ -671,40 +682,249 @@ nav ul {
 	border-radius:15px;
 	transition:0.3s;
 }
-/*nav ul {*/
-/*	padding:15px;*/
-/*	margin:0px;*/
-/*	list-style:none;*/
-/*	position:relative;*/
-/*	display:block;*/
-/*	border-radius:15px;*/
-/*}*/
-/*nav ul li {*/
-/*	background-color:mediumblue;*/
-/*	display:block;*/
-/*}*/
-/*nav ul ul {*/
-/*	display:none;*/
-/*	position:absolute;*/
-/*	width:100%;*/
-/*	left:0;*/
-/*}*/
-/*nav ul li:hover nav ul ul {*/
-/*	display:block;*/
-/*	color:red;*/
-/*}*/
-/*nav ul ul li {*/
-/*	min-width:150px;*/
-/*	float:none;*/
-/*	position:relative;*/
-/*	display:flex;*/
-/*	justify-content:center;*/
-/*}*/
-/*nav ul ul li:hover {*/
-/*	background-color:purple;*/
-/*}*/
-
+.choice3 {
+	border:2px solid white;
+	padding:10px;
+	border-radius:15px;
+	box-shadow: 0px 0px 30px #626262;
+	transition:0.3s;
+	display:none;
+}
+.choice4 {
+	border:2px solid white;
+	padding:10px;
+	border-radius:15px;
+	box-shadow: 0px 0px 30px #626262;
+	transition:0.3s;
+	display:none;
+}
+.choice5 {
+	border:2px solid white;
+	padding:10px;
+	border-radius:15px;
+	box-shadow: 0px 0px 30px #626262;
+	transition:0.3s;
+	display:none;
+}
+.choice6 {
+	border:2px solid white;
+	padding:10px;
+	border-radius:15px;
+	box-shadow: 0px 0px 30px #626262;
+	transition:0.3s;
+	display:none;
+}
+.ch-pil {
+	display:none;
+	padding:0px;
+	text-align:center;
+	border:2px solid white;
+	border-radius:15px;
+	transition:0.3s;
+	background-color:black;
+}
+.ch-pil li:hover {
+	background-color:purple;
+	border-radius:15px;
+	transition:0.3s;
+}
+.ch-odisb {
+	display:none;
+	padding:0px;
+	text-align:center;
+	border:2px solid white;
+	border-radius:15px;
+	transition:0.3s;
+	background-color:black;
+}
+.ch-odisb li:hover {
+	background-color:purple;
+	border-radius:15px;
+	transition:0.3s;
+}
+.ch-med {
+	display:none;
+	padding:0px;
+	text-align:center;
+	border:2px solid white;
+	border-radius:15px;
+	transition:0.3s;
+	background-color:black;
+}
+.ch-med li:hover {
+	background-color:purple;
+	border-radius:15px;
+	transition:0.3s;
+}
+.ch-tren {
+	display:none;
+	padding:0px;
+	text-align:center;
+	border:2px solid white;
+	border-radius:15px;
+	transition:0.3s;
+	background-color:black;
+}
+.ch-tren li:hover {
+	background-color:purple;
+	border-radius:15px;
+	transition:0.3s;
+}
+.active-ul {
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+	transition:0.3s;
+	text-align:center;
+	box-shadow: 0px 0px 30px #626262;
+}
+ /* SPAM */ /* SPAM *//* SPAM *//* SPAM *//* SPAM *//* SPAM *//* SPAM *//* SPAM *//* SPAM */
+.leg41 {
+	background-color: green;
+	padding:10px;
+	border-radius:20px;
+	margin:20px;
+}
+.leg212 {
+	background-color: orange;
+	padding:10px;
+	border-radius:20px;
+	margin:20px;
+}
+.leg501 {
+	background-color: blue;
+	padding:10px;
+	border-radius:20px;
+	margin:20px;
+}
+.legCT {
+	background-color: white;
+	padding:10px;
+	border-radius:20px;
+	margin:20px;
+	color:black;
+}
+.legGVARD {
+	background-color: darkViolet;
+	padding:10px;
+	border-radius:20px;
+	margin:20px;
+}
+.legIPK {
+	background-color: yellow;
+	padding:10px;
+	border-radius:20px;
+	margin:20px;
+	color:black;
+}
+.legODISB {
+	background-color: #05a1c8;
+	padding:10px;
+	border-radius:20px;
+	margin:20px;
+	color:black;
+}
+.legMED {
+	background-color: pink;
+	padding:10px;
+	border-radius:20px;
+	margin:20px;
+	color:black;
+}
+.legTREN {
+	background-color: black;
+	padding:10px;
+	border-radius:20px;
+	margin:20px;
+	color:white;
+}
+.R {
+	background-color: white;
+	padding:10px;
+	border-radius:20px;
+	margin:20px;
+	color:black;
+}
+.S {
+	background-color: darkgreen;
+	padding:10px;
+	border-radius:20px;
+	margin:20px;
+}
+.MO {
+	background-color: darkblue;
+	padding:10px;
+	border-radius:20px;
+	margin:20px;
+}
+.O {
+	background-color: darkred;
+	padding:10px;
+	border-radius:20px;
+	margin:20px;
+}
+.K {
+	background-color: #b6b300;
+	padding:10px;
+	border-radius:20px;
+	margin:20px;
+	color:black;
+}
+.E {
+	background-color: black;
+	padding:10px;
+	border-radius:20px;
+	margin:20px;
+	color:white;
+	box-shadow:0px 0px 5px 2px black;
+}
+.N {
+	background-color: white;
+	padding:10px;
+	border-radius:20px;
+	margin:20px;
+	color:black;
+}
+ /* SPAM */ /* SPAM *//* SPAM *//* SPAM *//* SPAM *//* SPAM *//* SPAM *//* SPAM *//* SPAM */
+ 
+ 
 /* PROFILE *//* PROFILE */
+
+
+/* SWRP */ /* SWRP */
+
+.players {
+	display:flex;
+	width: 80%;
+	height:100%;
+	flex-direction:row;
+	align-items:center;
+	flex-wrap:wrap;
+	justify-content:center;
+}
+.players-list {
+	color:white;
+	font-size:20px;
+	height:auto;
+}
+.none {
+	background-color:darkred;
+	border-radius:15px;
+	padding:10px;
+	margin:5px;
+	color:white;
+	box-shadow:0px 0px 5px 1px black;
+}
+.find {
+	background-color:green;
+	border-radius:15px;
+	padding:10px;
+	margin:5px;
+	color:white;
+	box-shadow:0px 0px 5px 1px green;
+}
+
+/* SWRP *//* SWRP */
 
 @media screen and (max-width: 1024px) {
 	.content {
@@ -767,6 +987,9 @@ nav ul {
     }
     [data]::after {
     	left:-10em;
+    }
+    .text-prof {
+    	font-size:20px;
     }
 }
 @media screen and (max-width: 320px) {

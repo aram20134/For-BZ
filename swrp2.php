@@ -38,13 +38,17 @@ if ($result['map'] == "rp_anaxes_ngg_winter") {
 	$map = "Naboo";
 } elseif ($result['map'] == "ngg_sw_m4") {
 	$map = "Tatooine";
-	$sim1 = 1;
+	$sim1 = "1";
 } elseif ($result['map'] == "ngg_sw_m7") {
 	$map = "Geonosis";
-	$sim1 = "1";
-} elseif ($result2['map'] == "ngg_sw_m5") {
+	$gen1 = "1";
+} elseif ($result['map'] == "ngg_sw_m5") {
 	$map = "Naboo";
 	$nabo1 = "1";
+} elseif ($result['map'] == "ngg_sw_m13") {
+	$map = "Mygeeto";
+} else {
+	$map = "Anaxes";
 }
 if ($result2['map'] == "rp_corellia_ngg_winter") {
 	$map2 = "Corellia";
@@ -60,32 +64,25 @@ if ($result2['map'] == "rp_corellia_ngg_winter") {
 	$map2 = "Naboo";
 } elseif ($result2['map'] == "ngg_sw_m4") {
 	$map2 = "Tatooine";
-	$sim2 = 1;
+	$sim2 = "1";
 } elseif ($result2['map'] == "ngg_sw_m7") {
 	$map2 = "Geonosis";
-	$sim2 = "2";
+	$gen2 = "1";
 } elseif ($result2['map'] == "ngg_sw_m5") {
 	$map2 = "Naboo";
 	$nabo2 = "1";
+} elseif ($result2['map'] == "ngg_sw_m13") {
+	$map2 = "Mygeeto";
+} else {
+	$map2 = "Corellia";
 }
 ?>
 <script src="jquery-3.6.0.min.js"></script>
 <!--SCRYPT-->
     <script>
-    // PRELOADER
-    
-    // $(window).on('load', function () {
-    // 	$('.preloader').addClass('loaded');
-    // });
-    // if ($(window).on('load')) {
-    // 	console.log("lad");
-    // } else {
-    // 	console.log("lod");
-    // }
-    
-    
-    $(document).ready(function () {
 
+    $(document).ready(function () {
+    	
     var map = '<?php echo $map ?>';
     var map2 = '<?php echo $map2 ?>';
     
@@ -114,8 +111,11 @@ if ($result2['map'] == "rp_corellia_ngg_winter") {
     	$('.first').toggleClass('map-tatooine'); 
     } else if (map == "Takodana") {
     	$('.first').toggleClass('map-takodana');
-    } 
-    	
+    } else if (map == "Naboo") {
+    	$('.first').toggleClass('map-naboo');
+    } else if (map == "Mygeeto") {
+    	$('.first').toggleClass('map-naboo');
+    }
     if (map2 == "Corellia") {
     	$('.second').toggleClass('map-corellia');
     } else if (map2 == "Tatooine" && sim2 == "1") {
@@ -132,8 +132,10 @@ if ($result2['map'] == "rp_corellia_ngg_winter") {
     	$('.second').toggleClass('map-tatooine'); 
     } else if (map2 == "Takodana") {
     	$('.second').toggleClass('map-takodana');
-    } else if (map == "Geonosis") {
+    } else if (map2 == "Geonosis") {
     	$('.second').toggleClass('map-geonosis');
+    } else if (map2 == "Mygeeto") {
+    	$('.second').toggleClass('map-mygeeto');
     }
 });
     </script>
@@ -151,6 +153,36 @@ if ($result2['map'] == "rp_corellia_ngg_winter") {
             	<img src="img/phase2/clone2.png" class="ico2"><?php echo $result2['playerscount']; ?>
             </div>
         </div>
+        <h1>Игроки на сервере</h1>
+	<div class ="players">
+			<?php
+			foreach($result2['playerslist'] as $player) {
+				$user = R::findOne('usersbz', 'steamid = ?', [$player['name']]);
+				if ($player['name'] == $user['steamid']) {
+					// echo '<a href="" class="find">';
+					$a = " | ";
+					$output = $user['number'].$a.$user['name'].$a.$user['legion'].$a.$user['rang'];
+					
+					// echo '</a>';
+					
+					if ($output == $user['number'].$a.$user['name'].$a."(NULL)".$a.$user['rang']) {
+						$output = $user['number'].$a.$user['name'].$a.$user['rang'];
+						echo '<a href="" class="find">';
+						echo $output;
+						echo '</a>';
+					} elseif ($output != " |  |  | ") {
+						echo '<a href="" class="find">';
+						echo $output;
+						echo '</a>';
+					}
+				} else {
+					echo '<a href="" class="none">';
+					echo $player['name'];
+					echo '</a>';
+				}
+			}
+			?>
+	</div>
 </div>
 
 <?php 

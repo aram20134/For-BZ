@@ -86,7 +86,7 @@ require __DIR__ . '/header.php';
 			$errors[] = 'Пользователь с таким номером уже существует!';
 		}
 		if (empty($errors)) {
-			$user = R::dispense('ab');
+			$user = R::dispense('usersbz');
 
 			$user->number = $data['number'];
 			$user->name = $data['name'];
@@ -96,6 +96,9 @@ require __DIR__ . '/header.php';
 				$user->phase = "2";
 			}
 			$user->password = $data['password'];
+			$user->legion = "0";
+			$user->rang = "0";
+			$user->steamid = "0";
 			
 			$user->password = password_hash($data['password'], PASSWORD_DEFAULT);
 			
