@@ -6,9 +6,26 @@ ob_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="yandex-verification" content="e4c9572b8cc0685c" />
+    <meta name="google-site-verification" content="bZqejiLKrDp3taS9Je72_cWm95TOIC6uzTjl_lHb7O8" />
     <title><?php echo $title; ?></title>
-<link rel="stylesheet" href="glav.css?71">
+	<link rel="stylesheet" href="glav.css?100">
     <link rel="shortcut icon" href="img/logo.png" type="image/png">
+    <!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(87038010, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/87038010" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 </head>
 <body>
 <header class="head">
@@ -17,8 +34,18 @@ ob_start();
             <a href="https://swrpngg.space/" id="btn-logo"></a>
             <a href="https://swrpngg.space/" style="text-decoration:none;"><p id="text-logo">STAR WARS RP NGG</p></a>
         </div>
-        <a href="swrp1" class="btn-head">SWRP Phase 1</a>
-        <a href="swrp2" class="btn-head">SWRP Phase 2</a>
+        <div class="drop-server">
+        	<a href="swrp1" class="btn-head">SWRP Phase 1</a>
+        	<div class="drop-cont">
+        		<a href="top-online?phase=1">Топ онлайн Phase 1</a>
+        	</div>
+        </div>
+        <div class="drop-server">
+        	<a href="swrp2" class="btn-head">SWRP Phase 2</a>
+        	<div class="drop-cont">
+        		<a href="top-online?phase=2">Топ онлайн Phase 2</a>
+        	</div>
+        </div>
         <?php 
         	if(isset($_SESSION['logged_user'])) {
         		$a = " | ";

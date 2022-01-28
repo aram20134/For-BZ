@@ -67,7 +67,7 @@ if (isset($_GET['logout'])){
 if (isset($_GET['update'])){
 	unset($_SESSION['steam_uptodate']);
 	require 'userInfo.php';
-	header('Location: '.$_SERVER['PHP_SELF']);
+	header('Location: https://swrpngg.space/profile');
 	exit;
 }
 

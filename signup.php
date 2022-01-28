@@ -56,7 +56,8 @@ require __DIR__ . '/header.php';
 		</div>
 		<?php 
 	$data = $_POST;
-	
+	$num = $data['number'];
+
 	if(isset($data['do_signup'])) {
 		$errors = array();
 		
@@ -75,10 +76,14 @@ require __DIR__ . '/header.php';
 		if($data['password2'] != $data['password']) {
 			$errors[] = 'Пароли не совпадают!';
 		}
-		
-		if (mb_strlen($data['number']) < 4 || mb_strlen($data['number']) > 5) {
+		if (is_numeric($num)) {
+			if ((mb_strlen($data['number']) < 4 or mb_strlen($data['number']) > 5)) {
 			$errors[] = 'Номер может быть только 4-ех или 5-и значным!';
+			}
+		} else {
+			$errors[] = 'Вы ввели не номер!';
 		}
+		
 		if (mb_strlen($data['name']) > 15) {
 			$errors[] = 'Позывной не может быть таким длинным!';
 		}
@@ -96,9 +101,7 @@ require __DIR__ . '/header.php';
 				$user->phase = "2";
 			}
 			$user->password = $data['password'];
-			$user->legion = "0";
-			$user->rang = "0";
-			$user->steamid = "0";
+
 			
 			$user->password = password_hash($data['password'], PASSWORD_DEFAULT);
 			

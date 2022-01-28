@@ -1,5 +1,22 @@
-AddDefaultCharset utf-8
-RewriteEngine On
+
+ # Запускаем движок замены
+
+RewriteEngine on
+
+ # Если запрашиваемый объект не папка
+
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(([A-Za-z0-9\-]+/)*[A-Za-z0-9\-]+)?$ $1.php
+
+ # если запрашиваемый объект с дописанным расширением php - файл
+
+RewriteCond %{REQUEST_FILENAME}\.php -f
+
+ # делаем замену с дописыванием .php
+
+RewriteRule ^(.*)$ $1.php
+
+RewriteBase /
+RewriteCond %{HTTP_HOST} (.*)
+RewriteCond %{REQUEST_URI} /$ [NC]
+RewriteRule ^(.*)(/)$ $1 [L,R=301]
+

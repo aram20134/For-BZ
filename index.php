@@ -1,22 +1,9 @@
 <?php
 $title="[SWRP] Главная";
 require "db.php";
-require __DIR__ . '/header.php';
+require __DIR__ . '/header.php'
 ?>
-<!-- Yandex.Metrika counter -->
-<script type="text/javascript" >
-   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
-   ym(87038010, "init", {
-        clickmap:true,
-        trackLinks:true,
-        accurateTrackBounce:true
-   });
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/87038010" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
 <?php
 // ПЕРВЫЙ СЕРВЕР
 $url="https://api.trackyserver.com/widget/index.php?id=7448";
@@ -94,29 +81,6 @@ if ($result2['map'] == "rp_corellia_ngg_winter") {
  <script src="jquery-3.6.0.min.js"></script>
 <!--SCRYPT-->
     <script>
-    // PRELOADER
-    
-    // $(window).on('load', function () {
-    // 	$('.preloader').addClass('loaded');
-    // });
-    // if ($(window).on('load')) {
-    // 	console.log("lad");
-    // } else {
-    // 	console.log("lod");
-    // }
-    
-    
-    $(document).ready(function () {
-    	$('.first').hover(function () {
-        	if(!$(this).hasClass('active-server')) {
-            	$(this).toggleClass('box-online-hover');
-        	}
-    	});
-    	$('.second').hover(function () {
-        	if(!$(this).hasClass('active-server')) {
-    		$(this).toggleClass('box-online-hover');
-        	}
-    	});
     var map = '<?php echo $map ?>';
     var map2 = '<?php echo $map2 ?>';
     
@@ -128,58 +92,25 @@ if ($result2['map'] == "rp_corellia_ngg_winter") {
     
     var nabo1 = '<?php echo $nabo1 ?>';
     var nabo2 = '<?php echo $nabo2 ?>';
-    
-    if (map == "Anaxes") {
-    	$('.first').toggleClass('map-anaxes');
-    } else if (map == "Tatooine" && sim1 == "1") {
-    	$('.first').toggleClass('map-tatooine_sim'); 
-    } else if (map == "Geonosis" && gen1 == "1") {
-    	$('.first').toggleClass('map-geonosis2');
-    } else if (map == "Naboo" && nabo1 == "1") {
-    	$('.first').toggleClass('map-naboo2'); 
-    } else if (map == "Korriban") {
-    	$('.first').toggleClass('map-korriban');
-    } else if (map == "Geonosis") {
-    	$('.first').toggleClass('map-geonosis');
-    } else if (map == "Tatooine") {
-    	$('.first').toggleClass('map-tatooine'); 
-    } else if (map == "Takodana") {
-    	$('.first').toggleClass('map-takodana');
-    } else if (map == "Naboo") {
-    	$('.first').toggleClass('map-naboo');
-    } else if (map == "Mygeeto") {
-    	$('.first').toggleClass('map-naboo');
-    }
-    if (map2 == "Corellia") {
-    	$('.second').toggleClass('map-corellia');
-    } else if (map2 == "Tatooine" && sim2 == "1") {
-    	$('.second').toggleClass('map-tatooine_sim');
-    } else if (map2 == "Geonosis" && gen2 == "1"){
-    	$('.second').toggleClass('map-geonosis2');
-    } else if (map2 == "Naboo" && nabo1 == "1") {
-    	$('.second').toggleClass('map-naboo2'); 
-    } else if (map2 == "Korriban") {
-    	$('.second').toggleClass('map-korriban');
-    } else if (map2 == "Naboo") {
-    	$('.second').toggleClass('map-naboo');
-    } else if (map2 == "Tatooine") {
-    	$('.second').toggleClass('map-tatooine'); 
-    } else if (map2 == "Takodana") {
-    	$('.second').toggleClass('map-takodana');
-    } else if (map2 == "Geonosis") {
-    	$('.second').toggleClass('map-geonosis');
-    } else if (map2 == "Mygeeto") {
-    	$('.second').toggleClass('map-mygeeto');
-    }
-});
+    $(document).ready(function(){$(".first").hover(function(){$(this).hasClass("active-server")||$(this).toggleClass("box-online-hover")});$(".second").hover(function(){$(this).hasClass("active-server")||$(this).toggleClass("box-online-hover")});"Anaxes"==map?$(".first").toggleClass("map-anaxes"):"Tatooine"==map&&"1"==sim1?$(".first").toggleClass("map-tatooine_sim"):"Geonosis"==map&&"1"==gen1?$(".first").toggleClass("map-geonosis2"):"Naboo"==map&&"1"==nabo1?$(".first").toggleClass("map-naboo2"):"Korriban"==
+map?$(".first").toggleClass("map-korriban"):"Geonosis"==map?$(".first").toggleClass("map-geonosis"):"Tatooine"==map?$(".first").toggleClass("map-tatooine"):"Takodana"==map?$(".first").toggleClass("map-takodana"):"Naboo"==map?$(".first").toggleClass("map-naboo"):"Mygeeto"==map&&$(".first").toggleClass("map-naboo");"Corellia"==map2?$(".second").toggleClass("map-corellia"):"Tatooine"==map2&&"1"==sim2?$(".second").toggleClass("map-tatooine_sim"):"Geonosis"==map2&&"1"==gen2?$(".second").toggleClass("map-geonosis2"):
+"Naboo"==map2&&"1"==nabo1?$(".second").toggleClass("map-naboo2"):"Korriban"==map2?$(".second").toggleClass("map-korriban"):"Naboo"==map2?$(".second").toggleClass("map-naboo"):"Tatooine"==map2?$(".second").toggleClass("map-tatooine"):"Takodana"==map2?$(".second").toggleClass("map-takodana"):"Geonosis"==map2?$(".second").toggleClass("map-geonosis"):"Mygeeto"==map2&&$(".second").toggleClass("map-mygeeto")});
     </script>
+<?php 
+$update= date("i", $result['date']/1000);
+$update2 = date("i", $result2['date']/1000);
+$today = date("i", time());
+$diff= $today - $update;
+$diff2= $today - $update2;
+// Maybe Carbon? 
+?>
 <!--SCRYPT-->
 <!--STOP HERE--> <!--STOP HERE--> <!--STOP HERE-->
     <div class="content">
 
         <div class="menu-content">
             <h3>Добро пожаловать!</h3>
-            <p>Это эксперементальная версия сайта, неофициально связанная с проектами SWRP NGG. Главной его функцией является отображение статуса серверов и отображение информации об игроках на сервере. В будущем он может стать чем-то большим.
+            <p>Это эксперементальная версия сайта, неофициально связанная с проектами SWRP NGG. Главной его функцией является отображение статуса серверов, игроков на сервере и их онлайн. Регистрация позволит выводить ваше НПЗ вместо ника в стиме. 
                 <br><br>
                 Если у вас есть вопросы, предложения или вы нашли баг, обратитесь к Fish'у #3493.
             </p>
@@ -202,6 +133,25 @@ if ($result2['map'] == "rp_corellia_ngg_winter") {
                 <div class="text-online1">
                 	<img src="img/phase1/clone1.png" class="ico2"><?php echo $result['playerscount']; ?>
                 </div>
+                <div class="difftime">
+                	Последнее обновление - 
+                	<?php 
+                	if ($diff == "0") {
+                		echo "Только что";
+                	} else if ($diff == "1") {
+                		echo $diff;
+                		echo " минуту назад";
+                	} else if ($diff == "2" or $diff == "3" or $diff == "4") {
+                		echo $diff;
+                		echo " минуты назад";
+                	} else if ($diff < 0) {
+                		echo "Недавно";
+                	} else {
+                		echo $diff;
+                		echo " минут назад";
+                	}
+                	?> 
+                </div>
             </div>
             </a>
             <p class="name-server">
@@ -219,6 +169,25 @@ if ($result2['map'] == "rp_corellia_ngg_winter") {
                 </div>
             	<div class="text-online2">
                 	<img src="img/phase2/clone2.png" class="ico2"><?php echo $result2['playerscount']; ?>
+                </div>
+                <div class="difftime">
+                	Последнее обновление - 
+                	<?php 
+                	if ($diff2 == "0") {
+                		echo "Только что";
+                	} else if ($diff2 == "1") {
+                		echo $diff2;
+                		echo " минуту назад";
+                	} else if ($diff2 == "2" or $diff2 == "3" or $diff2 == "4") {
+                		echo $diff2;
+                		echo " минуты назад";
+                	} else if ($diff2 < 0) {
+                		echo "Недавно";
+                	} else {
+                		echo $diff2;
+                		echo " минут назад";
+                	}
+                	?> 
                 </div>
             </div>
             </a>
