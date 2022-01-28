@@ -4,7 +4,7 @@ https://swrpngg.space/
 Возможности:
 1) Просмотр состояния серверов swrpngg, кол-ва игроков и карты.
 2) Система регистрации и авторизации.
-3) Просмотр подробной информации об игроках на сервере.
+3) Просмотр онлайна игроков.
 
 ![image](https://user-images.githubusercontent.com/85961114/151602014-9a90f258-3a6a-49f8-823c-3b5c51636625.png)
 ![image](https://user-images.githubusercontent.com/85961114/148447398-69e67e9d-0ebf-444e-87ef-2c609379a3f4.png)
