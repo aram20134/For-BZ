@@ -53,10 +53,10 @@
 		
 		public function Write( int $Header, string $String = '' ) : bool
 		{
-			$Command = pack( 'cccca*', 0xFF, 0xFF, 0xFF, 0xFF, $String );
-			$Length  = strlen( $Command );
+			$Command = Pack( 'cccca*', 0xFF, 0xFF, 0xFF, 0xFF, $String );
+			$Length  = StrLen( $Command );
 			
-			return $Length === fwrite( $this->Socket->Socket, $Command, $Length );
+			return $Length === FWrite( $this->Socket->Socket, $Command, $Length );
 		}
 		
 		/**
@@ -89,7 +89,7 @@
 					//$StringBuffer .= SubStr( $Packet, 0, -2 );
 					
 					// Let's assume if this packet is not long enough, there are no more after this one
-					$ReadMore = strlen( $Packet ) > 1000; // use 1300?
+					$ReadMore = StrLen( $Packet ) > 1000; // use 1300?
 					
 					if( $ReadMore )
 					{
@@ -140,6 +140,6 @@
 				throw new AuthenticationException( 'Failed to get RCON challenge.', AuthenticationException::BAD_PASSWORD );
 			}
 			
-			$this->RconChallenge = trim( $Buffer->Get( ) );
+			$this->RconChallenge = Trim( $Buffer->Get( ) );
 		}
 	}

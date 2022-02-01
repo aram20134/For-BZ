@@ -88,6 +88,12 @@ $diff2= $today - $update2;
 $d = date("d");
 $m = date("m");
 $y = date("y");
+
+// Сделать вывод за сколько дней онлайн + автообновление БД 
+// $raznica = R::findOn
+// echo $a = date("i") - date("i");
+// echo date("d-m-Y", mktime(0, 0, 0, 01, 25, 2022)) - date("d-m-Y", mktime(0, 0, 0, 01, 31, 2022));
+// echo $dateDiff = date_diff(new DateTime(), new DateTime('2022-01-29'))->days;
 ?>
 
 <div class ="content">
@@ -151,7 +157,7 @@ $y = date("y");
 						echo $output;
 						echo '</a>';
 					}
-				} else if ($player['name'] == "") {
+				} else if ($player['name'] == "" or $player['name'] == "็") {
 					
 				} else {
 					echo '<a href="https://swrpngg.space/profile-other?steam='.$player['name']."&phase=1".'" class ="none">';
@@ -160,7 +166,6 @@ $y = date("y");
 				}
 			}
 			
-				
 			?>
 	</div>
 </div>

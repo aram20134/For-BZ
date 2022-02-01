@@ -9,7 +9,7 @@ ob_start();
     <meta name="yandex-verification" content="e4c9572b8cc0685c" />
     <meta name="google-site-verification" content="bZqejiLKrDp3taS9Je72_cWm95TOIC6uzTjl_lHb7O8" />
     <title><?php echo $title; ?></title>
-	<link rel="stylesheet" href="glav.css?100">
+	<link rel="stylesheet" href="glav.css?103">
     <link rel="shortcut icon" href="img/logo.png" type="image/png">
     <!-- Yandex.Metrika counter -->
 <script type="text/javascript" >
@@ -35,21 +35,23 @@ ob_start();
             <a href="https://swrpngg.space/" style="text-decoration:none;"><p id="text-logo">STAR WARS RP NGG</p></a>
         </div>
         <div class="drop-server">
-        	<a href="swrp1" class="btn-head">SWRP Phase 1</a>
+        	<a class="btn-head">SWRP Phase 1<img src="img/chev.svg" class="chev" /></a>
         	<div class="drop-cont">
+        		<a href="swrp1">Игроки Phase 1</a>
         		<a href="top-online?phase=1">Топ онлайн Phase 1</a>
         	</div>
         </div>
         <div class="drop-server">
-        	<a href="swrp2" class="btn-head">SWRP Phase 2</a>
+        	<a class="btn-head">SWRP Phase 2<img src="img/chev.svg" class="chev"/></a>
         	<div class="drop-cont">
+        		<a href="swrp2">Игроки Phase 2</a>
         		<a href="top-online?phase=2">Топ онлайн Phase 2</a>
         	</div>
         </div>
         <?php 
         	if(isset($_SESSION['logged_user'])) {
         		$a = " | ";
-        		echo '<a href ="profile" class ="reg-head">'. $_SESSION['logged_user']->number.$a.$_SESSION['logged_user']->name. '</a>';
+        		echo '<a href ="profile" class ="reg-head" style="border:2px dotted #00748e;">'. $_SESSION['logged_user']->number.$a.$_SESSION['logged_user']->name. '</a>';
         		echo '<a href ="logout" class ="reg-logout"> Выйти </a>';
         	} else {
         		echo '<a href="login" class="reg-head">Войти</a>';

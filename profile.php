@@ -117,6 +117,7 @@ Highcharts.setOptions({
             	style: {
         			color: 'white',
         			fontWeight: 'bold',
+        			fontSize:'20px',
         		},
     	  },
     		labels: {
@@ -130,6 +131,7 @@ Highcharts.setOptions({
             	style: {
         			color: 'white',
         			fontWeight: 'bold',
+        			fontSize:'15px',
         		},
     	  },
     		labels: {
@@ -216,236 +218,6 @@ Highcharts.setOptions({
 			copyToClipboard2();
 		});
 		var phase = "<?php echo $_SESSION['logged_user']->phase ?>";
-		
-		// if (phase == "1") {
-		// 	$('#phase2').addClass('not-active')
-		// 	$('.choice1').click(function(){
-		// 	$('.ch-leg').toggleClass('active-l');
-		// 	console.log("Phase 1");
-		// });
-		// $('.ch-leg li').click(function (){
-		// 	$('input[name=legion]').val(this.value);
-		// 	var leg = $('input[name=legion]').val();
-			
-		// 	let legion = ["CT", "41", "212", "501", "Медик", "ОДИСБ", "ИПК", "Тренера", "Гвардия"];
-		// 	let rang = ["Рядовой-рекрут", "Рядовой", "Рядовой первого класса", "Специалист", "Капрал", "Сержант", "Штаб-сержант", "Сержант первого класса", "Первый сержант", "Сержант-майор", "Команд сержант-майор", "Сержант-майор сухопутных войска", "Мл. Лейтенант", "Лейтенант", "Капитан", "Майор", "Подполковник", "Полковник", "Командир", "Командир первого класса", "Клон коммандер", "Клон маршал"];
-		// 	let pil = ["Пилот-рекрут", "Пилот", "Старшина", "Сержант", "Первый сержант", "Сержант-майор воздушных войск", "Прапорщик", "Лейтенант флота", "Лейтенант-коммандер", "Коммандер", "Капитан 3 класса", "Капитан 2 класса", "Капитан 1 класса", "Адмирал флота"];
-		// 	let odisb = ["Осужденный", "Стажер", "Смотритель", "Оперативник", "Старший оперативник", "Дознаватель", "Руководитель", "Заместитель начальника", "Начальник"];
-		// 	let med = ["Интерн", "Практикант", "Ординатор", "Старший ординатор", "Военфельдшер", "Старший военфельдшер", "Врач", "Полевой врач", "Хирург", "Главный хирург", "Главврач", "Военврач 3-го ранга", "Военврач 2-го ранга", "Военврач 1-го ранга"];
-		// 	let tren = ["Контрактный тренер", "Тренер-практикант", "Тренер", "Старший тренер", "Тренер спец. назнния", "Мандалорский тренер"];
-		// 	$('.choice1').text(legion[leg]);
-			
-		// 	if(leg == "0" || leg == "1" || leg == "2" || leg == "3" || leg == "8") {
-		// 		$('.choice2').addClass('active-ul');
-		// 		$('.choice3').removeClass('active-ul');
-		// 		$('.choice4').removeClass('active-ul');
-		// 		$('.choice5').removeClass('active-ul');
-		// 		$('.choice6').removeClass('active-ul');
-		// 		$('.choice2').click(function(){
-		// 			$('.ch-rang').toggleClass('active-ul');
-		// 		});
-		// 		$('.ch-rang li').click(function () {
-		// 			$('input[name=rang]').val(this.value);
-		// 			var rng = $('input[name=rang]').val();
-		// 			console.log(rng);
-		// 			$('.choice2').text(rang[rng]);
-		// 		});
-		// 	} else if (leg == "6") {
-		// 			$('.ch-pil li').click(function () {
-		// 				$('input[name=rang]').val(this.value);
-		// 				var rng = $('input[name=rang]').val();
-		// 				console.log(rng);
-		// 			$('.choice3').text(pil[rng]);
-		// 		});
-		// 		$('.choice2').removeClass('active-ul');
-		// 		$('.choice3').addClass('active-ul');
-		// 		$('.choice5').removeClass('active-ul');
-		// 		$('.choice4').removeClass('active-ul');
-		// 		$('.choice6').removeClass('active-ul');
-		// 		$('.choice3').click(function() {
-		// 			$('.ch-pil').toggleClass('active-ul');
-		// 		});
-		// 	} else if (leg == "5") {
-		// 			$('.ch-odisb li').click(function () {
-		// 				$('input[name=rang]').val(this.value);
-		// 				var rng = $('input[name=rang]').val();
-		// 				console.log(rng);
-		// 			$('.choice4').text(odisb[rng]);
-		// 		});
-		// 		$('.choice2').removeClass('active-ul');
-		// 		$('.choice3').removeClass('active-ul');
-		// 		$('.choice5').removeClass('active-ul');
-		// 		$('.choice6').removeClass('active-ul');
-		// 		$('.choice4').addClass('active-ul');
-		// 		$('.choice4').click(function() {
-		// 			$('.ch-odisb').toggleClass('active-ul');
-		// 		});
-		// 	} else if (leg == "4") {
-		// 			$('.ch-med li').click(function () {
-		// 				$('input[name=rang]').val(this.value);
-		// 				var rng = $('input[name=rang]').val();
-		// 				console.log(rng);
-		// 			$('.choice5').text(med[rng]);
-		// 		});
-		// 		$('.choice2').removeClass('active-ul');
-		// 		$('.choice3').removeClass('active-ul');
-		// 		$('.choice4').removeClass('active-ul');
-		// 		$('.choice6').removeClass('active-ul');
-		// 		$('.choice5').addClass('active-ul');
-		// 		$('.choice5').click(function() {
-		// 			$('.ch-med').toggleClass('active-ul');
-		// 		});
-		// 	} else if (leg == "7") {
-		// 			$('.ch-tren li').click(function () {
-		// 				$('input[name=rang]').val(this.value);
-		// 				var rng = $('input[name=rang]').val();
-		// 				console.log(rng);
-		// 			$('.choice6').text(tren[rng]);
-		// 		});
-		// 		$('.choice2').removeClass('active-ul');
-		// 		$('.choice3').removeClass('active-ul');
-		// 		$('.choice4').removeClass('active-ul');
-		// 		$('.choice5').removeClass('active-ul');
-		// 		$('.choice6').addClass('active-ul');
-		// 		$('.choice6').click(function() {
-		// 			$('.ch-tren').toggleClass('active-ul');
-		// 		});
-		// 	} else {
-		// 		$('.choice3').removeClass('active-ul');
-		// 		$('.choice2').removeClass('active-ul');
-		// 		$('.choice4').removeClass('active-ul');
-		// 		$('.choice5').removeClass('active-ul');
-		// 		$('.choice6').removeClass('active-ul');
-		// 	}
-		// });
-		// // СДЕЛАТЬ ВЫБОР ЗВАНИЯ И ЛЕГИОНА 2 ФАЗЫ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		// } else {
-		// 	$('#phase1').addClass('not-active')
-		// 	$('.choice1').click(function(){
-		// 	$('.ch-leg')~.toggleClass('active-l');
-		// 	console.log("Phase 2");
-		// });
-		// $('.ch-leg li').click(function (){
-		// 	$('input[name=legion]').val(this.value);
-		// 	var leg = $('input[name=legion]').val();
-			
-		// 	let legion2 = ["CT", "41", "212", "501", "Медик", "ОДИСБ", "ИПК", "Инструктора", "Гвардия", "ЭРК"];
-		// 	let rang2 = ["Рядовой-рекрут", "Рядовой", "Рядовой первого класса", "Специалист", "Капрал", "Сержант", "Штаб-сержант", "Сержант первого класса", "Первый сержант", "Сержант-майор", "Команд сержант-майор", "Сержант-майор сухопутных войска", "Мл. Лейтенант", "Лейтенант", "Капитан", "Майор", "Подполковник", "Полковник", "Командир", "Командир первого класса", "Коммандер", "Маршал-коммандер"];
-		// 	let pil2 = ["Пилот-рекрут", "Пилот", "Пилот первого класса", "Специалист", "Капрал", "Сержант", "Штаб-сержант", "Сержант первого класса", "Первый сержант", "Сержант-майор", "Команд сержант-майор", "Сержант-майор воздушных войск", "Прапорщик", "Младший лейтенант", "Лейтенант", "Лейтенант-командир", "Командир", "Капитан", "Младший контр-адмирал", "Контр-адмирал", "Вице Адмирал", "Адмирал", "Адмирал флота"];
-		// 	let odisb2 = ["Осужденный", "Стажер", "Младший смотритель", "Смотритель", "Старший смотритель", "Смотритель первого класса", "Оперативник", "Бригадир", "Надзиратель", "Второй заместитель начальника", "Первый заместитель начальника", "Начальник"];
-		// 	let med2 = ["Ассистент", "Интерн", "Ординатор", "Младший военфельдшер", "Военфельдшер", "Старший военфельдшер", "Полевой врач", "Врач", "Хирург", "Военный хирург", "Главврач", "Военврач 3-го ранга", "Военврач 2-го ранга", "Военврач 1-го ранга"];
-		// 	let tren2 = ["Младший инструктор", "Инструктор", "Старший инструктор", "Оперативный инструктор", "Каминоанский инструктор 3-го ранга", "Каминоанский инструктор 2-го ранга", "Каминоанский инструктор 1-го ранга"];
-		// 	let erk2 = ["Лейтенант", "Капитан", "Коммандер"];
-		// 	$('.choice1').text(legion2[leg]);
-			
-		// 	if(leg == "0" || leg == "1" || leg == "2" || leg == "3" || leg == "8") {
-		// 		$('.choice2').addClass('active-ul');
-		// 		$('.choice3').removeClass('active-ul');
-		// 		$('.choice4').removeClass('active-ul');
-		// 		$('.choice5').removeClass('active-ul');
-		// 		$('.choice6').removeClass('active-ul');
-		// 		$('.choice7').removeClass('active-ul');
-		// 		$('.choice2').click(function(){
-		// 			$('.ch-rang').toggleClass('active-ul');
-		// 		});
-		// 		$('.ch-rang li').click(function () {
-		// 			$('input[name=rang]').val(this.value);
-		// 			var rng = $('input[name=rang]').val();
-		// 			console.log(rng);
-		// 			$('.choice2').text(rang2[rng]);
-		// 		});
-		// 	} else if (leg == "6") {
-		// 			$('.ch-pil li').click(function () {
-		// 				$('input[name=rang]').val(this.value);
-		// 				var rng = $('input[name=rang]').val();
-		// 				console.log(rng);
-		// 			$('.choice3').text(pil2[rng]);
-		// 		});
-		// 		$('.choice2').removeClass('active-ul');
-		// 		$('.choice3').addClass('active-ul');
-		// 		$('.choice5').removeClass('active-ul');
-		// 		$('.choice4').removeClass('active-ul');
-		// 		$('.choice6').removeClass('active-ul');
-		// 		$('.choice7').removeClass('active-ul');
-		// 		$('.choice3').click(function() {
-		// 			$('.ch-pil').toggleClass('active-ul');
-		// 		});
-		// 	} else if (leg == "5") {
-		// 			$('.ch-odisb li').click(function () {
-		// 				$('input[name=rang]').val(this.value);
-		// 				var rng = $('input[name=rang]').val();
-		// 				console.log(rng);
-		// 			$('.choice4').text(odisb2[rng]);
-		// 		});
-		// 		$('.choice2').removeClass('active-ul');
-		// 		$('.choice3').removeClass('active-ul');
-		// 		$('.choice5').removeClass('active-ul');
-		// 		$('.choice6').removeClass('active-ul');
-		// 		$('.choice7').removeClass('active-ul');
-		// 		$('.choice4').addClass('active-ul');
-		// 		$('.choice4').click(function() {
-		// 			$('.ch-odisb').toggleClass('active-ul');
-		// 		});
-		// 	} else if (leg == "4") {
-		// 			$('.ch-med li').click(function () {
-		// 				$('input[name=rang]').val(this.value);
-		// 				var rng = $('input[name=rang]').val();
-		// 				console.log(rng);
-		// 			$('.choice5').text(med2[rng]);
-		// 		});
-		// 		$('.choice2').removeClass('active-ul');
-		// 		$('.choice3').removeClass('active-ul');
-		// 		$('.choice4').removeClass('active-ul');
-		// 		$('.choice6').removeClass('active-ul');
-		// 		$('.choice7').removeClass('active-ul');
-		// 		$('.choice5').addClass('active-ul');
-		// 		$('.choice5').click(function() {
-		// 			$('.ch-med').toggleClass('active-ul');
-		// 		});
-		// 	} else if (leg == "7") {
-		// 			$('.ch-tren li').click(function () {
-		// 				$('input[name=rang]').val(this.value);
-		// 				var rng = $('input[name=rang]').val();
-		// 				console.log(rng);
-		// 			$('.choice6').text(tren2[rng]);
-		// 		});
-		// 		$('.choice2').removeClass('active-ul');
-		// 		$('.choice3').removeClass('active-ul');
-		// 		$('.choice4').removeClass('active-ul');
-		// 		$('.choice5').removeClass('active-ul');
-		// 		$('.choice7').removeClass('active-ul');
-		// 		$('.choice6').addClass('active-ul');
-		// 		$('.choice6').click(function() {
-		// 			$('.ch-tren').toggleClass('active-ul');
-		// 		});
-		// 	} else if (leg == "9") {
-		// 		console.log("9");
-		// 		$('.ch-erk li').click(function () {
-		// 				$('input[name=rang]').val(this.value);
-		// 				var rng = $('input[name=rang]').val();
-		// 				console.log(rng);
-		// 			$('.choice7').text(erk2[rng]);
-		// 		});
-		// 		$('.choice2').removeClass('active-ul');
-		// 		$('.choice3').removeClass('active-ul');
-		// 		$('.choice4').removeClass('active-ul');
-		// 		$('.choice5').removeClass('active-ul');
-		// 		$('.choice6').removeClass('active-ul');
-		// 		$('.choice7').addClass('active-ul');
-		// 		$('.choice7').click(function() {
-		// 			$('.ch-erk').toggleClass('active-ul');
-		// 		});
-		// 	} else {
-		// 		$('.choice3').removeClass('active-ul');
-		// 		$('.choice2').removeClass('active-ul');
-		// 		$('.choice4').removeClass('active-ul');
-		// 		$('.choice5').removeClass('active-ul');
-		// 		$('.choice6').removeClass('active-ul');
-		// 		$('.choice7').removeClass('active-ul');
-		// 	}
-		// });
-			
-		// }
 		
 		if (phase == "1") {
 			$('#check-rang1').click(function() {
@@ -671,7 +443,7 @@ if(get('action') == 'logout') {
 				Легион: <?php $user = R::findOne('usersbz', 'number = ?', [$_SESSION['logged_user']->number]);
 					if (isset($roles['roleslist'])) {
 						$roles = $roles['roleslist'];
-						$user['rang'] = NULL;
+						// $user['rang'] = NULL;
 						$user['bigrang'] = NULL;
 						R::store($user);
 					} else {
@@ -917,7 +689,7 @@ if(get('action') == 'logout') {
 						echo '<span class="A">'. $user['rang'] . '</span>'; 
 					} else if ($user['legion'] == "Без легиона" and $user['rang'] == "Советник") {
 						echo '<span class="E">'. $user['rang'] . '</span>'; 
-					}
+					} 
 				}
 				} else if ($roles != NULL and $user['phase'] == "2") {
 					if (strpos($roles, '530382067167657984')) {
@@ -1044,12 +816,13 @@ if(get('action') == 'logout') {
 				$user = R::findOne('usersbz', 'number = ?', [$_SESSION['logged_user']->number]);
 					if(isset($data['save'])) {
 						$errors = array();
-					
+						// print_r($user);
+						print_r($data);
 						if(trim($data['rang']) == "") {
 							$errors[] = 'Выберите звание!';
 						}
 						if(!empty($errors)) {
-						echo '<div class="alert-box"><p>'. array_shift($errors) . '</p></div>';
+							echo '<div class="alert-box"><p>'. array_shift($errors) . '</p></div>';
 						} else {
 							$user->rang = $data['rang'];
 							R::store($user);

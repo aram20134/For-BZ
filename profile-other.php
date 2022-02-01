@@ -182,6 +182,7 @@ Highcharts.setOptions({
     		labels: {
         		style: {
         		color: 'white',
+        		fontSize:'15px'
         		}
 			},
     	},
@@ -194,7 +195,8 @@ Highcharts.setOptions({
     	  },
     		labels: {
         		style: {
-        		color: 'white'
+        		color: 'white',
+        		fontSize:'13px'
         		}
 			},
     	},
@@ -211,7 +213,7 @@ Highcharts.setOptions({
     	plotOptions: {
         	series: {
             	borderWidth: 1,
-            	color: 'darkred',
+            	color: 'red',
             	lineWidth: 4,
             	dataLabels: {
                 	enabled: true,
@@ -223,31 +225,42 @@ Highcharts.setOptions({
             name: 'Минуты',
             data: online,
             tooltip: {
-                valueDecimals: 2
+                valueDecimals: 2,
             },
             marker: {
                 enabled: true,
                 lineWidth: 2,
                 radius: 5,
-                fillColor: 'red',
+                fillColor: 'blue',
+                
             },
         }]
     });
+    if (window.matchMedia("(min-width: 1200px)").matches) {
+    	
+	} else {
+		chart.setSize(1000);
+	}
     if (window.matchMedia("(min-width: 1024px)").matches) {
     	
 	} else {
-		chart.setSize(600);
+		chart.setSize(800);
 	}
+    if (window.matchMedia("(min-width: 800px)").matches) {
+    	
+    } else {
+    	chart.setSize(600);
+    }
     if (window.matchMedia("(min-width: 600px)").matches) {
     	
     } else {
-    	chart.setSize(300);
+    	chart.setSize(320);
     }
     });
     
 </script>
 <div class ="content">
-	<?php if($data == NULL) : ?>
+	<?php if($data == NULL or $steam == " ็") : ?>
 	
 	<div class ="alert-box">Страница не найдена</div>
 	

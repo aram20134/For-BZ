@@ -149,7 +149,7 @@ $y = date("y");
 						echo $output;
 						echo '</a>';
 					}
-				} else if ($player['name'] == "") {
+				} else if ($player['name'] == "" or $player['name'] == "็") {
 					
 				} else {
 					echo '<a href="https://swrpngg.space/profile-other?steam='.$player['name'].'" class ="none">';

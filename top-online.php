@@ -8,13 +8,28 @@ if ($data['phase'] == 1 or $data['phase'] == 2) {
 require "db.php";
 require __DIR__ . '/header.php';
 ?>
-<?php 
+<?php
+    $memcache_obj = new Memcache;
+    $memcache_obj->connect('localhost', 11211) or die('Could not connect');
+    $onlinetemp = @$memcache_obj->get('onlinetemp');
+    $onlinetemp2 = @$memcache_obj->get('onlinetemp2');
 	
-	if ($data['phase'] == "1") {
+	if ($data['phase'] == "1" and empty($onlinetemp)) {
 		$online = R::getAssoc('SELECT * FROM online');
-	} else if ($data['phase'] == "2") {
-		$online = R::getAssoc('SELECT * FROM online2');
+		$memcache_obj->set('onlinetemp', $online, false, 600);
+	} else if ($data['phase'] == "1" and !empty($onlinetemp)) {
+		$online = $onlinetemp;
 	}
+	
+	if ($data['phase'] == "2" and empty($onlinetemp2)) {
+		$online = R::getAssoc('SELECT * FROM online2');
+		$memcache_obj->set('onlinetemp2', $online, false, 600);
+	} else if ($data['phase'] == "2" and !empty($onlinetemp2)) {
+		$online = $onlinetemp2;
+	}
+
+	$memcache_obj->close();
+	
 	function recursive_array_search($needle,$haystack) {
     foreach($haystack as $key=>$value) {
         $current_key=$key;
@@ -65,13 +80,14 @@ var chart = Highcharts.chart('container', {
         },
     },
     credits: {
-    		enabled: false
+		enabled: false
 	},
     xAxis: {
         type:'category',
         labels: {
         	style: {
     			color: 'white',
+    			fontSize:'15px',
     		},
         }
     },
@@ -81,6 +97,7 @@ var chart = Highcharts.chart('container', {
             style: {
         		color: 'white',
         		fontWeight: 'bold',
+        		fontSize:'20px'
         	},
         },
         labels: {
@@ -190,7 +207,7 @@ var chart = Highcharts.chart('container', {
     if (window.matchMedia("(min-width: 600px)").matches) {
     	
     } else {
-    	chart.setSize(300);
+    	chart.setSize(320);
     }
     });
 </script>

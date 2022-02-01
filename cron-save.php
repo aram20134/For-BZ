@@ -48,7 +48,7 @@ foreach($result['playerslist'] as $player) {
 					$online->y = $y;
 					$online->time = 1;	
 				}
-				if ($online['steamname'] == "" or $online['steamname'] == " ") {
+				if ($online['steamname'] == "" or $online['steamname'] == " " or $online['steamname'] == "็") {
 					
 				} else {
 					R::store($online);
@@ -66,7 +66,7 @@ foreach($result2['playerslist'] as $player2) {
 					$online2->y = $y;
 					$online2->time = 1;	
 				}
-				if ($online2['steamname'] == "" or $online2['steamname'] == " ") {
+				if ($online2['steamname'] == "" or $online2['steamname'] == " " or $online2['steamname'] == "็") {
 					
 				} else {
 					R::store($online2);

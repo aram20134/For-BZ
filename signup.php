@@ -16,45 +16,7 @@ require __DIR__ . '/header.php';
 </script>
 
 <div class ="content">
-	<div style="display:flex; justify-content:center;">
-		<div class="alert-box">
-			<p>
-				<strong>ВНИМАНИЕ!</strong>
-				<br>
-				Вводите свои настоящие данные, указанные на сервере! Иначе вы создадите проблем всем пользователям. В таком случае ваш аккаунт может быть удален.
-			</p>
-		</div>
-	</div>
-	<div class ="reg">
-		<h1 class ="online-head" style="margin-bottom:20px; margin-top:0px;">РЕГИСТРАЦИЯ</h1>
-	<form action="signup" method="post" class ="form-inp">
-		<div style="display: flex;flex-direction: column;">
-			<input type="text" class="inp" name="number" placeholder="Введите ваш номер">
-			<p>Номер сменить будет нельзя!</p>
-			<input type="text" class="inp" name="name" placeholder="Введите ваш позывной">
-			<p>Позывной можно будет сменить в любое время.</p>
-			<input type="password" class="inp" name="password" placeholder="Введите пароль">
-			<input type="password" class="inp" name="password2" placeholder="Повторите пароль">
-		</div>
-		<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;">
-			<h1>Выберите фазу</h1>
-			<ul class="phs">
-				<li>
-					<input type="checkbox" id="chk1" name="phase1"></input>
-					<label for="chk1"><img src="img/phase1/clone1.png" class="ico-phs1" /></label>
-				</li>
-				<li>
-					<input type="checkbox" id="chk2" name="phase2"></input>
-					<label for="chk2"><img src="img/phase2/clone2.png" class="ico-phs2" /></label>
-				</li>
-			</ul>
-		</div>
-		<div style="display: flex;justify-content: center;width: 100%;">
-			<div>
-				<button class="btn-reg" name="do_signup" type="submit">Зарегистрироватьcя</button>
-			</div>
-		</div>
-		<?php 
+	<?php 
 	$data = $_POST;
 	$num = $data['number'];
 
@@ -112,6 +74,45 @@ require __DIR__ . '/header.php';
 		}
 	}
 ?>
+	<div style="display:flex; justify-content:center;">
+		<div class="alert-box">
+			<p>
+				<strong>ВНИМАНИЕ!</strong>
+				<br>
+				Вводите свои настоящие данные, указанные на сервере! Иначе вы создадите проблем всем пользователям. В таком случае ваш аккаунт может быть удален.
+			</p>
+		</div>
+	</div>
+	<div class ="reg">
+		<h1 class ="online-head" style="margin-bottom:20px; margin-top:0px;">РЕГИСТРАЦИЯ</h1>
+	<form action="signup" method="post" class ="form-inp">
+		<div style="display: flex;flex-direction: column;">
+			<input type="text" class="inp" name="number" placeholder="Введите ваш номер">
+			<p>Номер сменить будет нельзя!</p>
+			<input type="text" class="inp" name="name" placeholder="Введите ваш позывной">
+			<p>Позывной можно будет сменить в любое время.</p>
+			<input type="password" class="inp" name="password" placeholder="Введите пароль">
+			<input type="password" class="inp" name="password2" placeholder="Повторите пароль">
+		</div>
+		<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;">
+			<h1>Выберите фазу</h1>
+			<ul class="phs">
+				<li>
+					<input type="checkbox" id="chk1" name="phase1"></input>
+					<label for="chk1" id="log-sig"><img src="img/phase1/clone1.png" class="ico-phs1" /></label>
+				</li>
+				<li>
+					<input type="checkbox" id="chk2" name="phase2"></input>
+					<label for="chk2" id="log-sig"><img src="img/phase2/clone2.png" class="ico-phs2" /></label>
+				</li>
+			</ul>
+		</div>
+		<div style="display: flex;justify-content: center;width: 100%;">
+			<div>
+				<button class="btn-reg" name="do_signup" type="submit">Зарегистрироватьcя</button>
+			</div>
+		</div>
+		
 	</form>
 	
 	</div>
