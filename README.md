@@ -5,6 +5,7 @@ https://swrpngg.space/
 1) Просмотр состояния серверов SWRP NGG, кол-ва игроков и карты.
 2) Система регистрации и авторизации.
 3) Просмотр онлайна игроков.
+4) Просмотр топ онлайна среди сервера
 
 Что используется:
 1) PHP
@@ -26,3 +27,5 @@ https://swrpngg.space/
 ![image](https://user-images.githubusercontent.com/85961114/151602136-a67ca819-25d0-4775-891c-acfcf3685b7a.png)
 ![image](https://user-images.githubusercontent.com/85961114/151602179-1e8e523f-e42f-4509-9188-6b7859e206f9.png)
 ![image](https://user-images.githubusercontent.com/85961114/151601979-dd56ca42-af78-46e9-89d0-e7140360fcf9.png)
+![image](https://user-images.githubusercontent.com/85961114/153407852-4b8fd3f5-27c4-44a1-8a80-4988afbe191a.png)
+
