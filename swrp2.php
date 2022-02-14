@@ -55,39 +55,27 @@ if ($result2['map'] == "rp_corellia_ngg_winter" or $result2['map'] == "rp_corell
     
     var nabo2 = '<?php echo $nabo2 ?>';
     
-    if (map2 == "Corellia") {
-    	$('.second').toggleClass('map-corellia');
-    } else if (map2 == "Tatooine" && sim2 == "1") {
-    	$('.second').toggleClass('map-tatooine_sim');
-    } else if (map2 == "Geonosis" && gen2 == "1"){
-    	$('.second').toggleClass('map-geonosis2');
-    } else if (map2 == "Naboo" && nabo1 == "1") {
-    	$('.second').toggleClass('map-naboo2'); 
-    } else if (map2 == "Korriban") {
-    	$('.second').toggleClass('map-korriban');
-    } else if (map2 == "Naboo") {
-    	$('.second').toggleClass('map-naboo');
-    } else if (map2 == "Tatooine") {
-    	$('.second').toggleClass('map-tatooine'); 
-    } else if (map2 == "Takodana") {
-    	$('.second').toggleClass('map-takodana');
-    } else if (map2 == "Geonosis") {
-    	$('.second').toggleClass('map-geonosis');
-    } else if (map2 == "Mygeeto") {
-    	$('.second').toggleClass('map-mygeeto');
-    }
+    var _0xe908=["\x43\x6F\x72\x65\x6C\x6C\x69\x61","\x6D\x61\x70\x2D\x63\x6F\x72\x65\x6C\x6C\x69\x61","\x74\x6F\x67\x67\x6C\x65\x43\x6C\x61\x73\x73","\x2E\x73\x65\x63\x6F\x6E\x64","\x54\x61\x74\x6F\x6F\x69\x6E\x65","\x31","\x6D\x61\x70\x2D\x74\x61\x74\x6F\x6F\x69\x6E\x65\x5F\x73\x69\x6D","\x47\x65\x6F\x6E\x6F\x73\x69\x73","\x6D\x61\x70\x2D\x67\x65\x6F\x6E\x6F\x73\x69\x73\x32","\x4E\x61\x62\x6F\x6F","\x6D\x61\x70\x2D\x6E\x61\x62\x6F\x6F\x32","\x4B\x6F\x72\x72\x69\x62\x61\x6E","\x6D\x61\x70\x2D\x6B\x6F\x72\x72\x69\x62\x61\x6E","\x6D\x61\x70\x2D\x6E\x61\x62\x6F\x6F","\x6D\x61\x70\x2D\x74\x61\x74\x6F\x6F\x69\x6E\x65","\x54\x61\x6B\x6F\x64\x61\x6E\x61","\x6D\x61\x70\x2D\x74\x61\x6B\x6F\x64\x61\x6E\x61","\x6D\x61\x70\x2D\x67\x65\x6F\x6E\x6F\x73\x69\x73","\x4D\x79\x67\x65\x65\x74\x6F","\x6D\x61\x70\x2D\x6D\x79\x67\x65\x65\x74\x6F"];if(map2== _0xe908[0]){$(_0xe908[3])[_0xe908[2]](_0xe908[1])}else {if(map2== _0xe908[4]&& sim2== _0xe908[5]){$(_0xe908[3])[_0xe908[2]](_0xe908[6])}else {if(map2== _0xe908[7]&& gen2== _0xe908[5]){$(_0xe908[3])[_0xe908[2]](_0xe908[8])}else {if(map2== _0xe908[9]&& nabo1== _0xe908[5]){$(_0xe908[3])[_0xe908[2]](_0xe908[10])}else {if(map2== _0xe908[11]){$(_0xe908[3])[_0xe908[2]](_0xe908[12])}else {if(map2== _0xe908[9]){$(_0xe908[3])[_0xe908[2]](_0xe908[13])}else {if(map2== _0xe908[4]){$(_0xe908[3])[_0xe908[2]](_0xe908[14])}else {if(map2== _0xe908[15]){$(_0xe908[3])[_0xe908[2]](_0xe908[16])}else {if(map2== _0xe908[7]){$(_0xe908[3])[_0xe908[2]](_0xe908[17])}else {if(map2== _0xe908[18]){$(_0xe908[3])[_0xe908[2]](_0xe908[19])}}}}}}}}}}
 });
     </script>
 <?php 
-$update= date("i", $result['date']/1000);
-$update2 = date("i", $result2['date']/1000);
-$today = date("i", time());
-$diff= $today - $update;
-$diff2= $today - $update2;
-$d = date("d");
-$m = date("m");
-$y = date("y");
+
+$cur = date("Y:m:d H:i:s");
+$acur = new DateTime($cur);
+
+$last = date("Y:m:d H:i:s", $result['date']/1000);
+$alast = new DateTime($last);
+
+$last2 = date("Y:m:d H:i:s", $result2['date']/1000);
+$alast2 = new DateTime($last2);
+
+$diff = $acur->diff($alast);
+$diff2 = $acur->diff($alast2);
+
+$diff = $diff->format("%i");
+$diff2 = $diff2->format("%i");
 ?>
+
 
 <div class ="content">
     <p class="name-server">

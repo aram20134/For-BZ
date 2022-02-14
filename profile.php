@@ -219,64 +219,90 @@ Highcharts.setOptions({
 		});
 		var phase = "<?php echo $_SESSION['logged_user']->phase ?>";
 		
-		if (phase == "1") {
-			$('#check-rang1').click(function() {
-				$('#check-rang2').prop("checked", false);
-				$('#check-rang3').prop("checked", false);
-				$('#check-rang4').prop("checked", false);
-				$('#check-rang5').prop("checked", false);
-				$('#check-rang6').prop("checked", false);
-				$('#check-rang7').prop("checked", false);
-			});
-			$('#check-rang2').click(function() {
-				$('#check-rang1').prop("checked", false);
-				$('#check-rang3').prop("checked", false);
-				$('#check-rang4').prop("checked", false);
-				$('#check-rang5').prop("checked", false);
-				$('#check-rang6').prop("checked", false);
-				$('#check-rang7').prop("checked", false);
-			});
-			$('#check-rang3').click(function() {
-				$('#check-rang1').prop("checked", false);
-				$('#check-rang2').prop("checked", false);
-				$('#check-rang4').prop("checked", false);
-				$('#check-rang5').prop("checked", false);
-				$('#check-rang6').prop("checked", false);
-				$('#check-rang7').prop("checked", false);
-			});
-			$('#check-rang4').click(function() {
-				$('#check-rang1').prop("checked", false);
-				$('#check-rang2').prop("checked", false);
-				$('#check-rang3').prop("checked", false);
-				$('#check-rang5').prop("checked", false);
-				$('#check-rang6').prop("checked", false);
-				$('#check-rang7').prop("checked", false);
-			});
-			$('#check-rang5').click(function() {
-				$('#check-rang1').prop("checked", false);
-				$('#check-rang2').prop("checked", false);
-				$('#check-rang3').prop("checked", false);
-				$('#check-rang4').prop("checked", false);
-				$('#check-rang6').prop("checked", false);
-				$('#check-rang7').prop("checked", false);
-			});
-			$('#check-rang6').click(function() {
-				$('#check-rang1').prop("checked", false);
-				$('#check-rang2').prop("checked", false);
-				$('#check-rang3').prop("checked", false);
-				$('#check-rang4').prop("checked", false);
-				$('#check-rang5').prop("checked", false);
-				$('#check-rang7').prop("checked", false);
-			});
-			$('#check-rang7').click(function() {
-				$('#check-rang1').prop("checked", false);
-				$('#check-rang2').prop("checked", false);
-				$('#check-rang3').prop("checked", false);
-				$('#check-rang4').prop("checked", false);
-				$('#check-rang5').prop("checked", false);
-				$('#check-rang6').prop("checked", false);
-			});
-		}
+		var _0xbfa1=["\x31","\x32","\x63\x68\x65\x63\x6B\x65\x64","\x70\x72\x6F\x70","\x23\x63\x68\x65\x63\x6B\x2D\x72\x61\x6E\x67\x32","\x23\x63\x68\x65\x63\x6B\x2D\x72\x61\x6E\x67\x33","\x23\x63\x68\x65\x63\x6B\x2D\x72\x61\x6E\x67\x34","\x23\x63\x68\x65\x63\x6B\x2D\x72\x61\x6E\x67\x35","\x23\x63\x68\x65\x63\x6B\x2D\x72\x61\x6E\x67\x36","\x23\x63\x68\x65\x63\x6B\x2D\x72\x61\x6E\x67\x37","\x23\x63\x68\x65\x63\x6B\x2D\x72\x61\x6E\x67\x38","\x6C\x6F\x67","\x63\x6C\x69\x63\x6B","\x23\x63\x68\x65\x63\x6B\x2D\x72\x61\x6E\x67\x31","\x33","\x34","\x35","\x36","\x37","\x38"];if(phase== _0xbfa1[0]|| phase== _0xbfa1[1]){$(_0xbfa1[13])[_0xbfa1[12]](function(){$(_0xbfa1[4])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[5])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[6])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[7])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[8])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[9])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[10])[_0xbfa1[3]](_0xbfa1[2],false);console[_0xbfa1[11]](_0xbfa1[0])});$(_0xbfa1[4])[_0xbfa1[12]](function(){$(_0xbfa1[13])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[5])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[6])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[7])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[8])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[9])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[10])[_0xbfa1[3]](_0xbfa1[2],false);console[_0xbfa1[11]](_0xbfa1[1])});$(_0xbfa1[5])[_0xbfa1[12]](function(){$(_0xbfa1[13])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[4])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[6])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[7])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[8])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[9])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[10])[_0xbfa1[3]](_0xbfa1[2],false);console[_0xbfa1[11]](_0xbfa1[14])});$(_0xbfa1[6])[_0xbfa1[12]](function(){$(_0xbfa1[13])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[4])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[5])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[7])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[8])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[9])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[10])[_0xbfa1[3]](_0xbfa1[2],false);console[_0xbfa1[11]](_0xbfa1[15])});$(_0xbfa1[7])[_0xbfa1[12]](function(){$(_0xbfa1[13])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[4])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[5])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[6])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[8])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[9])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[10])[_0xbfa1[3]](_0xbfa1[2],false);console[_0xbfa1[11]](_0xbfa1[16])});$(_0xbfa1[8])[_0xbfa1[12]](function(){$(_0xbfa1[13])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[4])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[5])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[6])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[7])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[9])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[10])[_0xbfa1[3]](_0xbfa1[2],false);console[_0xbfa1[11]](_0xbfa1[17])});$(_0xbfa1[9])[_0xbfa1[12]](function(){$(_0xbfa1[13])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[4])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[5])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[6])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[7])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[8])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[10])[_0xbfa1[3]](_0xbfa1[2],false);console[_0xbfa1[11]](_0xbfa1[18])});$(_0xbfa1[10])[_0xbfa1[12]](function(){$(_0xbfa1[13])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[4])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[5])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[6])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[7])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[8])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[9])[_0xbfa1[3]](_0xbfa1[2],false);console[_0xbfa1[11]](_0xbfa1[19])})}
+		
+		// if (phase == "1" || phase == "2") {
+		// 	$('#check-rang1').click(function() {
+		// 		$('#check-rang2').prop("checked", false);
+		// 		$('#check-rang3').prop("checked", false);
+		// 		$('#check-rang4').prop("checked", false);
+		// 		$('#check-rang5').prop("checked", false);
+		// 		$('#check-rang6').prop("checked", false);
+		// 		$('#check-rang7').prop("checked", false);
+		// 		$('#check-rang8').prop("checked", false);
+		// 		console.log("1");
+		// 	});
+		// 	$('#check-rang2').click(function() {
+		// 		$('#check-rang1').prop("checked", false);
+		// 		$('#check-rang3').prop("checked", false);
+		// 		$('#check-rang4').prop("checked", false);
+		// 		$('#check-rang5').prop("checked", false);
+		// 		$('#check-rang6').prop("checked", false);
+		// 		$('#check-rang7').prop("checked", false);
+		// 		$('#check-rang8').prop("checked", false);
+		// 		console.log("2");
+		// 	});
+		// 	$('#check-rang3').click(function() {
+		// 		$('#check-rang1').prop("checked", false);
+		// 		$('#check-rang2').prop("checked", false);
+		// 		$('#check-rang4').prop("checked", false);
+		// 		$('#check-rang5').prop("checked", false);
+		// 		$('#check-rang6').prop("checked", false);
+		// 		$('#check-rang7').prop("checked", false);
+		// 		$('#check-rang8').prop("checked", false);
+		// 		console.log("3");
+		// 	});
+		// 	$('#check-rang4').click(function() {
+		// 		$('#check-rang1').prop("checked", false);
+		// 		$('#check-rang2').prop("checked", false);
+		// 		$('#check-rang3').prop("checked", false);
+		// 		$('#check-rang5').prop("checked", false);
+		// 		$('#check-rang6').prop("checked", false);
+		// 		$('#check-rang7').prop("checked", false);
+		// 		$('#check-rang8').prop("checked", false);
+		// 		console.log("4");
+		// 	});
+		// 	$('#check-rang5').click(function() {
+		// 		$('#check-rang1').prop("checked", false);
+		// 		$('#check-rang2').prop("checked", false);
+		// 		$('#check-rang3').prop("checked", false);
+		// 		$('#check-rang4').prop("checked", false);
+		// 		$('#check-rang6').prop("checked", false);
+		// 		$('#check-rang7').prop("checked", false);
+		// 		$('#check-rang8').prop("checked", false);
+		// 		console.log("5");
+		// 	});
+		// 	$('#check-rang6').click(function() {
+		// 		$('#check-rang1').prop("checked", false);
+		// 		$('#check-rang2').prop("checked", false);
+		// 		$('#check-rang3').prop("checked", false);
+		// 		$('#check-rang4').prop("checked", false);
+		// 		$('#check-rang5').prop("checked", false);
+		// 		$('#check-rang7').prop("checked", false);
+		// 		$('#check-rang8').prop("checked", false);
+		// 		console.log("6");
+		// 	});
+		// 	$('#check-rang7').click(function() {
+		// 		$('#check-rang1').prop("checked", false);
+		// 		$('#check-rang2').prop("checked", false);
+		// 		$('#check-rang3').prop("checked", false);
+		// 		$('#check-rang4').prop("checked", false);
+		// 		$('#check-rang5').prop("checked", false);
+		// 		$('#check-rang6').prop("checked", false);
+		// 		$('#check-rang8').prop("checked", false);
+		// 		console.log("7");
+		// 	});
+		// 	$('#check-rang8').click(function() {
+		// 		$('#check-rang1').prop("checked", false);
+		// 		$('#check-rang2').prop("checked", false);
+		// 		$('#check-rang3').prop("checked", false);
+		// 		$('#check-rang4').prop("checked", false);
+		// 		$('#check-rang5').prop("checked", false);
+		// 		$('#check-rang6').prop("checked", false);
+		// 		$('#check-rang7').prop("checked", false);
+		// 		console.log("8");
+		// 	});
+		// } 
 	});
 </script>
 <?php if(isset($_SESSION['logged_user'])) : ?>
@@ -332,9 +358,19 @@ Highcharts.setOptions({
 							echo '<a href="steamauth/logout.php" style="text-decoration:underline;">(Выйти)</a>';
 							
 						} else if (isset($_SESSION['steamid'])) {
-							$user->steamid = $_SESSION['steam_personaname'];
-							$user->avatar = $_SESSION['steam_avatarfull'];
-							$user->profurl = $_SESSION['steam_profileurl'];
+							$check = R::findOne('usersbz', 'steamid = ?', [$_SESSION['steamid']]);
+							if ($check == NULL) {
+								$user->steamid = $_SESSION['steam_steamid'];
+								$user->avatar = $_SESSION['steam_avatarfull'];
+								$user->profurl = $_SESSION['steam_profileurl'];
+								$user->steamname = $_SESSION['steam_personaname'];
+								header("Refresh: 0");
+							} else {
+								echo '<br>';
+								echo '<span>Steam:</span><span class ="alert-box" style="margin-bottom:0;"> Данный стим аккаунт уже привязан! </span>';
+								echo '<span style="width:50%;display:flex;justify-content:center;"><button class="btn-retry" value="Refresh Page" onClick="window.location.reload();">Повторить</button></span>';
+								unset($_SESSION['steamid']);
+							}
 						} else {
 							echo 'Steam: ';loginButton(); echo '<span data="Подключите Steam аккаунт, чтобы вы и другие пользователи могли видеть ваш номер и позывной в списке игроков вашей фазы."><img src="img/info.png" class="ico-info"/></span>';
 						}
@@ -356,8 +392,6 @@ $apiURLBase = 'https://discord.com/api/users/@me';
 $revokeURL = 'https://discord.com/api/oauth2/token/revoke';
 
 $dis = R::findOne('usersbz', 'number = ?', [$_SESSION['logged_user']->number]);
-
-
 
 
 function apiRequest($url, $post=FALSE, $headers=array()) {
@@ -405,12 +439,21 @@ if(get('code')) {
     $_SESSION['access_token'] = $token->access_token;
     header('Location: https://swrpngg.space/profile');
   }
-if(session('access_token')) {
+$user = apiRequest($apiURLBase);
+if(session('access_token') and $dis['dsid'] == NULL) {
 		$user = apiRequest($apiURLBase);
-		echo '<span class="find">Discord:<a href=""><img src="img/discord.png" style="height:50px;margin:5px;" />Подключено</a></span>';
-		echo '<a href="?action=logout" style="text-decoration:underline;">(Выйти)</a>';
-		$dis->dsid = $user->id;
-		R::store($dis);
+		$check = R::findOne ('usersbz', 'dsid = ?', [$user->id]);
+		if ($check == NULL) {
+			echo '<span class="find">Discord:<a href=""><img src="img/discord.png" style="height:50px;margin:5px;" />Подключено</a></span>';
+			echo '<a href="?action=logout" style="text-decoration:underline;">(Выйти)</a>';
+			$dis->dsid = $user->id;
+			R::store($dis);
+		} else if ($check != NULL) {
+			echo '<br>';
+			echo '<span>Discord:</span><span class ="alert-box" style="margin-bottom:0;"> Данный дискорд аккаунт уже привязан! </span>';
+			echo '<span style="width:50%;display:flex;justify-content:center;"><button class="btn-retry" value="Refresh Page" onClick="window.location.reload();">Повторить</button></span>';
+			unset($_SESSION['access_token']);
+		} 
 } else if ($dis['dsid'] != NULL) {
 		$user = apiRequest($apiURLBase);
 		echo '<span class="find">Discord:<a href=""><img src="img/discord.png" style="height:50px;margin:5px;" />Подключено</a></span>';
@@ -445,6 +488,7 @@ if(get('action') == 'logout') {
 						$roles = $roles['roleslist'];
 						// $user['rang'] = NULL;
 						$user['bigrang'] = NULL;
+						$user['legion'] = NULL;
 						R::store($user);
 					} else {
 						$roles = NULL;
@@ -500,7 +544,8 @@ if(get('action') == 'logout') {
 						R::store($user);
 						echo '<span class="legODISB">'. $user['legion'] . '</span>';
 					// } // убрать ->
-					} elseif (strpos($roles, '636115360910671892')) {
+					} 
+					elseif (strpos($roles, '636115360910671892')) {
 						$user->legion = "Без легиона";
 						$user->rang = "Советник";
 						R::store($user);
@@ -817,7 +862,7 @@ if(get('action') == 'logout') {
 					if(isset($data['save'])) {
 						$errors = array();
 						// print_r($user);
-						print_r($data);
+						// print_r($data);
 						if(trim($data['rang']) == "") {
 							$errors[] = 'Выберите звание!';
 						}

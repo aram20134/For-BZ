@@ -24,16 +24,29 @@ $result2=json_decode(curl_exec($ch2), true);
 curl_close($ch2);
 ?>
 <?php 
-$update= date("i", $result['date']/1000);
-$update2 = date("i", $result2['date']/1000);
-$today = date("i", time());
-$diff=$today-$update;
-$diff2= $today - $update2;
 $d = date("d");
 $m = date("m");
 $y = date("Y");
 ?>
 
+<?php 
+// $memcache_obj = new Memcache;
+// $memcache_obj->connect('localhost', 11211) or die('Could not connect');
+// $daystodel = @$memcache_obj->get('daystodel');
+// if (!empty($daystodel)) {
+// 	$date = $daystodel[array_key_first($daystodel)];
+// 	$dateDiff = date_diff(new DateTime(), new DateTime($date['y']."-".$date['m']."-".$date['d']))->days;
+// 	if ($dateDiff > 15) {
+// 		$online = R::findAll('online', 'd = :d AND m = :m AND y = :y', [':d' => $date['d'], ':m' => $date['m'], ':y' => $date['y']]);
+// 		$online2 = R::findAll('online2', 'd = :d AND m = :m AND y = :y', [':d' => $date['d'], ':m' => $date['m'], ':y' => $date['y']]);
+// 		R::trash($online);
+// 		R::trash($online2);
+// 	}
+// } else {
+// 	$online = R::getAssoc('SELECT * FROM online');
+// 	$memcache_obj->set('daystodel', $online, false, 3600);
+// }
+?>
 
 <?php
 foreach($result['playerslist'] as $player) {
@@ -48,7 +61,7 @@ foreach($result['playerslist'] as $player) {
 					$online->y = $y;
 					$online->time = 1;	
 				}
-				if ($online['steamname'] == "" or $online['steamname'] == " " or $online['steamname'] == "็") {
+				if ($online['steamname'] == "᠌ ᠌ ᠌᠌ ᠌ ᠌ ᠌ ᠌" or $online['steamname'] == "" or $online['steamname'] == " " or $online['steamname'] == "็") {
 					
 				} else {
 					R::store($online);
@@ -66,7 +79,7 @@ foreach($result2['playerslist'] as $player2) {
 					$online2->y = $y;
 					$online2->time = 1;	
 				}
-				if ($online2['steamname'] == "" or $online2['steamname'] == " " or $online2['steamname'] == "็") {
+				if ($online2['steamname'] == "᠌ ᠌ ᠌᠌ ᠌ ᠌ ᠌ ᠌" or $online2['steamname'] == "" or $online2['steamname'] == " " or $online2['steamname'] == "็") {
 					
 				} else {
 					R::store($online2);

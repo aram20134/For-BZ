@@ -2,6 +2,7 @@
 require "db.php";
 $data = $_GET;
 $user = R::findOne('usersbz', 'number = :n AND phase = :ph', [':n' => $data['number'], ':ph' => $data['phase']]);
+$roles = R::findOne('site', 'discordid = ?', [$user['dsid']]);
 if ($user != NULL) {
 	$title="[SWRP] Профиль игрока ".$user['name'];
 } else {
@@ -254,7 +255,7 @@ Highcharts.setOptions({
     if (window.matchMedia("(min-width: 600px)").matches) {
     	
     } else {
-    	chart.setSize(320);
+    	chart.setSize(document.documentElement.clientWidth);
     }
     });
     
@@ -265,6 +266,7 @@ Highcharts.setOptions({
 	<div class ="alert-box">Страница не найдена</div>
 	
 	<?php else : ?>
+	
 		<?php $user = R::findOne('usersbz', 'number = :number AND phase = :phase', [':number' => $data['number'], ':phase' => $data['phase']]); ?>
 		<?php if (isset($user)) : ?>
 		<?php if($user['legion'] != NULL and $user['rang'] != NULL) : ?>
@@ -315,51 +317,368 @@ Highcharts.setOptions({
 						}
 					?>
 					<br><br>
-				Легион: <?php
-					if ($user['legion'] == "501") {
-						echo '<span class="leg501">'. $user['legion'] . '</span>';
-					} else if ($user['legion'] == "212") {
-						echo '<span class="leg212">'. $user['legion'] . '</span>';
-					} else if ($user['legion'] == "41") {
-						echo '<span class="leg41">'. $user['legion'] . '</span>'; 
-					} else if ($user['legion'] == "Солдат-клон") {
+				Легион: <?php $user = R::findOne('usersbz', 'number = :n AND phase = :ph', [':n' => $data['number'], ':ph' => $data['phase']]);
+					if (isset($roles['roleslist'])) {
+						$roles = $roles['roleslist'];
+						// $user['rang'] = NULL;
+						$user['bigrang'] = NULL;
+						$user['legion'] = NULL;
+						R::store($user);
+					} else {
+						$roles = NULL;
+					}
+					
+				if ($roles != NULL and $user['phase'] == "1") {
+						if (strpos($roles, '636270468797562900')) {
+						$user->legion = "Солдат-клон";
+						R::store($user);
 						echo '<span class="legCT">'. $user['legion'] . '</span>';
-					} else if ($user['legion'] == "Гвардия") {
-						echo '<span class="legGVARD">'. $user['legion'] . '</span>';
-					} else if ($user['legion'] == "ИПК") {
-						echo '<span class="legIPK">'. $user['legion'] . '</span>';
-					} else if ($user['legion'] == "ОДИСБ") {
+					} elseif (strpos($roles, '750697611752898600')) {
+						$user->legion = "ОДИСБ";
+						$user->bigrang = "Мл. офицерский состав";
+						R::store($user);
 						echo '<span class="legODISB">'. $user['legion'] . '</span>';
-					} else if ($user['legion'] == "Медик") {
+					} elseif (strpos($roles, '781576937474621460')) {
+						$user->legion = "41";
+						R::store($user);
+						echo '<span class="leg41">'. $user['legion'] . '</span>';
+					} elseif (strpos($roles, '63626954529990246')) {
+						$user->legion = "212";
+						R::store($user);
+						echo '<span class="leg212">'. $user['legion'] . '</span>';
+					} elseif (strpos($roles, '636269357831290887')) {
+						$user->legion = "501";
+						R::store($user);
+						echo '<span class="leg501">'. $user['legion'] . '</span>';
+					} elseif (strpos($roles, '650207151335407656')) {
+						$user->legion = "Гвардия";
+						R::store($user);
+						echo '<span class="legGVARD">'. $user['legion'] . '</span>';
+					} elseif (strpos($roles, '636270262475554899')) {
+						$user->legion = "ИПК";
+						R::store($user);
+						echo '<span class="legIPK">'. $user['legion'] . '</span>';
+					} elseif (strpos($roles, '650207588801183791')) {
+						$user->legion = "Медик";
+						R::store($user);
 						echo '<span class="legMED">'. $user['legion'] . '</span>';
-					} else if ($user['legion'] == "Тренера") {
+					} elseif (strpos($roles, '636268496107470850')) {
+						$user->legion = "Тренера";
+						$user->bigrang = "Мл. офицерский состав";
+						R::store($user);
 						echo '<span class="legTREN">'. $user['legion'] . '</span>';
-					} else if ($user['legion'] == "Без легиона") {
-						echo '<span class="N">Без легиона</span>';
-					} else if ($user['legion'] == "ЭРК") {
-						echo '<span class="legERK">'. $user['legion'] . '</span>';
-					} else if ($user['legion'] == "Инструктора"){
-						echo '<span class="legTREN">'. $user['legion'] . '</span>';
+					} elseif (strpos($roles, '636271352591941632')) {
+						$user->legion = "Без легиона";
+						$user->rang = "Кадет";
+						R::store($user);
+						echo '<span class="N">'. $user['legion'] . '</span>';
+					} elseif (strpos($roles, '891062472813977600')) {
+						$user->legion = "ОДИСБ";
+						$user->rang = "Осужденный";
+						R::store($user);
+						echo '<span class="legODISB">'. $user['legion'] . '</span>';
+					// } // убрать ->
+					} elseif (strpos($roles, '636115360910671892')) {
+						$user->legion = "Без легиона";
+						$user->rang = "Советник";
+						R::store($user);
+						echo '<span class="N">'. $user['legion'] . '</span>';
+					} 
+					
+					
+				} else if ($roles != NULL and $user['phase'] == "2") {
+						if (strpos($roles, '758369712106373150')) {
+							$user->legion = "Солдат-клон";
+							echo '<span class="legCT">'. $user['legion'] . '</span>';
+							R::store($user);
+						} else if (strpos($roles, '530379817695313950')) {
+							$user->legion = "ИПК";
+							echo '<span class="legIPK">'. $user['legion'] . '</span>';
+							R::store($user);
+						} else if (strpos($roles, '758374474197237790')) {
+							$user->legion = "41";
+							echo '<span class="leg41">'. $user['legion'] . '</span>';
+							R::store($user);
+						} else if (strpos($roles, '530378413257785365')) {
+							$user->legion = "212";
+							echo '<span class="leg212">'. $user['legion'] . '</span>';
+							R::store($user);
+						} else if (strpos($roles, '530377477726535695')) {
+							$user->legion = "501";
+							echo '<span class="leg501">'. $user['legion'] . '</span>';
+							R::store($user);
+						} else if (strpos($roles, '758371450020560916')) {
+							$user->legion = "Гвардия";
+							echo '<span class="legGVARD">'. $user['legion'] . '</span>';
+							R::store($user);
+						} else if (strpos($roles, '758373770704191548')) {
+							$user->legion = "Медик";
+							echo '<span class="legMED">'. $user['legion'] . '</span>';
+							R::store($user);
+						} else if (strpos($roles, '758375394667003974')) {
+							$user->legion = "Инструктора";
+							echo '<span class="legTREN">'. $user['legion'] . '</span>';
+							R::store($user);
+						} else if (strpos($roles, '758377044031176756')) {
+							$user->legion = "ОДИСБ";
+							echo '<span class="legODISB">'. $user['legion'] . '</span>';
+							R::store($user);
+						} else if (strpos($roles, '538347524118020096')) { // Осужденный
+							$user->legion = "ОДИСБ";
+							$user->rang = "Осужденный";
+							echo '<span class="legODISB">'. $user['legion'] . '</span>';
+							R::store($user);
+						} else if (strpos($roles, '758372584474804365')) { // Советник
+							$user->legion = "Без легиона";
+							$user->rang = "Советник";
+							echo '<span class="N">'. $user['legion'] . '</span>';
+							R::store($user);
+						} else if (strpos($roles, '758369670851067966')) { // Кадет
+							$user->legion = "Без легиона";
+							$user->rang = "Кадет";
+							echo '<span class="N">'. $user['legion'] . '</span>';
+							R::store($user);
+						} else if (strpos($roles, '530367354782089226'))  { // Админ
+							$user->legion = "Без легиона";
+							$user->rang = "Советник";
+							echo '<span class="N">'. $user['legion'] . '</span>';
+							R::store($user);
+						} else if (strpos($roles, '714416434737840148'))  {
+							$user->legion = "ЭРК";
+							echo '<span class="legERK">'. $user['legion'] . '</span>';
+							R::store($user);
+						}
 					} else {
 						echo '<span class="N">Отсутствует</span>';
 					}
+					
 				?>
 				<br><br>
-				Звание: <?php
-				if ($user['bigrang'] =="Рядовой состав" or $user['bigrang'] =="Капральский состав") {
-					echo '<span class="R">'. $user['rang'] . '</span>';
-				} elseif ($user['bigrang'] == "Сержантский состав" or $user['bigrang'] == "Старше-сержантский состав") {
-					echo '<span class="S">'. $user['rang'] . '</span>';
-				} elseif ($user['bigrang'] == "Мл. офицерский состав") {
-					echo '<span class="MO">'. $user['rang'] . '</span>';
-				} elseif ($user['bigrang'] == "Офицерский состав") {
-					echo '<span class="O">'. $user['rang'] . '</span>';
-				} elseif ($user['rang'] == "Советник") {
+				Звание: <?php 
+				if ($roles != NULL and $user['phase'] == "1") {
+					if (strpos($roles, '636274085441044489')) {
+					// $user->rang = NULL; // Рядовой состав
+					$user->bigrang = "Рядовой состав";
+						if ($user['rang'] == "Рядовой состав") {
+							echo '<span class="N">Отсутствует</span>';
+							echo '<br><br><span style="border:2px solid green;margin:5px;padding:5px;border-radius:10px;display:inline-flex;">Уточните ваше звание ниже</span>';
+						}
+				} if (strpos($roles, '636273807589376012')) {
+					// $user->rang = NULL; // Сержантский состав
+					$user->bigrang = "Сержантский состав";
+						if ($user['rang'] == NULL) {
+							echo '<span class="N">Отсутствует</span>';
+							echo '<br><br><span style="border:2px solid red;margin:5px;padding:5px;border-radius:10px;display:inline-flex;">Для отображения в списке игроков, уточните ваше звание ниже</span>';
+						}
+				} if (strpos($roles, '636273574352650240')) {
+					// $user->rang = NULL; // Мл. офицерский состав
+					$user->bigrang = "Мл. офицерский состав";
+						if ($user['rang'] == NULL) {
+							echo '<span class="N">Отсутствует</span>';
+							echo '<br><br><span style="border:2px solid red;margin:5px;padding:5px;border-radius:10px;display:inline-flex;">Для отображения в списке игроков, уточните ваше звание ниже</span>';
+						}
+				} if (strpos($roles, '636273329434656773')) {
+					// $user->rang = NULL; // Офицерский состав	
+					$user->bigrang = "Офицерский состав";
+						if ($user['rang'] == NULL) {
+							echo '<span class="N">Отсутствует</span>';
+							echo '<br><br><span style="border:2px solid red;margin:5px;padding:5px;border-radius:10px;display:inline-flex;">Для отображения в списке игроков, уточните ваше звание ниже</span>';
+						}
+				} if (strpos($roles, '698240245149335583')) {
+					$user->rang = "Зам. начальнка";
+					$user->bigrang = NULL;
+					echo '<span class="K">'. $user['rang'] . '</span>';
+				} if (strpos($roles, '636268938631839765')) {
+					$user->rang = "Начальнк";
+					$user->bigrang = NULL;
+					echo '<span class="K">'. $user['rang'] . '</span>';
+				} if (strpos($roles, '636268248186224700')) {
+					$user->rang = "Командир";
+					$user->bigrang = NULL;
+					echo '<span class="K">'. $user['rang'] . '</span>';
+				} if (strpos($roles, '636267521997144086')) {
+					$user->rang = "Мандалорский тренер";
+					$user->bigrang = NULL;
+					echo '<span class="K">'. $user['rang'] . '</span>';
+				} if (strpos($roles, '745142892355649657')) {
+					$user->rang = "Главврач";
+					$user->bigrang = NULL;
+					echo '<span class="K">'. $user['rang'] . '</span>';
+				} if (strpos($roles, '745142845672915005')) {
+					$user->rang = "Капитан 3-го класса";
+					$user->bigrang = NULL;
+					echo '<span class="K">'. $user['rang'] . '</span>';
+				} if (strpos($roles, '636267840537755657')) {
+					$user->rang = "Командир первого класса";
+					$user->bigrang = NULL;
+					echo '<span class="K">'. $user['rang'] . '</span>';
+				} if (strpos($roles, '725828334575026268')) {
+					$user->rang = "Капитан 2-го класса";
+					$user->bigrang = NULL;
+					echo '<span class="K">'. $user['rang'] . '</span>';
+				} if (strpos($roles, '636267285337604148')) {
+					$user->bigrang = NULL;
+					$user->rang = "Военврач 3-го ранга";
+					echo '<span class="K">'. $user['rang'] . '</span>';
+				} if (strpos($roles, '725828326253658193')) {
+					$user->bigrang = NULL;
+					$user->rang = "Капитан 1-го класса";
+					echo '<span class="K">'. $user['rang'] . '</span>';
+				} if (strpos($roles, '636266998032105502')) {
+					$user->bigrang = NULL;
+					$user->rang = "Клон коммандер";
+					echo '<span class="K">'. $user['rang'] . '</span>';
+				} if (strpos($roles, '636266583567892485')) {
+					$user->bigrang = NULL;
+					$user->rang = "Военврач 2-го ранга";
+					echo '<span class="K">'. $user['rang'] . '</span>';
+				} if (strpos($roles, '650205871552331776')) {
+					$user->bigrang = NULL;
+					$user->rang = "Адмирал флота";
+					echo '<span class="K">'. $user['rang'] . '</span>';
+				} if (strpos($roles, '650205254494978048')) {
+					$user->bigrang = NULL;
+					$user->rang = "Клон маршал";
+					echo '<span class="K">'. $user['rang'] . '</span>';
+				} if (strpos($roles, '650205933225639957')) {
+					$user->bigrang = NULL;
+					$user->rang = "Военврач 1-го ранга";
+					echo '<span class="K">'. $user['rang'] . '</span>';
+				} if (strpos($roles, '650206724287889433')) {
+					$user->legion = "Без легиона";
+					$user->rang = "Советник";
 					echo '<span class="E">'. $user['rang'] . '</span>';
+				} if (strpos($roles, '636271352591941632')) {
+					$user->legion = "Без легиона";
+					$user->rang = "Кадет";
+					echo '<span class="N">'. $user['rang'] . '</span>'; 
+				}  else {
+					if ($user['bigrang'] == "Рядовой состав" and $user['rang'] != NULL) {
+						echo '<span class="R">'. $user['rang'] . '</span>'; 
+					} else if ($user['bigrang'] == "Сержантский состав" and $user['rang'] != NULL) {
+						echo '<span class="S">'. $user['rang'] . '</span>'; 
+					} else if ($user['bigrang'] == "Мл. офицерский состав" and $user['rang'] != NULL) {
+						echo '<span class="MO">'. $user['rang'] . '</span>'; 
+					} else if ($user['bigrang'] == "Офицерский состав" and $user['rang'] != NULL) {
+						echo '<span class="O">'. $user['rang'] . '</span>'; 
+					} else if ($user['legion'] == "Без легиона" and $user['rang'] == "Кадет") {
+						echo '<span class="N">'. $user['rang'] . '</span>'; 
+					} else if (($user['legion'] == "Без легиона" and $user['rang'] == "Советник") and ($user['number'] == "2563" or $user['number'] == "7266")) {
+						echo '<span class="A">'. $user['rang'] . '</span>'; 
+					} else if ($user['legion'] == "Без легиона" and $user['rang'] == "Советник") {
+						echo '<span class="E">'. $user['rang'] . '</span>'; 
+					} 
+				}
+				} else if ($roles != NULL and $user['phase'] == "2") {
+					if (strpos($roles, '530382067167657984')) {
+					// $user->rang = NULL; // Рядовой состав
+					$user->bigrang = "Рядовой состав";
+						if ($user['rang'] == "Рядовой состав") {
+							echo '<span class="N">Отсутствует</span>';
+							echo '<br><br><span style="border:2px solid green;margin:5px;padding:5px;border-radius:10px;display:inline-flex;">Уточните ваше звание ниже</span>';
+						}
+				} if (strpos($roles, '530388776124547092')) {
+					// $user->rang = NULL; // Капральский состав
+					$user->bigrang = "Капральский состав";
+						if ($user['rang'] == NULL) {
+							echo '<span class="N">Отсутствует</span>';
+							echo '<br><br><span style="border:2px solid red;margin:5px;padding:5px;border-radius:10px;display:inline-flex;">Для отображения в списке игроков, уточните ваше звание ниже</span>';
+						}
+				} if (strpos($roles, '530382020451368962')) {
+					// $user->rang = NULL; // Сержантский состав
+					$user->bigrang = "Сержантский состав";
+						if ($user['rang'] == NULL) {
+							echo '<span class="N">Отсутствует</span>';
+							echo '<br><br><span style="border:2px solid red;margin:5px;padding:5px;border-radius:10px;display:inline-flex;">Для отображения в списке игроков, уточните ваше звание ниже</span>';
+						}
+				} if (strpos($roles, '530382190186463252')) {
+					// $user->rang = NULL; // Старше-сержантский состав
+					$user->bigrang = "Старше-сержантский состав";
+						if ($user['rang'] == NULL) {
+							echo '<span class="N">Отсутствует</span>';
+							echo '<br><br><span style="border:2px solid red;margin:5px;padding:5px;border-radius:10px;display:inline-flex;">Для отображения в списке игроков, уточните ваше звание ниже</span>';
+						}
+				} if (strpos($roles, '530381962511253514')) {
+					// $user->rang = NULL; // Мл. офицерский состав
+					$user->bigrang = "Мл. офицерский состав";
+						if ($user['rang'] == NULL) {
+							echo '<span class="N">Отсутствует</span>';
+							echo '<br><br><span style="border:2px solid red;margin:5px;padding:5px;border-radius:10px;display:inline-flex;">Для отображения в списке игроков, уточните ваше звание ниже</span>';
+						}
+				} if (strpos($roles, '530381907163217926')) {
+					// $user->rang = NULL; // Офицерский состав
+					$user->bigrang = "Офицерский состав";
+						if ($user['rang'] == NULL) {
+							echo '<span class="N">Отсутствует</span>';
+							echo '<br><br><span style="border:2px solid red;margin:5px;padding:5px;border-radius:10px;display:inline-flex;">Для отображения в списке игроков, уточните ваше звание ниже</span>';
+						}
+				} if (strpos($roles, '530386071670751242')) {
+					$user->rang = "Командир";
+					$user->bigrang = NULL;
+					echo '<span class="K">'. $user['rang'] . '</span>';
+				} if (strpos($roles, '530386137370460160')) {
+					$user->rang = "Командир первого класса";
+					$user->bigrang = NULL;
+					echo '<span class="K">'. $user['rang'] . '</span>';
+				} if (strpos($roles, '530386077769531392')) {
+					$user->rang = "Коммандер";
+					$user->bigrang = NULL;
+					echo '<span class="K">'. $user['rang'] . '</span>';
+				} if (strpos($roles, '530385530718781450')) {
+					$user->rang = "Маршал-коммандер";
+					$user->bigrang = NULL;
+					echo '<span class="K">'. $user['rang'] . '</span>';
+				} if (strpos($roles, '530531632172761119')) {
+					$user->rang = "Младший контр-адмирал";
+					$user->bigrang = "Адмиральский состав";
+					echo '<span class="K">'. $user['rang'] . '</span>';
+				} if (strpos($roles, '538377815062478858')) {
+					$user->rang = "Главврач";
+					$user->bigrang = "Военврачебный состав";
+					echo '<span class="K">'. $user['rang'] . '</span>';
+				} if (strpos($roles, '530531787974246428')) {
+					$user->rang = "Адмирал флота";
+					$user->bigrang = NULL;
+					echo '<span class="K">'. $user['rang'] . '</span>';
+				} else {
+					if (($user['bigrang'] == "Рядовой состав" or $user['bigrang'] == "Капральский состав") and $user['rang'] != NULL) {
+						echo '<span class="R">'. $user['rang'] . '</span>'; 
+					} else if (($user['bigrang'] == "Сержантский состав" or $user['bigrang'] == "Старше-сержантский состав") and $user['rang'] != NULL) {
+						echo '<span class="S">'. $user['rang'] . '</span>'; 
+					} else if ($user['bigrang'] == "Мл. офицерский состав" and $user['rang'] != NULL) {
+						echo '<span class="MO">'. $user['rang'] . '</span>'; 
+					} else if ($user['bigrang'] == "Офицерский состав" and $user['rang'] != NULL) {
+						echo '<span class="O">'. $user['rang'] . '</span>'; 
+					} else if ($user['legion'] == "Без легиона" and $user['rang'] == "Кадет") {
+						echo '<span class="N">'. $user['rang'] . '</span>'; 
+					} else if (($user['legion'] == "Без легиона" and $user['rang'] == "Советник") and ($user['number'] == "2563" or $user['number'] == "7266")) {
+						echo '<span class="A">'. $user['rang'] . '</span>'; 
+					} else if ($user['legion'] == "Без легиона" and $user['rang'] == "Советник") {
+						echo '<span class="E">'. $user['rang'] . '</span>'; 
+					}
+				}
 				} else {
 					echo '<span class="N">Отсутствует</span>';
 				}
-			?>
+				R::store($user);
+				?>
+				<br><br>
+			<!--Звание: -->
+			<?php
+			// 	if ($user['bigrang'] =="Рядовой состав" or $user['bigrang'] =="Капральский состав") {
+			// 		echo '<span class="R">'. $user['rang'] . '</span>';
+			// 	} elseif ($user['bigrang'] == "Сержантский состав" or $user['bigrang'] == "Старше-сержантский состав") {
+			// 		echo '<span class="S">'. $user['rang'] . '</span>';
+			// 	} elseif ($user['bigrang'] == "Мл. офицерский состав") {
+			// 		echo '<span class="MO">'. $user['rang'] . '</span>';
+			// 	} elseif ($user['bigrang'] == "Офицерский состав") {
+			// 		echo '<span class="O">'. $user['rang'] . '</span>';
+			// 	} elseif ($user['rang'] == "Советник") {
+			// 		echo '<span class="E">'. $user['rang'] . '</span>';
+			// 	} else {
+			// 		echo '<span class="N">Отсутствует</span>';
+			// 	}
+			// ?>
 			</div>
 		<figure class="highcharts-figure">
 				<div id="container"></div>

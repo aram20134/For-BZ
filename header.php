@@ -9,7 +9,7 @@ ob_start();
     <meta name="yandex-verification" content="e4c9572b8cc0685c" />
     <meta name="google-site-verification" content="bZqejiLKrDp3taS9Je72_cWm95TOIC6uzTjl_lHb7O8" />
     <title><?php echo $title; ?></title>
-	<link rel="stylesheet" href="glav.css?103">
+	<link rel="stylesheet" href="glav.css?113">
     <link rel="shortcut icon" href="img/logo.png" type="image/png">
     <!-- Yandex.Metrika counter -->
 <script type="text/javascript" >

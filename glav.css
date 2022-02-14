@@ -143,8 +143,8 @@ li {
 	background-color:black;
 	border:2px solid white;
 	z-index:1;
-	width:190px;
-	left:10px;
+	width:100%; 
+	left:-2px;
 	border-radius:15px;
 	top:50px;
 	transition:all 0.2s linear;
@@ -763,6 +763,30 @@ label:hover {
 .text-prof p{
 	
 }
+.btn-retry {
+	font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	display:flex;
+	border:none;
+	margin:5px;
+	font-size:15px;
+	padding:5px;
+	border-radius:10px;
+	cursor:pointer;
+}
+.btn-retry:before {
+	position:absolute;
+	content:"";
+	width:0%;
+	height:1px;
+	background:red;
+	transition:all 0.2s ease-in-out;
+	top:602px;
+}
+.btn-retry:hover:before {
+	transition:all 0.2s ease-in-out;
+	width:67px;
+	top:602px;
+}
 .ico-info {
     height: 30px;
     margin: 0px 10px 0px 0px;
@@ -1331,7 +1355,20 @@ nav ul {
 		max-width: 100%;
 	}
 }
-
+@media screen and (max-width: 850px) {
+	.img-foot {
+    	width:150px;
+    }
+    .img-content-l, .img-content-r {
+    	width:75px;
+    }
+    .ico-foot {
+    	width:50px;
+    }
+    .foot-cont p {
+    	font-size:20px;
+    }
+}
 @media screen and (max-width: 768px) {
     #btn-logo {
         position: relative;
@@ -1391,27 +1428,12 @@ nav ul {
     .text-prof {
     	font-size:20px;
     }
-    .img-foot {
-    	width:150px;
-    }
-    .img-content-l, .img-content-r {
-    	width:75px;
-    }
-    .ico-foot {
-    	width:50px;
-    }
-    .foot-cont p {
-    	font-size:20px;
-    }
     .top-players {
     	width:450px;
     }
 }
-@media screen and (max-width: 450px) {
-	.name-server {
-        font-size: 15px ;
-    }
-    .foot-cont p {
+@media screen and (max-width: 520px) {
+	.foot-cont p {
     	font-size:15px;
     }
     .img-content-r, .img-content-l {
@@ -1419,6 +1441,11 @@ nav ul {
     }
     .foot-phase {
     	justify-content:center;
+    }
+}
+@media screen and (max-width: 450px) {
+	.name-server {
+        font-size: 15px ;
     }
     .top-players {
     	width:300px;
@@ -1435,5 +1462,11 @@ nav ul {
 	}
 	.text-online1, .text-online2 {
 		margin:5px;
+	}
+	.profbz {
+		width:80%;
+	}
+	.textprof {
+		width:80%;
 	}
 }

@@ -39,7 +39,6 @@ require __DIR__ . '/header.php';
     }
     return false;
 	}
-	// print_r($online);
 	$steam = array();
 	$top50 = array();
 	$itog = array();
@@ -49,16 +48,17 @@ require __DIR__ . '/header.php';
 			$itog[$id]['time'] += $_arr['time'];
 		} else {
 			$steam[] = $_arr['steamname'];
-			// $itog[] = ["steamname" => $_arr['steamname'], "time" => $_arr['time']];
 			$itog[] = ["time" => $_arr['time'], "steamname" => $_arr['steamname']];
 		}
 	}
-		echo $days;
 	arsort($itog);
 	$top50 = array_slice($itog, 0, 50);
-	// print_r($top50);
 ?>
-
+<?php 
+	$k = array_key_first($online);
+	$date = $online[array_key_first($online)];
+	$dateDiff = date_diff(new DateTime(), new DateTime($date['y']."-".$date['m']."-".$date['d']))->days;
+?>
 <script src="jquery-3.6.0.min.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 
@@ -72,7 +72,7 @@ var chart = Highcharts.chart('container', {
         width:1200,
     },
     title: {
-        text: 'Топ 5 онлайна Phase <?php echo $data['phase'] ?> ',
+        text: 'Топ 5 онлайна Phase <?php echo $data['phase'] ?> за <?php echo $dateDiff?> дней',
         style: {
         	color: 'white',
         	fontWeight: 'bold',
@@ -219,7 +219,7 @@ var chart = Highcharts.chart('container', {
 			<div style="display:flex;justify-content:center;">
 			</div>
 		</figure>
-	<h1 style="margin-top:70px;text-align:center;">Топ 50 онлайна Phase <?php echo $data['phase'] ?></h1>
+	<h1 style="margin-top:70px;text-align:center;">Топ 50 онлайна Phase <?php echo $data['phase'] ?> за <?php echo $dateDiff?> дней</h1>
 	<div class="top-players">
 		<div class ="pl" style="border:2px solid white;border-radius:15px;">
 			<div class="num-td">Место</div>

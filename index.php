@@ -81,6 +81,9 @@ if ($result2['map'] == "rp_corellia_ngg_winter") {
  <script src="jquery-3.6.0.min.js"></script>
 <!--SCRYPT-->
     <script>
+    
+
+    
     var map = '<?php echo $map ?>';
     var map2 = '<?php echo $map2 ?>';
     
@@ -97,14 +100,22 @@ map?$(".first").toggleClass("map-korriban"):"Geonosis"==map?$(".first").toggleCl
 "Naboo"==map2&&"1"==nabo1?$(".second").toggleClass("map-naboo2"):"Korriban"==map2?$(".second").toggleClass("map-korriban"):"Naboo"==map2?$(".second").toggleClass("map-naboo"):"Tatooine"==map2?$(".second").toggleClass("map-tatooine"):"Takodana"==map2?$(".second").toggleClass("map-takodana"):"Geonosis"==map2?$(".second").toggleClass("map-geonosis"):"Mygeeto"==map2&&$(".second").toggleClass("map-mygeeto")});
     </script>
 <?php 
-$update= date("i", $result['date']/1000);
-$update2 = date("i", $result2['date']/1000);
-$today = date("i", time());
-$diff= $today - $update;
-$diff2= $today - $update2;
-// Maybe Carbon? 
-?>
 
+$cur = date("Y:m:d H:i:s");
+$acur = new DateTime($cur);
+
+$last = date("Y:m:d H:i:s", $result['date']/1000);
+$alast = new DateTime($last);
+
+$last2 = date("Y:m:d H:i:s", $result2['date']/1000);
+$alast2 = new DateTime($last2);
+
+$diff = $acur->diff($alast);
+$diff2 = $acur->diff($alast2);
+
+$diff = $diff->format("%i");
+$diff2 = $diff2->format("%i");
+?>
 <!--SCRYPT-->
 <!--STOP HERE--> <!--STOP HERE--> <!--STOP HERE-->
     <div class="content">
