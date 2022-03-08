@@ -7,43 +7,73 @@ require __DIR__ . '/header.php';
 
 <?php
 // ПЕРВЫЙ СЕРВЕР
-$url="https://api.trackyserver.com/widget/index.php?id=7448";
+$url="http://83.234.136.125:3333/players";
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_URL,$url);
 $result=json_decode(curl_exec($ch), true);
 curl_close($ch);
+// print_r($result['players']);	
 ?>
 <?php
 // MAPS
 if ($result['map'] == "rp_anaxes_ngg_winter" or $result['map'] == "rp_anaxes_ngg") {
 	$map = "Anaxes";
+	$desc = "База";
 } elseif ($result['map'] == "ngg_sw_m3") {
 	$map = "Tatooine";
+	$desc = "Симуляция сражения";
 } elseif ($result['map'] == "ngg_sw_m12") {
 	$map = "Takodana";
+	$desc = "Превосходство";
 } elseif ($result['map'] == "ngg_sw_m6") {
 	$map = "Geonosis";
+	$desc = "Цитадель";
 } elseif ($result['map'] == "ngg_sw_m10") {
 	$map = "Korriban";
+	$desc = "Контроль территорий";
 } elseif ($result['map'] == "ngg_sw_m11") {
 	$map = "Naboo";
+	$desc = "Симуляция сражения";
 } elseif ($result['map'] == "ngg_sw_m4") {
 	$map = "Tatooine";
 	$sim1 = "1";
+	$desc = "Цитадель";
 } elseif ($result['map'] == "ngg_sw_m7") {
 	$map = "Geonosis";
 	$gen1 = "1";
+	$desc = "Контроль территорий";
 } elseif ($result['map'] == "ngg_sw_m5") {
 	$map = "Naboo";
 	$nabo1 = "1";
+	$desc = "Превосходство";
 } elseif ($result['map'] == "ngg_sw_m13") {
 	$map = "Mygeeto";
+	$desc = "Контроль территорий";
 } else {
 	$map = "Anaxes";
+	$desc = "База";
 }
 ?>
 <script src="jquery-3.6.0.min.js"></script>
+<!-- <script>
+		function show () {
+			$.ajax ({
+				url: 'https://swrpngg.space/api/getplayers',
+				method: 'get',
+				dataType: 'json',
+				cache: false,
+				success: function(data) {
+					document.getElementById('onl').innerHTML = data['raw']['numplayers'] + "/128";
+				}
+			});
+		}
+                		$(document).ready(function() {
+							show();
+							setInterval('show()', 10000);
+						});
+		
+</script> -->
 <!--SCRYPT-->
     <script>
     $(document).ready(function () {
@@ -83,38 +113,33 @@ $diff2 = $diff2->format("%i");
     </p>
     <div class="box-online first">
         <div class="text-online1">
-        	<img src="img/planet5.png" class="ico"><?php echo $map; ?>
+        	<img src="img/planet5.png" class="ico">
+        	<div class = "maps">
+        		<div class = "m"><?php echo $map; ?></div>
+        		<div><?php echo $desc; ?></div>
+        	</div>
         </div>
         <div class="text-online1">
-        	<img src="img/phase1/clone1.png" class="ico2"><?php echo $result['playerscount']; ?>
-        </div>
-        <div class="difftime">
-                	Последнее обновление - 
-                	<?php 
-                	if ($diff == "0") {
-                		echo "Только что";
-                	} else if ($diff == "1") {
-                		echo $diff;
-                		echo " минуту назад";
-                	} else if ($diff == "2" or $diff == "3" or $diff == "4") {
-                		echo $diff;
-                		echo " минуты назад";
-                	} else if ($diff < 0) {
-                		echo "Недавно";
+        	<img src="img/phase1/clone1.png" class="ico2">
+        	<div id ="onl"></div>
+        	<?php 
+                	if ($result['raw']['numplayers'] != NULL) {
+                		echo $result['raw']['numplayers']."/128"; 
                 	} else {
-                		echo $diff;
-                		echo " минут назад";
+                		echo 'Offline';
                 	}
-                	?> 
-                </div>
+    		?>
+        </div>
+        <div id="difftime">
+        	<!--Обновление в реальном времени-->
+        </div>
 	</div>
-	<div class="alert-box">Информация о сервере обновляется каждые 15 минут</div>
 	<h1>Игроки на сервере</h1>
 	<div class ="players">
 		
 			<?php
 			
-			foreach($result['playerslist'] as $player) {
+			foreach($result['players'] as $player) {
 				$user = R::findOne('usersbz', 'steamname = ?', [$player['name']]);
 				if ($player['name'] == $user['steamname'] and $user['phase'] == "1") {
 					// echo '<a href="" class="find">';
@@ -128,7 +153,7 @@ $diff2 = $diff2->format("%i");
 						echo '<a href="https://swrpngg.space/profile-other?'."number=".$user['number']."&phase=".$user['phase'].'" class="find">';
 						echo $output;
 						echo '</a>';
-					} elseif ($output == $user['number'].$a.$user['name'].$a.$a) {
+					} elseif ($output == $user['number'].$a.$user['name'].$a.$a or $output == $user['number'].$a.$user['name'].$a.$user['legion'].$a) {
 						echo '<a href="https://swrpngg.space/profile-other?'."number=".$user['number']."&phase=".$user['phase'].'" class="find">';
 						$output = $user['number']." | ".$user['name'];
 						echo $output;

@@ -3,6 +3,12 @@ require "db.php";
 $data = $_GET;
 $user = R::findOne('usersbz', 'number = :n AND phase = :ph', [':n' => $data['number'], ':ph' => $data['phase']]);
 $roles = R::findOne('site', 'discordid = ?', [$user['dsid']]);
+if ($roles == NULL and $user != NULL) {
+	$user->rang = NULL;
+	$user->bigrang = NULL;
+	$user->legion = NULL;
+	R::store($user);
+}
 if ($user != NULL) {
 	$title="[SWRP] Профиль игрока ".$user['name'];
 } else {
@@ -102,7 +108,7 @@ Highcharts.setOptions({
     		width: 1000,
     	},
     	navigator: {
-    		enabled: false,
+    		enabled: true,
     	},
     	scrollbar: {
     		enabled: false,
@@ -255,7 +261,7 @@ Highcharts.setOptions({
     if (window.matchMedia("(min-width: 600px)").matches) {
     	
     } else {
-    	chart.setSize(document.documentElement.clientWidth);
+    	chart.setSize($(container).width());
     }
     });
     
@@ -269,10 +275,10 @@ Highcharts.setOptions({
 	
 		<?php $user = R::findOne('usersbz', 'number = :number AND phase = :phase', [':number' => $data['number'], ':phase' => $data['phase']]); ?>
 		<?php if (isset($user)) : ?>
-		<?php if($user['legion'] != NULL and $user['rang'] != NULL) : ?>
+		<?php if($user['legion'] != NULL and $user['rang'] != NULL and $roles != NULL) : ?>
 		<div class="profbz">
 		<div class="profbz-content">
-			<a href="<?php echo $user['profurl'] ?>"><img style="height:150px;" src="<?php echo $user['avatar']?>"  /></a>
+			<a target="_blank" href="<?php echo $user['profurl'] ?>"><img style="height:150px;" src="<?php echo $user['avatar']?>"  /></a>
 			<?php echo '<div>'  ?>
 			<?php echo '<div>'.$user['number']." | ".$user['name'].'</div>' ?>
 			<?php echo '<div>'.$user['legion'].'</div>';  ?>
@@ -280,7 +286,7 @@ Highcharts.setOptions({
 			<?php echo '</div>'  ?>
 		</div>
 			<div class="prof-btns">
-			<a href="<?php echo $user['profurl'] ?>" class="prof-btn">профиль</a>
+			<a target ="_blank" href="<?php echo $user['profurl'] ?>" class="prof-btn">профиль</a>
 			<div id="prof-btn">копировать [Н|П|З]</div>
 			<div id="prof-btn2">копировать STEAM ID</div>
 			</div>
@@ -300,7 +306,7 @@ Highcharts.setOptions({
 				<?php
 					if ($user['steamid']) {
 							echo '<br>';
-							echo '<span class="find">Steam:<a href="'.$user['profurl'].'"><img src="img/steam.png" style="height:50px;margin:5px;" />Подключено</a></span>';
+							echo '<span class="find">Steam:<a target="_blank" href="'.$user['profurl'].'"><img src="img/steam.png" style="height:50px;margin:5px;" />Подключено</a></span>';
 						} else {
 							echo 'Steam: Не подключен';
 							echo '<br>';
@@ -310,7 +316,7 @@ Highcharts.setOptions({
 					<?php 
 						if ($user ['dsid']) {
 							echo '<br>';
-							echo '<span class="find">Discord:<a href=""><img src="img/discord.png" style="height:50px;margin:5px;" />Подключено</a></span>';
+							echo '<span class="find">Discord:<img src="img/discord.png" style="height:50px;margin:5px;" />Подключено</span>';
 						} else {
 							echo '<br>';
 							echo 'Discord: Не подключен';
@@ -378,7 +384,7 @@ Highcharts.setOptions({
 						R::store($user);
 						echo '<span class="legODISB">'. $user['legion'] . '</span>';
 					// } // убрать ->
-					} elseif (strpos($roles, '636115360910671892')) {
+					} elseif (strpos($roles, '650206724287889433')) {
 						$user->legion = "Без легиона";
 						$user->rang = "Советник";
 						R::store($user);
@@ -428,7 +434,7 @@ Highcharts.setOptions({
 							$user->rang = "Осужденный";
 							echo '<span class="legODISB">'. $user['legion'] . '</span>';
 							R::store($user);
-						} else if (strpos($roles, '758372584474804365')) { // Советник
+						} else if (strpos($roles, '-------')) { // Советник
 							$user->legion = "Без легиона";
 							$user->rang = "Советник";
 							echo '<span class="N">'. $user['legion'] . '</span>';
@@ -497,7 +503,15 @@ Highcharts.setOptions({
 					$user->bigrang = NULL;
 					echo '<span class="K">'. $user['rang'] . '</span>';
 				} if (strpos($roles, '636267521997144086')) {
-					$user->rang = "Мандалорский тренер";
+					$user->rang = "Тренер 1-го ранга";
+					$user->bigrang = NULL;
+					echo '<span class="K">'. $user['rang'] . '</span>';
+				} if (strpos($roles, '941259701700685856')) {
+					$user->rang = "Тренер 2-го ранга";
+					$user->bigrang = NULL;
+					echo '<span class="K">'. $user['rang'] . '</span>';
+				} if (strpos($roles, '941259711364345889')) {
+					$user->rang = "Тренер 3-го ранга";
 					$user->bigrang = NULL;
 					echo '<span class="K">'. $user['rang'] . '</span>';
 				} if (strpos($roles, '745142892355649657')) {
@@ -547,12 +561,13 @@ Highcharts.setOptions({
 				} if (strpos($roles, '650206724287889433')) {
 					$user->legion = "Без легиона";
 					$user->rang = "Советник";
-					echo '<span class="E">'. $user['rang'] . '</span>';
 				} if (strpos($roles, '636271352591941632')) {
 					$user->legion = "Без легиона";
 					$user->rang = "Кадет";
 					echo '<span class="N">'. $user['rang'] . '</span>'; 
-				}  else {
+				} if (strpos($roles, '891062472813977600')) {
+					echo '<span class="N">'. $user['rang'] . '</span>'; 
+				} else {
 					if ($user['bigrang'] == "Рядовой состав" and $user['rang'] != NULL) {
 						echo '<span class="R">'. $user['rang'] . '</span>'; 
 					} else if ($user['bigrang'] == "Сержантский состав" and $user['rang'] != NULL) {
@@ -567,7 +582,9 @@ Highcharts.setOptions({
 						echo '<span class="A">'. $user['rang'] . '</span>'; 
 					} else if ($user['legion'] == "Без легиона" and $user['rang'] == "Советник") {
 						echo '<span class="E">'. $user['rang'] . '</span>'; 
-					} 
+					} elseif ($user['rang'] == NULL) {
+						echo '<span class ="R">Отсутствует</span>';
+					}
 				}
 				} else if ($roles != NULL and $user['phase'] == "2") {
 					if (strpos($roles, '530382067167657984')) {
@@ -655,6 +672,8 @@ Highcharts.setOptions({
 						echo '<span class="A">'. $user['rang'] . '</span>'; 
 					} else if ($user['legion'] == "Без легиона" and $user['rang'] == "Советник") {
 						echo '<span class="E">'. $user['rang'] . '</span>'; 
+					} elseif ($user['rang'] == NULL) {
+						echo '<span class ="R">Отсутствует</span>';
 					}
 				}
 				} else {
@@ -683,7 +702,7 @@ Highcharts.setOptions({
 		<figure class="highcharts-figure">
 				<div id="container"></div>
 				<div style="display:flex;justify-content:center;">
-					<div class ="alert-box" style="background:rgb(157, 192, 0, 0.5);border:2px solid green;">Погрешность счёта онлайна может составлять от 5 до 15 минут</div>
+					<div class ="alert-box" style="background:rgb(157, 192, 0, 0.5);border:2px solid green;">Погрешность счёта онлайна составляет менее 5 минут</div>
 				</figure>
 				</div>
 		</div>
@@ -692,7 +711,7 @@ Highcharts.setOptions({
 			<figure class="highcharts-figure">
 				<div id="container"></div>
 			</figure>
-			<div class ="alert-box" style="background:rgb(157, 192, 0, 0.5);border:2px solid green;">Погрешность счёта онлайна может составлять от 5 до 15 минут</div>
+			<div class ="alert-box" style="background:rgb(157, 192, 0, 0.5);border:2px solid green;">Погрешность счёта онлайна составляет менее 5 минут</div>
 		<?php else : ?>
 		
 		<div class ="alert-box">Пользователь не найден</div>

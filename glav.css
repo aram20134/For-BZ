@@ -115,6 +115,7 @@ li {
     font-size: 30px;
     font-weight: bold;
     margin-left: 20px;
+	margin-right: 20px;
     text-decoration:none;
 }
 .btn-head {
@@ -455,11 +456,11 @@ li {
     letter-spacing: 2px;
     align-items: center;
 }
-.difftime {
+#difftime, #difftime2 {
 	position:absolute;
-	background-color: mediumblue;
+	background-color: green;
 	text-shadow: 0px 0px 15px black;
-    letter-spacing: 2px;
+	letter-spacing: 2px;
 	left:0;
 	top:0;
 	padding:5px;
@@ -467,6 +468,7 @@ li {
 	border-radius:10px;
 	color:white;
 }
+
 .ico {
     height: 50px;
     margin: 0px 10px 0px 0px;
@@ -1065,105 +1067,105 @@ nav ul {
 .leg41 {
 	background-color: green;
 	padding:10px;
-	border-radius:20px;
+	border-radius:10px;
 	margin:20px;
 }
 .leg212 {
 	background-color: orange;
 	padding:10px;
-	border-radius:20px;
+	border-radius:10px;
 	margin:20px;
 }
 .leg501 {
 	background-color: blue;
 	padding:10px;
-	border-radius:20px;
+	border-radius:10px;
 	margin:20px;
 }
 .legCT {
 	background-color: white;
 	padding:10px;
-	border-radius:20px;
+	border-radius:10px;
 	margin:20px;
 	color:black;
 }
 .legGVARD {
 	background-color: darkViolet;
 	padding:10px;
-	border-radius:20px;
+	border-radius:10px;
 	margin:20px;
 }
 .legIPK {
 	background-color: yellow;
 	padding:10px;
-	border-radius:20px;
+	border-radius:10px;
 	margin:20px;
 	color:black;
 }
 .legODISB {
 	background-color: #05a1c8;
 	padding:10px;
-	border-radius:20px;
+	border-radius:10px;
 	margin:20px;
 	color:black;
 }
 .legMED {
 	background-color: pink;
 	padding:10px;
-	border-radius:20px;
+	border-radius:10px;
 	margin:20px;
 	color:black;
 }
 .legTREN {
 	background-color: black;
 	padding:10px;
-	border-radius:20px;
+	border-radius:10px;
 	margin:20px;
 	color:white;
 }
 .legERK {
 	background-color: purple;
 	padding:10px;
-	border-radius:20px;
+	border-radius:10px;
 	margin:20px;
 	color:white;
 }
 .R {
 	background-color: white;
 	padding:10px;
-	border-radius:20px;
+	border-radius:10px;
 	margin:20px;
 	color:black;
 }
 .S {
 	background-color: darkgreen;
 	padding:10px;
-	border-radius:20px;
+	border-radius:10px;
 	margin:20px;
 }
 .MO {
 	background-color: darkblue;
 	padding:10px;
-	border-radius:20px;
+	border-radius:10px;
 	margin:20px;
 }
 .O {
 	background-color: darkred;
 	padding:10px;
-	border-radius:20px;
+	border-radius:10px;
 	margin:20px;
 }
 .K {
 	background-color: #b6b300;
 	padding:10px;
-	border-radius:20px;
+	border-radius:10px;
 	margin:20px;
 	color:black;
 }
 .E {
 	background-color: black;
 	padding:10px;
-	border-radius:20px;
+	border-radius:10px;
 	margin:20px;
 	color:white;
 	box-shadow:0px 0px 5px 2px black;
@@ -1171,14 +1173,14 @@ nav ul {
 .N {
 	background-color: white;
 	padding:10px;
-	border-radius:20px;
+	border-radius:10px;
 	margin:20px;
 	color:black;
 }
 .A {
 	background-color: darkred;
 	padding:10px;
-	border-radius:20px;
+	border-radius:10px;
 	margin:20px;
 	color:white;
 	box-shadow:0px 0px 5px 2px red;
@@ -1315,41 +1317,102 @@ nav ul {
 	width:100%;
 	text-align:center;
 	transition:0.2s all linear;
+	font-weight: bold;
 }
 .pl a:hover {
 	transform:translate(5px, 5px);
 }
 .top-players div {
-	color:white;
+	color:black;
 }
 .num-td {
-	background-color:mediumblue;
+	background-color:#10918d;
 	padding:20px;
 	border-radius:15px;
 	margin:5px;
 	font-weight:bold;
 }
 .pl-td {
-	background-color:darkred;
+	background-color:#a0000c;
 	padding:20px;
 	border-radius:15px;
 	margin:5px;
+	font-weight: bold;
 }
 .pl-tdf {
-	background-color:green;
+	background-color:#125c1a;
 	padding:20px;
 	border-radius:15px;
 	margin:5px;
 }
 .time-td {
-	background-color:purple;
+	background-color:#bfbfbf;
 	padding:20px;
 	border-radius:15px;
 	margin:5px;
+	font-weight: bold;
 }
 
 /* TOP ONLINE*/
 
+/* COOKIES */
+.hide {
+	bottom:-100px !important;
+	transition:all 0.5s linear;
+}
+.show {
+	display:flex !important;
+	transition:all 0.5s linear;
+}
+
+#cockies {
+	position:fixed;
+	display:none;
+	width:1200px;
+	background-color:black;
+	opacity:0.7;
+	bottom:5px;
+	justify-content:center;
+	z-index:100;
+	align-items:center;
+	transition:all 0.5s ease-in-out;
+	border:2px solid white;
+	border-radius:20px;
+	left:50%;
+	transform:translateX(-50%);
+}
+#cockies p {
+	color:white;
+	text-align:center;
+	margin:10px;
+}
+#cockies button {
+	cursor:pointer;
+	background:mediumblue;
+	color:white;
+	margin:10px;
+}
+.maps {
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+}
+.maps:before {
+	content:"";
+	position:relative;
+	height:2px;
+	width:100%;
+	background:white;
+	border-radius:25px;
+	top:26px;
+}
+/* COOKIES */
+
+@media screen and (max-width:1200px) {
+	#cockies {
+		width:100%;
+	}
+}
 @media screen and (max-width: 1024px) {
 	.content {
 		max-width: 100%;
@@ -1404,6 +1467,9 @@ nav ul {
     	/*flex-direction:column;*/
     	width:90%;
     }
+    .maps:before {
+    	top:20px;
+    }
     .alert-box {
     	max-width: 80%;
     }
@@ -1442,6 +1508,9 @@ nav ul {
     .foot-phase {
     	justify-content:center;
     }
+	.text-online1, .text-online2 {
+		letter-spacing: 0px;
+	}
 }
 @media screen and (max-width: 450px) {
 	.name-server {

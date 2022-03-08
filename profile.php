@@ -3,31 +3,21 @@ $title="[SWRP] Профиль";
 require "db.php";
 require __DIR__ . '/header.php';
 require "steamauth/steamauth.php";
-$legion = ["CT", "41", "212", "501", "Медик", "ОДИСБ", "ИПК", "Тренера", "Гвардия"];
-$rang = ["Рядовой-рекрут", "Рядовой", "Рядовой первого класса", "Специалист", "Капрал", "Сержант", "Штаб-сержант", "Сержант первого класса", "Первый сержант", "Сержант-майор", "Команд сержант-майор", "Сержант-майор сухопутных войска", "Мл. Лейтенант", "Лейтенант", "Капитан", "Майор", "Подполковник", "Полковник", "Командир", "Командир первого класса", "Клон коммандер", "Клон маршал"];
-$med = ["Интерн", "Практикант", "Ординатор", "Старший ординатор", "Военфельдшер", "Старший военфельдшер", "Врач", "Полевой врач", "Хирург", "Главный хирург", "Главврач", "Военврач 3-го ранга", "Военврач 2-го ранга", "Военврач 1-го ранга"];
-$pil = ["Пилот-рекрут", "Пилот", "Старшина", "Сержант", "Первый сержант", "Сержант-майор воздушных войск", "Прапорщик", "Лейтенант флота", "Лейтенант-коммандер", "Коммандер", "Капитан 3 класса", "Капитан 2 класса", "Капитан 1 класса", "Адмирал флота"];
-$ODISB = ["Осужденный", "Стажер", "Смотритель", "Оперативник", "Старший оперативник", "Дознаватель", "Руководитель", "Заместитель начальника", "Начальник"];
-$tren = ["Контрактный тренер", "Тренер-практикант", "Тренер", "	Старший тренер", "Тренер спец. назнния", "Мандалорский тренер"];
-
-$legion2 = ["CT", "41", "212", "501", "Медик", "ОДИСБ", "ИПК", "Инструктора", "Гвардия", "ЭРК"];
-$rang2 = ["Рядовой-рекрут", "Рядовой", "Рядовой первого класса", "Специалист", "Капрал", "Сержант", "Штаб-сержант", "Сержант первого класса", "Первый сержант", "Сержант-майор", "Команд сержант-майор", "Сержант-майор сухопутных войска", "Мл. Лейтенант", "Лейтенант", "Капитан", "Майор", "Подполковник", "Полковник", "Командир", "Командир первого класса", "Коммандер", "Маршал-коммандер"];
-$med2 = ["Ассистент", "Интерн", "Ординатор", "Младший военфельдшер", "Военфельдшер", "Старший военфельдшер", "Полевой врач", "Врач", "Хирург", "Военный хирург", "Главврач", "Военврач 3-го ранга", "Военврач 2-го ранга", "Военврач 1-го ранга"];
-$pil2 = ["Пилот-рекрут", "Пилот", "Пилот первого класса", "Специалист", "Капрал", "Сержант", "Штаб-сержант", "Сержант первого класса", "Первый сержант", "Сержант-майор", "Команд сержант-майор", "Сержант-майор воздушных войск", "Прапорщик", "Младший лейтенант", "Лейтенант", "Лейтенант-командир", "Командир", "Капитан", "Младший контр-адмирал", "Контр-адмирал", "Вице Адмирал", "Адмирал", "Адмирал флота"];
-$ODISB2 = ["Осужденный", "Стажер", "Младший смотритель", "Смотритель", "Старший смотритель", "Смотритель первого класса", "Оперативник", "Бригадир", "Надзиратель", "Второй заместитель начальника", "Первый заместитель начальника", "Начальник"];
-$tren2 = ["Младший инструктор", "Инструктор", "Старший инструктор", "Оперативный инструктор", "Каминоанский инструктор 3-го ранга", "Каминоанский инструктор 2-го ранга", "Каминоанский инструктор 1-го ранга"];
-$erk2 = ["Лейтенант", "Капитан", "Коммандер"];
 ?>
 <?php $user = R::findOne('usersbz', 'number = ?', [$_SESSION['logged_user']->number]); ?>
-<?php $roles = R::findOne('site', 'discordid = ?', [$user['dsid']]); ?>
-
+<?php $roles = R::findOne('site', 'discordid = ?', [$user['dsid']]); 
+if ($roles == NULL and $user != NULL) {
+	$user->rang = NULL;
+	$user->bigrang = NULL;
+	$user->legion = NULL;
+	R::store($user);
+}
+?>
 <script src="jquery-3.6.0.min.js"></script>
 <!--GRAPHICS-->
 <script src="https://code.highcharts.com/stock/highstock.js"></script>
 <script src="https://code.highcharts.com/stock/modules/data.js"></script>
 <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
-
-
 
 <?php if ($user['steamname'] != NULL) : ?>
 
@@ -70,7 +60,7 @@ Highcharts.setOptions({
     		backgroundColor: 'transparent',
     	},
     	navigator: {
-    		enabled: false,
+    		enabled: true,
     	},
     	scrollbar: {
     		enabled: false,
@@ -172,22 +162,36 @@ Highcharts.setOptions({
             },
         }]
     });
+    if (window.matchMedia("(min-width: 1200px)").matches) {
+    	
+	} else {
+		chart.setSize(1000);
+	}
     if (window.matchMedia("(min-width: 1024px)").matches) {
     	
 	} else {
-		chart.setSize(600);
+		chart.setSize(800);
 	}
+    if (window.matchMedia("(min-width: 800px)").matches) {
+    	
+    } else {
+    	chart.setSize(600);
+    }
     if (window.matchMedia("(min-width: 600px)").matches) {
     	
     } else {
-    	chart.setSize(300);
+    	chart.setSize($(container).width());
     }
     });
 </script>
 
 <?php else : ?>
 <div style="display:flex;justify-content:center;">
-<div class="alert-box">Для просмотра своего онлайна привяжите свой Steam</div>
+<?php 
+	if ($user != NULL) {
+		echo '<div class="alert-box">Для просмотра своего онлайна привяжите свой Steam</div>';
+	} 
+?>
 <?php $onl = true; ?>
 </div>
 <?php endif ?>
@@ -213,104 +217,24 @@ Highcharts.setOptions({
 		
 		$('#prof-btn').click(function() {
 			copyToClipboard();
+			console.log('1');
 		});
 		$('#prof-btn2').click(function() {
 			copyToClipboard2();
+			console.log('2');
 		});
 		var phase = "<?php echo $_SESSION['logged_user']->phase ?>";
 		
-		var _0xbfa1=["\x31","\x32","\x63\x68\x65\x63\x6B\x65\x64","\x70\x72\x6F\x70","\x23\x63\x68\x65\x63\x6B\x2D\x72\x61\x6E\x67\x32","\x23\x63\x68\x65\x63\x6B\x2D\x72\x61\x6E\x67\x33","\x23\x63\x68\x65\x63\x6B\x2D\x72\x61\x6E\x67\x34","\x23\x63\x68\x65\x63\x6B\x2D\x72\x61\x6E\x67\x35","\x23\x63\x68\x65\x63\x6B\x2D\x72\x61\x6E\x67\x36","\x23\x63\x68\x65\x63\x6B\x2D\x72\x61\x6E\x67\x37","\x23\x63\x68\x65\x63\x6B\x2D\x72\x61\x6E\x67\x38","\x6C\x6F\x67","\x63\x6C\x69\x63\x6B","\x23\x63\x68\x65\x63\x6B\x2D\x72\x61\x6E\x67\x31","\x33","\x34","\x35","\x36","\x37","\x38"];if(phase== _0xbfa1[0]|| phase== _0xbfa1[1]){$(_0xbfa1[13])[_0xbfa1[12]](function(){$(_0xbfa1[4])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[5])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[6])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[7])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[8])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[9])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[10])[_0xbfa1[3]](_0xbfa1[2],false);console[_0xbfa1[11]](_0xbfa1[0])});$(_0xbfa1[4])[_0xbfa1[12]](function(){$(_0xbfa1[13])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[5])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[6])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[7])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[8])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[9])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[10])[_0xbfa1[3]](_0xbfa1[2],false);console[_0xbfa1[11]](_0xbfa1[1])});$(_0xbfa1[5])[_0xbfa1[12]](function(){$(_0xbfa1[13])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[4])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[6])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[7])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[8])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[9])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[10])[_0xbfa1[3]](_0xbfa1[2],false);console[_0xbfa1[11]](_0xbfa1[14])});$(_0xbfa1[6])[_0xbfa1[12]](function(){$(_0xbfa1[13])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[4])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[5])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[7])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[8])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[9])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[10])[_0xbfa1[3]](_0xbfa1[2],false);console[_0xbfa1[11]](_0xbfa1[15])});$(_0xbfa1[7])[_0xbfa1[12]](function(){$(_0xbfa1[13])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[4])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[5])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[6])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[8])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[9])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[10])[_0xbfa1[3]](_0xbfa1[2],false);console[_0xbfa1[11]](_0xbfa1[16])});$(_0xbfa1[8])[_0xbfa1[12]](function(){$(_0xbfa1[13])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[4])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[5])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[6])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[7])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[9])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[10])[_0xbfa1[3]](_0xbfa1[2],false);console[_0xbfa1[11]](_0xbfa1[17])});$(_0xbfa1[9])[_0xbfa1[12]](function(){$(_0xbfa1[13])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[4])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[5])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[6])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[7])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[8])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[10])[_0xbfa1[3]](_0xbfa1[2],false);console[_0xbfa1[11]](_0xbfa1[18])});$(_0xbfa1[10])[_0xbfa1[12]](function(){$(_0xbfa1[13])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[4])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[5])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[6])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[7])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[8])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[9])[_0xbfa1[3]](_0xbfa1[2],false);console[_0xbfa1[11]](_0xbfa1[19])})}
-		
-		// if (phase == "1" || phase == "2") {
-		// 	$('#check-rang1').click(function() {
-		// 		$('#check-rang2').prop("checked", false);
-		// 		$('#check-rang3').prop("checked", false);
-		// 		$('#check-rang4').prop("checked", false);
-		// 		$('#check-rang5').prop("checked", false);
-		// 		$('#check-rang6').prop("checked", false);
-		// 		$('#check-rang7').prop("checked", false);
-		// 		$('#check-rang8').prop("checked", false);
-		// 		console.log("1");
-		// 	});
-		// 	$('#check-rang2').click(function() {
-		// 		$('#check-rang1').prop("checked", false);
-		// 		$('#check-rang3').prop("checked", false);
-		// 		$('#check-rang4').prop("checked", false);
-		// 		$('#check-rang5').prop("checked", false);
-		// 		$('#check-rang6').prop("checked", false);
-		// 		$('#check-rang7').prop("checked", false);
-		// 		$('#check-rang8').prop("checked", false);
-		// 		console.log("2");
-		// 	});
-		// 	$('#check-rang3').click(function() {
-		// 		$('#check-rang1').prop("checked", false);
-		// 		$('#check-rang2').prop("checked", false);
-		// 		$('#check-rang4').prop("checked", false);
-		// 		$('#check-rang5').prop("checked", false);
-		// 		$('#check-rang6').prop("checked", false);
-		// 		$('#check-rang7').prop("checked", false);
-		// 		$('#check-rang8').prop("checked", false);
-		// 		console.log("3");
-		// 	});
-		// 	$('#check-rang4').click(function() {
-		// 		$('#check-rang1').prop("checked", false);
-		// 		$('#check-rang2').prop("checked", false);
-		// 		$('#check-rang3').prop("checked", false);
-		// 		$('#check-rang5').prop("checked", false);
-		// 		$('#check-rang6').prop("checked", false);
-		// 		$('#check-rang7').prop("checked", false);
-		// 		$('#check-rang8').prop("checked", false);
-		// 		console.log("4");
-		// 	});
-		// 	$('#check-rang5').click(function() {
-		// 		$('#check-rang1').prop("checked", false);
-		// 		$('#check-rang2').prop("checked", false);
-		// 		$('#check-rang3').prop("checked", false);
-		// 		$('#check-rang4').prop("checked", false);
-		// 		$('#check-rang6').prop("checked", false);
-		// 		$('#check-rang7').prop("checked", false);
-		// 		$('#check-rang8').prop("checked", false);
-		// 		console.log("5");
-		// 	});
-		// 	$('#check-rang6').click(function() {
-		// 		$('#check-rang1').prop("checked", false);
-		// 		$('#check-rang2').prop("checked", false);
-		// 		$('#check-rang3').prop("checked", false);
-		// 		$('#check-rang4').prop("checked", false);
-		// 		$('#check-rang5').prop("checked", false);
-		// 		$('#check-rang7').prop("checked", false);
-		// 		$('#check-rang8').prop("checked", false);
-		// 		console.log("6");
-		// 	});
-		// 	$('#check-rang7').click(function() {
-		// 		$('#check-rang1').prop("checked", false);
-		// 		$('#check-rang2').prop("checked", false);
-		// 		$('#check-rang3').prop("checked", false);
-		// 		$('#check-rang4').prop("checked", false);
-		// 		$('#check-rang5').prop("checked", false);
-		// 		$('#check-rang6').prop("checked", false);
-		// 		$('#check-rang8').prop("checked", false);
-		// 		console.log("7");
-		// 	});
-		// 	$('#check-rang8').click(function() {
-		// 		$('#check-rang1').prop("checked", false);
-		// 		$('#check-rang2').prop("checked", false);
-		// 		$('#check-rang3').prop("checked", false);
-		// 		$('#check-rang4').prop("checked", false);
-		// 		$('#check-rang5').prop("checked", false);
-		// 		$('#check-rang6').prop("checked", false);
-		// 		$('#check-rang7').prop("checked", false);
-		// 		console.log("8");
-		// 	});
-		// } 
+		var _0xbfa1=["\x31","\x32","\x63\x68\x65\x63\x6B\x65\x64","\x70\x72\x6F\x70","\x23\x63\x68\x65\x63\x6B\x2D\x72\x61\x6E\x67\x32","\x23\x63\x68\x65\x63\x6B\x2D\x72\x61\x6E\x67\x33","\x23\x63\x68\x65\x63\x6B\x2D\x72\x61\x6E\x67\x34","\x23\x63\x68\x65\x63\x6B\x2D\x72\x61\x6E\x67\x35","\x23\x63\x68\x65\x63\x6B\x2D\x72\x61\x6E\x67\x36","\x23\x63\x68\x65\x63\x6B\x2D\x72\x61\x6E\x67\x37","\x23\x63\x68\x65\x63\x6B\x2D\x72\x61\x6E\x67\x38","\x6C\x6F\x67","\x63\x6C\x69\x63\x6B","\x23\x63\x68\x65\x63\x6B\x2D\x72\x61\x6E\x67\x31","\x33","\x34","\x35","\x36","\x37","\x38"];if(phase== _0xbfa1[0]|| phase== _0xbfa1[1]){$(_0xbfa1[13])[_0xbfa1[12]](function(){$(_0xbfa1[4])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[5])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[6])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[7])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[8])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[9])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[10])[_0xbfa1[3]](_0xbfa1[2],false);console[_0xbfa1[11]](_0xbfa1[0])});$(_0xbfa1[4])[_0xbfa1[12]](function(){$(_0xbfa1[13])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[5])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[6])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[7])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[8])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[9])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[10])[_0xbfa1[3]](_0xbfa1[2],false);console[_0xbfa1[11]](_0xbfa1[1])});$(_0xbfa1[5])[_0xbfa1[12]](function(){$(_0xbfa1[13])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[4])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[6])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[7])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[8])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[9])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[10])[_0xbfa1[3]](_0xbfa1[2],false);console[_0xbfa1[11]](_0xbfa1[14])});$(_0xbfa1[6])[_0xbfa1[12]](function(){$(_0xbfa1[13])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[4])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[5])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[7])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[8])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[9])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[10])[_0xbfa1[3]](_0xbfa1[2],false);console[_0xbfa1[11]](_0xbfa1[15])});$(_0xbfa1[7])[_0xbfa1[12]](function(){$(_0xbfa1[13])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[4])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[5])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[6])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[8])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[9])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[10])[_0xbfa1[3]](_0xbfa1[2],false);console[_0xbfa1[11]](_0xbfa1[16])});$(_0xbfa1[8])[_0xbfa1[12]](function(){$(_0xbfa1[13])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[4])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[5])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[6])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[7])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[9])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[10])[_0xbfa1[3]](_0xbfa1[2],false);console[_0xbfa1[11]](_0xbfa1[17])});$(_0xbfa1[9])[_0xbfa1[12]](function(){$(_0xbfa1[13])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[4])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[5])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[6])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[7])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[8])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[10])[_0xbfa1[3]](_0xbfa1[2],false);console[_0xbfa1[11]](_0xbfa1[18])});$(_0xbfa1[10])[_0xbfa1[12]](function(){$(_0xbfa1[13])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[4])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[5])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[6])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[7])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[8])[_0xbfa1[3]](_0xbfa1[2],false);$(_0xbfa1[9])[_0xbfa1[3]](_0xbfa1[2],false);console[_0xbfa1[11]](_0xbfa1[19])})};
+
 	});
-</script>
+		</script>
 <?php if(isset($_SESSION['logged_user'])) : ?>
 	<div class ="content">
 		<?php if($user['legion'] != NULL and $user['rang'] != NULL and $user['steamid'] != NULL) : ?>
 		<div class="profbz">
 		<div class="profbz-content">
-			<a href="<?php echo $user['profurl'] ?>"><img style="height:150px;" src="<?php echo $user['avatar']?>"  /></a>
+			<a target="_blank" href="<?php echo $user['profurl'] ?>"><img style="height:150px;" src="<?php echo $user['avatar']?>"  /></a>
 			<?php echo '<div>'  ?>
 			<?php echo '<div>'.$_SESSION['logged_user']->number.$a.$_SESSION['logged_user']->name.'</div>' ?>
 			<?php echo '<div>'.$user['legion'].'</div>';  ?>
@@ -318,7 +242,7 @@ Highcharts.setOptions({
 			<?php echo '</div>'  ?>
 		</div>
 			<div class="prof-btns">
-			<a href="<?php echo $user['profurl'] ?>" class="prof-btn">профиль</a>
+			<a target = "_blank" href="<?php echo $user['profurl'] ?>" class="prof-btn">профиль</a>
 			<div id="prof-btn">копировать [Н|П|З]</div>
 			<div id="prof-btn2">копировать STEAM ID</div>
 			</div>
@@ -342,10 +266,11 @@ Highcharts.setOptions({
 				Фаза: <?php echo $_SESSION['logged_user']->phase; ?>
 				<br>
 				 <?php
-					$user = R::findOne('usersbz', 'number = ?', [$_SESSION['logged_user']->number]);
+ //	$online = R::findOne('online', 'd = :d AND m = :m AND y = :y AND steamname = :st', [':d' => $d, ':m' => $m, ':y' => $y, ':st'=>$player['name']]);
+					$user = R::findOne('usersbz', 'number = :n AND phase = :p', [':n' => $_SESSION['logged_user']->number, ':p' => $_SESSION['logged_user']->phase]);
 					
 					require 'steamauth/userInfo.php';
-					
+
 					if ($user['steamid']) {
 							if(isset($_SESSION['steamid'])) {
 								$user->steamid =  $_SESSION['steam_steamid'];
@@ -354,7 +279,7 @@ Highcharts.setOptions({
 								$user->steamname = $_SESSION['steam_personaname'];
 							}
 							echo '<br>';
-							echo '<span class="find">Steam:<a href="'.$user['profurl'].'"><img src="img/steam.png" style="height:50px;margin:5px;" />Подключено</a></span>';
+							echo '<span class="find">Steam:<a target="_blank" href="'.$user['profurl'].'"><img src="img/steam.png" style="height:50px;margin:5px;" />Подключено</a></span>';
 							echo '<a href="steamauth/logout.php" style="text-decoration:underline;">(Выйти)</a>';
 							
 						} else if (isset($_SESSION['steamid'])) {
@@ -456,7 +381,7 @@ if(session('access_token') and $dis['dsid'] == NULL) {
 		} 
 } else if ($dis['dsid'] != NULL) {
 		$user = apiRequest($apiURLBase);
-		echo '<span class="find">Discord:<a href=""><img src="img/discord.png" style="height:50px;margin:5px;" />Подключено</a></span>';
+		echo '<span class="find">Discord:<img src="img/discord.png" style="height:50px;margin:5px;" />Подключено</span>';
 		echo '<a href="?action=logout" style="text-decoration:underline;">(Выйти)</a>';
 	
 } else {
@@ -494,11 +419,12 @@ if(get('action') == 'logout') {
 						$roles = NULL;
 					}
 					
-				if ($roles != NULL and $user['phase'] == "1") {
-						if (strpos($roles, '636270468797562900')) {
-						$user->legion = "Солдат-клон";
+					if ($roles != NULL and $user['phase'] == "1") {
+						if (strpos($roles, '636268496107470850')) {
+						$user->legion = "Тренера";
+						$user->bigrang = "Мл. офицерский состав";
 						R::store($user);
-						echo '<span class="legCT">'. $user['legion'] . '</span>';
+						echo '<span class="legTREN">'. $user['legion'] . '</span>';
 					} elseif (strpos($roles, '750697611752898600')) {
 						$user->legion = "ОДИСБ";
 						$user->bigrang = "Мл. офицерский состав";
@@ -520,19 +446,18 @@ if(get('action') == 'logout') {
 						$user->legion = "Гвардия";
 						R::store($user);
 						echo '<span class="legGVARD">'. $user['legion'] . '</span>';
-					} elseif (strpos($roles, '636270262475554899')) {
-						$user->legion = "ИПК";
-						R::store($user);
-						echo '<span class="legIPK">'. $user['legion'] . '</span>';
 					} elseif (strpos($roles, '650207588801183791')) {
 						$user->legion = "Медик";
 						R::store($user);
 						echo '<span class="legMED">'. $user['legion'] . '</span>';
-					} elseif (strpos($roles, '636268496107470850')) {
-						$user->legion = "Тренера";
-						$user->bigrang = "Мл. офицерский состав";
+					} elseif (strpos($roles, '636270262475554899')) {
+						$user->legion = "ИПК";
 						R::store($user);
-						echo '<span class="legTREN">'. $user['legion'] . '</span>';
+						echo '<span class="legIPK">'. $user['legion'] . '</span>';
+					} elseif (strpos($roles, '636270468797562900')) {
+						$user->legion = "Солдат-клон";
+						R::store($user);
+						echo '<span class="legСТ">'. $user['legion'] . '</span>';
 					} elseif (strpos($roles, '636271352591941632')) {
 						$user->legion = "Без легиона";
 						$user->rang = "Кадет";
@@ -544,14 +469,12 @@ if(get('action') == 'logout') {
 						R::store($user);
 						echo '<span class="legODISB">'. $user['legion'] . '</span>';
 					// } // убрать ->
-					} 
-					elseif (strpos($roles, '636115360910671892')) {
+					} elseif (strpos($roles, '636115360910671892')) {
 						$user->legion = "Без легиона";
 						$user->rang = "Советник";
 						R::store($user);
 						echo '<span class="N">'. $user['legion'] . '</span>';
 					} 
-					
 					
 				} else if ($roles != NULL and $user['phase'] == "2") {
 						if (strpos($roles, '758369712106373150')) {
@@ -598,7 +521,6 @@ if(get('action') == 'logout') {
 						} else if (strpos($roles, '758372584474804365')) { // Советник
 							$user->legion = "Без легиона";
 							$user->rang = "Советник";
-							echo '<span class="N">'. $user['legion'] . '</span>';
 							R::store($user);
 						} else if (strpos($roles, '758369670851067966')) { // Кадет
 							$user->legion = "Без легиона";
@@ -664,7 +586,15 @@ if(get('action') == 'logout') {
 					$user->bigrang = NULL;
 					echo '<span class="K">'. $user['rang'] . '</span>';
 				} if (strpos($roles, '636267521997144086')) {
-					$user->rang = "Мандалорский тренер";
+					$user->rang = "Тренер 1-го ранга";
+					$user->bigrang = NULL;
+					echo '<span class="K">'. $user['rang'] . '</span>';
+				} if (strpos($roles, '941259701700685856')) {
+					$user->rang = "Тренер 2-го ранга";
+					$user->bigrang = NULL;
+					echo '<span class="K">'. $user['rang'] . '</span>';
+				} if (strpos($roles, '941259711364345889')) {
+					$user->rang = "Тренер 3-го ранга";
 					$user->bigrang = NULL;
 					echo '<span class="K">'. $user['rang'] . '</span>';
 				} if (strpos($roles, '745142892355649657')) {
@@ -732,9 +662,9 @@ if(get('action') == 'logout') {
 						echo '<span class="N">'. $user['rang'] . '</span>'; 
 					} else if (($user['legion'] == "Без легиона" and $user['rang'] == "Советник") and ($user['number'] == "2563" or $user['number'] == "7266")) {
 						echo '<span class="A">'. $user['rang'] . '</span>'; 
-					} else if ($user['legion'] == "Без легиона" and $user['rang'] == "Советник") {
-						echo '<span class="E">'. $user['rang'] . '</span>'; 
-					} 
+					} elseif ($user['rang'] == NULL) {
+						echo '<span class ="R">Отсутствует</span>';
+					}
 				}
 				} else if ($roles != NULL and $user['phase'] == "2") {
 					if (strpos($roles, '530382067167657984')) {
@@ -822,6 +752,8 @@ if(get('action') == 'logout') {
 						echo '<span class="A">'. $user['rang'] . '</span>'; 
 					} else if ($user['legion'] == "Без легиона" and $user['rang'] == "Советник") {
 						echo '<span class="E">'. $user['rang'] . '</span>'; 
+					} elseif ($user['rang'] == NULL) {
+						echo '<span class ="R">Отсутствует</span>';
 					}
 				}
 				} else {
@@ -830,14 +762,21 @@ if(get('action') == 'logout') {
 				R::store($user);
 				
 			?>
+				<?php 
+				if ($user['rang'] == NULL and $user['legion'] == NULL) {
+					echo '<br>';
+					echo '<br>';
+					echo '<span class = "alert-box">Для получения легиона и звания напишите в дискорд сервер команду !verify (Для этого нужна привязка Steam и Discord) </span>';
+				}  
+				?>
 				</p>
 			
 			</div>
 			<figure class="highcharts-figure">
 				<div id="container"></div>
-				<div style="display:flex;justify-content:center;">
+				<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;">
 					<?php if ($onl != true) {
-						echo '<div class ="alert-box" style="background:rgb(157, 192, 0, 0.5);border:2px solid green;">Погрешность счёта онлайна может составлять от 5 до 15 минут</div>';
+						echo '<div class ="alert-box" style="background:rgb(157, 192, 0, 0.5);border:2px solid green;">Погрешность счёта онлайна может составлять менее 5 минут</div>';
 					}
 					?>
 					

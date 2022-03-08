@@ -46,7 +46,7 @@ require __DIR__ . '/header.php';
 				<button class="btn-reg" name="do_login" type="submit">Войти</button>
 			</div>
 		</div>
-		<?php 
+		<?php
 			$data = $_POST;
 			
 			if(isset($data['do_login'])) {
@@ -75,7 +75,8 @@ require __DIR__ . '/header.php';
 					if($user['phase'] == $data['phase']) {
 						if(password_verify($data['password'], $user->password)) {
 						$_SESSION['logged_user'] = $user;
-						// header('Location: https://swrpngg.space/');
+						$user->lastEntry = date("[H:i:s] [j-m-y]");
+						R::store($user);
 						header('Location: https://swrpngg.space/');
 						exit;
 					} else {

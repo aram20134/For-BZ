@@ -46,7 +46,7 @@ require __DIR__ . '/header.php';
 			$errors[] = 'Вы ввели не номер!';
 		}
 		
-		if (mb_strlen($data['name']) > 15) {
+		if (mb_strlen($data['name']) > 20) {
 			$errors[] = 'Позывной не может быть таким длинным!';
 		}
 		if (R::count('usersbz', "number = ?", array($data['number'])) > 0) {

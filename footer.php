@@ -1,5 +1,28 @@
+<div id = "cockies">
+	<p> Данный сайт использует файлы COOKIE для корректной работы. Продолжая использование сайта вы соглашаетесь с тем, что мы используем COOKIE. </p>
+	<button class ="acp">Хорошо</button>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+<script>
+function checkCookies(){
+    let cookieDate = localStorage.getItem('cookieDate');
+    let cookieNotification = document.getElementById('cockies');
+    let cookieBtn = cookieNotification.querySelector('.acp');
+
+    if( !cookieDate || (+cookieDate + 31536000000) < Date.now() ){
+        cookieNotification.classList.add('show');
+    }
+
+    cookieBtn.addEventListener('click', function(){
+        localStorage.setItem( 'cookieDate', Date.now() );
+        cookieNotification.classList.add('hide');
+    })
+}
+checkCookies();
+</script>
 </body>
 </html>
+
 <footer>
 	<div class="foot-phase">
 	<div class ="img-content-l">

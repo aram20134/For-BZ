@@ -7,9 +7,8 @@ ob_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="yandex-verification" content="e4c9572b8cc0685c" />
-    <meta name="google-site-verification" content="bZqejiLKrDp3taS9Je72_cWm95TOIC6uzTjl_lHb7O8" />
     <title><?php echo $title; ?></title>
-	<link rel="stylesheet" href="glav.css?113">
+	<link rel="stylesheet" href="glav.css?137">
     <link rel="shortcut icon" href="img/logo.png" type="image/png">
     <!-- Yandex.Metrika counter -->
 <script type="text/javascript" >
@@ -18,7 +17,7 @@ ob_start();
    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
    ym(87038010, "init", {
-        clickmap:true,
+        clickmap:false,
         trackLinks:true,
         accurateTrackBounce:true,
         webvisor:true
@@ -31,8 +30,8 @@ ob_start();
 <header class="head">
     <div class="head-content">
         <div style="display: flex; align-items:center;">
-            <a href="https://swrpngg.space/" id="btn-logo"></a>
-            <a href="https://swrpngg.space/" style="text-decoration:none;"><p id="text-logo">STAR WARS RP NGG</p></a>
+            <a href="." id="btn-logo"></a>
+            <a href="." style="text-decoration:none;"><p id="text-logo">STAR WARS RP NGG</p></a>
         </div>
         <div class="drop-server">
         	<a class="btn-head">SWRP Phase 1<img src="img/chev.svg" class="chev" /></a>

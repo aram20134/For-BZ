@@ -9,26 +9,11 @@ require "db.php";
 require __DIR__ . '/header.php';
 ?>
 <?php
-    $memcache_obj = new Memcache;
-    $memcache_obj->connect('localhost', 11211) or die('Could not connect');
-    $onlinetemp = @$memcache_obj->get('onlinetemp');
-    $onlinetemp2 = @$memcache_obj->get('onlinetemp2');
-	
-	if ($data['phase'] == "1" and empty($onlinetemp)) {
+	if ($data['phase'] == '1') {
 		$online = R::getAssoc('SELECT * FROM online');
-		$memcache_obj->set('onlinetemp', $online, false, 600);
-	} else if ($data['phase'] == "1" and !empty($onlinetemp)) {
-		$online = $onlinetemp;
-	}
-	
-	if ($data['phase'] == "2" and empty($onlinetemp2)) {
+	} else {
 		$online = R::getAssoc('SELECT * FROM online2');
-		$memcache_obj->set('onlinetemp2', $online, false, 600);
-	} else if ($data['phase'] == "2" and !empty($onlinetemp2)) {
-		$online = $onlinetemp2;
 	}
-
-	$memcache_obj->close();
 	
 	function recursive_array_search($needle,$haystack) {
     foreach($haystack as $key=>$value) {
@@ -57,7 +42,7 @@ require __DIR__ . '/header.php';
 <?php 
 	$k = array_key_first($online);
 	$date = $online[array_key_first($online)];
-	$dateDiff = date_diff(new DateTime(), new DateTime($date['y']."-".$date['m']."-".$date['d']))->days;
+	$dateDiff = date_diff(new DateTime(), new DateTime($date['y']."-".$date['m']."-".$date['d']))->days + 1;
 ?>
 <script src="jquery-3.6.0.min.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -72,7 +57,13 @@ var chart = Highcharts.chart('container', {
         width:1200,
     },
     title: {
-        text: 'Топ 5 онлайна Phase <?php echo $data['phase'] ?> за <?php echo $dateDiff?> дней',
+        text: 'Топ 5 онлайна Phase <?php echo $data['phase'] ?> за <?php 
+			if ($dateDiff < 5) {
+				echo $dateDiff." Дня";
+			} else {
+				echo $dateDiff." Дней";
+			}
+		?>',
         style: {
         	color: 'white',
         	fontWeight: 'bold',
@@ -125,9 +116,9 @@ var chart = Highcharts.chart('container', {
             name: "Минуты",
             colorByPoint: true,
             data: [
-                {
+                { 
                     name: "<?php
-                    	$user = R::findOne('usersbz', 'steamname = ?', [$top50[0]['steamname']]);
+                    	$user = R::findOne('usersbz', 'steamname = :st AND phase = :ph', [':st' => $top50[0]['steamname'], ':ph' => $data['phase']]);
                     	if ($user == NULL) {
                     		echo $top50[0]['steamname'];
                     	} else {
@@ -139,7 +130,7 @@ var chart = Highcharts.chart('container', {
                 },
                 {
                     name: "<?php
-                    	$user = R::findOne('usersbz', 'steamname = ?', [$top50[1]['steamname']]);
+                    	$user = R::findOne('usersbz', 'steamname = :st AND phase = :ph', [':st' => $top50[1]['steamname'], ':ph' => $data['phase']]);
                     	if ($user == NULL) {
                     		echo $top50[1]['steamname'];
                     	} else {
@@ -151,7 +142,7 @@ var chart = Highcharts.chart('container', {
                 },
                 {
                     name: "<?php
-                    	$user = R::findOne('usersbz', 'steamname = ?', [$top50[2]['steamname']]);
+                    	$user = R::findOne('usersbz', 'steamname = :st AND phase = :ph', [':st' => $top50[2]['steamname'], ':ph' => $data['phase']]);
                     	if ($user == NULL) {
                     		echo $top50[2]['steamname'];
                     	} else {
@@ -163,7 +154,7 @@ var chart = Highcharts.chart('container', {
                 },
                 {
                     name: "<?php
-                    	$user = R::findOne('usersbz', 'steamname = ?', [$top50[3]['steamname']]);
+                    	$user = R::findOne('usersbz', 'steamname = :st AND phase = :ph', [':st' => $top50[3]['steamname'], ':ph' => $data['phase']]);
                     	if ($user == NULL) {
                     		echo $top50[3]['steamname'];
                     	} else {
@@ -175,7 +166,7 @@ var chart = Highcharts.chart('container', {
                 },
                 {
                     name: "<?php
-                    	$user = R::findOne('usersbz', 'steamname = ?', [$top50[4]['steamname']]);
+                    	$user = R::findOne('usersbz', 'steamname = :st AND phase = :ph', [':st' => $top50[4]['steamname'], ':ph' => $data['phase']]);
                     	if ($user == NULL) {
                     		echo $top50[4]['steamname'];
                     	} else {
@@ -207,7 +198,7 @@ var chart = Highcharts.chart('container', {
     if (window.matchMedia("(min-width: 600px)").matches) {
     	
     } else {
-    	chart.setSize(320);
+    	chart.setSize(document.documentElement.clientWidth);
     }
     });
 </script>
@@ -219,17 +210,26 @@ var chart = Highcharts.chart('container', {
 			<div style="display:flex;justify-content:center;">
 			</div>
 		</figure>
-	<h1 style="margin-top:70px;text-align:center;">Топ 50 онлайна Phase <?php echo $data['phase'] ?> за <?php echo $dateDiff?> дней</h1>
+	<h1 style="margin-top:70px;text-align:center;">Топ 50 онлайна Phase <?php echo $data['phase'] ?> за 
+	<?php 
+			if ($dateDiff < 5) {
+				echo $dateDiff." Дня";
+			} else {
+				echo $dateDiff." Дней";
+			}
+	?>
+	</h1>
 	<div class="top-players">
 		<div class ="pl" style="border:2px solid white;border-radius:15px;">
 			<div class="num-td">Место</div>
-			<div class="pl-td">Ник (НПЗ)</div>
+			<div class="pl-td" style="color:white;" >Ник (НПЗ)</div>
 			<div class="time-td">Время (м)</div>
 		</div>
 		<?php 
 			for($i = 0; $i < 50; $i++) {
 				$n = $i + 1;
-				$user = R::findOne('usersbz', 'steamname = ?', [$top50[$i]['steamname']]);
+				// $online = R::findOne('online', 'd = :d AND m = :m AND y = :y AND steamname = :st', [':d' => $d, ':m' => $m, ':y' => $y, ':st'=>$player['name']]);
+				$user = R::findOne('usersbz', 'steamname = :st AND phase = :ph', [':st' => $top50[$i]['steamname'], ':ph' => $data['phase']]);
 				echo '<div class="pl">';
 				if ($n == 1) {
 					echo '<div class="num-td" style="background:#ffd700;color:black;">' .$n.". ". '</div>';
@@ -244,7 +244,7 @@ var chart = Highcharts.chart('container', {
 				if ($user == NULL) {
 					echo '<a href="profile-other?steam='.$top50[$i]['steamname']."&phase=".$data['phase'].'" class="pl-td">'.$top50[$i]['steamname']. '</a>';
 				} else {
-					echo '<a href="profile-other?number='.$user['number']."&phase=".$user['phase'].'" class="pl-tdf">'.$user['number']." | ".$user['name']. '</a>';
+					echo '<a href="profile-other?number='.$user['number']."&phase=".$user['phase'].'" class="pl-tdf">'.$user['number']." | ".$user['name']." | ".$user['rang']. '</a>';
 				}
 				echo '<div class="time-td">'.$top50[$i]['time']. '</div>';
 				echo '</div>';
