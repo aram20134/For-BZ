@@ -112,7 +112,13 @@ if ($result2['map'] == "rp_corellia_ngg_winter" or $result2['map'] == "rp_corell
                 	}
             	?>
             </div>
-            <div id="difftime2"></div>
+            <?php 
+			if ($result2['raw']['numplayers'] != NULL) {
+				echo '<div id="difftime"></div>';
+			} else {
+				echo '<div id="difftime" style="background-color:red;"></div>';
+			}
+		?>
         </div>
         <h1>Игроки на сервере</h1>
 	<div class ="players">

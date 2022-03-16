@@ -2,9 +2,7 @@
 
 set_time_limit(30);
 
-$title="Save BD";
 require "db.php";
-require __DIR__ . '/header.php';
 
 // ПЕРВЫЙ СЕРВЕР
 $url="http://83.234.136.125:3333/players";
@@ -73,4 +71,36 @@ foreach($result2['players'] as $player2) {
 					R::store($online2);
 				}
 }
+
+$bz1 = R::findOne('bz1', 'd = :d AND m = :m AND y = :y', [':d' => $d, ':m' => $m, ':y' => $y]);
+$bz2 = R::findOne('bz2', 'd = :d AND m = :m AND y = :y', [':d' => $d, ':m' => $m, ':y' => $y]);
+
+if ($bz1 == NULL) {
+	$bz1 = R::dispense('bz1');
+	$bz1->d = date("d");
+	$bz1->m = date("m");
+	$bz1->y = date("Y");
+	$bz1->pick = $result['raw']['numplayers'];
+    R::store($bz1);
+}
+
+if ($bz1['pick'] < $result['raw']['numplayers']) {
+	$bz1->pick = $result['raw']['numplayers'];
+    R::store($bz1);
+}
+
+if ($bz2 == NULL) {
+	$bz2 = R::dispense('bz2');
+	$bz2->d = date("d");
+	$bz2->m = date("m");
+	$bz2->y = date("Y");
+	$bz2->pick = $result2['raw']['numplayers'];
+    R::store($bz2);
+}
+
+if ($bz2['pick'] < $result2['raw']['numplayers']) {
+	$bz2->pick = $result2['raw']['numplayers'];
+    R::store($bz2);
+}
+
 exit();

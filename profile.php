@@ -102,6 +102,7 @@ Highcharts.setOptions({
             offset: 15,
             tickWidth: 1,
             tickLength: 10,
+			tickAmount: 6,
             lineWidth: 1,
         	title: {
             	style: {
@@ -152,7 +153,7 @@ Highcharts.setOptions({
             name: 'Минуты',
             data: online,
             tooltip: {
-                valueDecimals: 2
+                valueDecimals: 0
             },
             marker: {
                 enabled: true,
@@ -660,7 +661,7 @@ if(get('action') == 'logout') {
 						echo '<span class="O">'. $user['rang'] . '</span>'; 
 					} else if ($user['legion'] == "Без легиона" and $user['rang'] == "Кадет") {
 						echo '<span class="N">'. $user['rang'] . '</span>'; 
-					} else if (($user['legion'] == "Без легиона" and $user['rang'] == "Советник") and ($user['number'] == "2563" or $user['number'] == "7266")) {
+					} else if (($user['legion'] == "Без легиона" and $user['rang'] == "Советник") and ($user['number'] == "2563")) {
 						echo '<span class="A">'. $user['rang'] . '</span>'; 
 					} elseif ($user['rang'] == NULL) {
 						echo '<span class ="R">Отсутствует</span>';

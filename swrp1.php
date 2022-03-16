@@ -130,9 +130,13 @@ $diff2 = $diff2->format("%i");
                 	}
     		?>
         </div>
-        <div id="difftime">
-        	<!--Обновление в реальном времени-->
-        </div>
+        <?php 
+			if ($result['raw']['numplayers'] != NULL) {
+				echo '<div id="difftime"></div>';
+			} else {
+				echo '<div id="difftime" style="background-color:red;"></div>';
+			}
+		?>
 	</div>
 	<h1>Игроки на сервере</h1>
 	<div class ="players">

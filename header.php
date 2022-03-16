@@ -8,7 +8,7 @@ ob_start();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="yandex-verification" content="e4c9572b8cc0685c" />
     <title><?php echo $title; ?></title>
-	<link rel="stylesheet" href="glav.css?137">
+	<link rel="stylesheet" href="glav.css?138">
     <link rel="shortcut icon" href="img/logo.png" type="image/png">
     <!-- Yandex.Metrika counter -->
 <script type="text/javascript" >

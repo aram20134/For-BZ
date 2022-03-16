@@ -190,7 +190,13 @@ map?$(".first").toggleClass("map-korriban"):"Geonosis"==map?$(".first").toggleCl
                 	}
                 	?>
                 </div>
-                <div id="difftime"> </div>
+				<?php 
+					if ($result['raw']['numplayers'] != NULL) {
+						echo '<div id="difftime"></div>';
+					} else {
+						echo '<div id="difftime" style="background-color:red;"></div>';
+					}
+				?>
             </div>
             </a>
             <p class="name-server">
@@ -217,7 +223,13 @@ map?$(".first").toggleClass("map-korriban"):"Geonosis"==map?$(".first").toggleCl
                 	}
                 	?>
                 </div>
-                <div id="difftime2"> </div>
+                <?php 
+					if ($result2['raw']['numplayers'] != NULL) {
+						echo '<div id="difftime"></div>';
+					} else {
+						echo '<div id="difftime" style="background-color:red;"></div>';
+					}
+				?>
             </div>
             </a>
         </div>

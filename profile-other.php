@@ -179,6 +179,7 @@ Highcharts.setOptions({
             offset: 15,
             tickWidth: 1,
             tickLength: 10,
+			tickAmount: 6,
             lineWidth: 1,
         	title: {
             	style: {
@@ -232,7 +233,7 @@ Highcharts.setOptions({
             name: 'Минуты',
             data: online,
             tooltip: {
-                valueDecimals: 2,
+                valueDecimals: 0,
             },
             marker: {
                 enabled: true,
@@ -389,7 +390,12 @@ Highcharts.setOptions({
 						$user->rang = "Советник";
 						R::store($user);
 						echo '<span class="N">'. $user['legion'] . '</span>';
-					} 
+					} elseif (strpos($roles, '636115360910671892')) {
+						$user->legion = "Без легиона";
+						$user->rang = "Советник";
+						R::store($user);
+						echo '<span class="N">'. $user['legion'] . '</span>';
+					}
 					
 					
 				} else if ($roles != NULL and $user['phase'] == "2") {
@@ -434,7 +440,7 @@ Highcharts.setOptions({
 							$user->rang = "Осужденный";
 							echo '<span class="legODISB">'. $user['legion'] . '</span>';
 							R::store($user);
-						} else if (strpos($roles, '-------')) { // Советник
+						} else if (strpos($roles, '-----')) { // Советник
 							$user->legion = "Без легиона";
 							$user->rang = "Советник";
 							echo '<span class="N">'. $user['legion'] . '</span>';
@@ -453,7 +459,7 @@ Highcharts.setOptions({
 							$user->legion = "ЭРК";
 							echo '<span class="legERK">'. $user['legion'] . '</span>';
 							R::store($user);
-						}
+						} 
 					} else {
 						echo '<span class="N">Отсутствует</span>';
 					}
