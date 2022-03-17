@@ -23,7 +23,7 @@ https://swrpngg.space/ - Active
 
 ![image](https://user-images.githubusercontent.com/85961114/153407714-f9d04c2c-f13e-4582-a3a0-8f8294f8cb37.png)
 ![image](https://user-images.githubusercontent.com/85961114/153408025-93fc9dc1-9638-483e-9fb4-b6b9478951c2.png)
-![image](https://user-images.githubusercontent.com/85961114/148447453-f0260613-2b8c-4f28-b11f-409e91771710.png)
+![image](https://user-images.githubusercontent.com/85961114/158866970-16c209f0-61fd-494d-b010-fc9c0fa167b1.png)
 ![image](https://user-images.githubusercontent.com/85961114/158866700-5b24fc98-a8f7-4ada-aa3a-8305a9861342.png)
 ![image](https://user-images.githubusercontent.com/85961114/158866848-9ff3ff4f-5c9e-43e1-83da-3458145d9394.png)
 ![image](https://user-images.githubusercontent.com/85961114/151601979-dd56ca42-af78-46e9-89d0-e7140360fcf9.png)
