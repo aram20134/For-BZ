@@ -3,9 +3,17 @@ $title="[SWRP] Профиль";
 require "db.php";
 require __DIR__ . '/header.php';
 require "steamauth/steamauth.php";
+require __DIR__ . '/distab.php';
 ?>
-<?php $user = R::findOne('usersbz', 'number = ?', [$_SESSION['logged_user']->number]); ?>
-<?php $roles = R::findOne('site', 'discordid = ?', [$user['dsid']]); 
+<?php $user = R::findOne('usersbz', 'number = :n AND phase = :ph', [':n' => $_SESSION['logged_user']->number, ':ph' => $_SESSION['logged_user']->phase]); ?>
+<?php
+
+if ($user['phase'] == 1) {
+	$roles = R::findOne('roles', 'discordid = ?', [$user['dsid']]); 
+} else {
+	$roles = R::findOne('roles2', 'discordid = ?', [$user['dsid']]); 
+}
+
 if ($roles == NULL and $user != NULL) {
 	$user->rang = NULL;
 	$user->bigrang = NULL;
@@ -14,6 +22,22 @@ if ($roles == NULL and $user != NULL) {
 }
 ?>
 <script src="jquery-3.6.0.min.js"></script>
+<script>
+    $(function(){
+  $('.asd').click(function(){
+    $.ajax ({
+        url: 'disdb.php',
+        method: 'post',
+        data: {id: $(this).parent().attr('id'), user: '<?php echo $user['number'] ?>', phase: '<?php echo $user['phase'] ?>'},
+        success: function (data) {
+            var elem = $('#'+data);
+            $(elem).detach();
+            console.log(data);
+        }
+    });
+  });
+});
+</script>
 <!--GRAPHICS-->
 <script src="https://code.highcharts.com/stock/highstock.js"></script>
 <script src="https://code.highcharts.com/stock/modules/data.js"></script>
@@ -22,20 +46,25 @@ if ($roles == NULL and $user != NULL) {
 <?php if ($user['steamname'] != NULL) : ?>
 
 <script type="text/javascript">
-<?php 
-	$online = R::findAll('online', 'steamname = ?', [$user['steamname']]);
-?>
 
 document.addEventListener('DOMContentLoaded', function () {
 	// [Date.UTC(2022, 0, 21), 100],
-	
 	var online = [
-		<?php
+	<?php 
+	if ($user['phase'] == 1) {
+		$online = R::findAll('online', 'steamname = ?', [$user['steamname']]);
 		foreach ($online as $key => $value) {
 			$value['m']--;
 			echo '[Date.UTC('.$value['y'].','.$value['m'].','.$value['d'].'),'.$value['time'].'],';
 		}
-		?>
+		} elseif ($user['phase'] == 2) {
+			$online = R::findAll('online2', 'steamname = ?', [$user['steamname']]);
+			foreach ($online as $key => $value) {
+				$value['m']--;
+				echo '[Date.UTC('.$value['y'].','.$value['m'].','.$value['d'].'),'.$value['time'].'],';
+			}
+		}
+	?>
 	];
 Highcharts.setOptions({
     lang: {
@@ -284,7 +313,7 @@ Highcharts.setOptions({
 							echo '<a href="steamauth/logout.php" style="text-decoration:underline;">(Выйти)</a>';
 							
 						} else if (isset($_SESSION['steamid'])) {
-							$check = R::findOne('usersbz', 'steamid = ?', [$_SESSION['steamid']]);
+							$check = R::findOne('usersbz', 'steamid = :steamid AND phase = :ph', [':steamid' => $_SESSION['steamid'], ':ph' => $user['phase']]);
 							if ($check == NULL) {
 								$user->steamid = $_SESSION['steam_steamid'];
 								$user->avatar = $_SESSION['steam_avatarfull'];
@@ -317,8 +346,7 @@ $tokenURL = 'https://discordapp.com/api/oauth2/token';
 $apiURLBase = 'https://discord.com/api/users/@me';
 $revokeURL = 'https://discord.com/api/oauth2/token/revoke';
 
-$dis = R::findOne('usersbz', 'number = ?', [$_SESSION['logged_user']->number]);
-
+$dis = R::findOne('usersbz', 'number = :n AND phase = :ph', [':n' => $_SESSION['logged_user']->number, ':ph' => $user['phase']]);
 
 function apiRequest($url, $post=FALSE, $headers=array()) {
     $ch = curl_init($url);
@@ -346,7 +374,7 @@ if(get('action') == 'login') {
     'client_id' => OAUTH2_CLIENT_ID,
     'redirect_uri' => 'https://swrpngg.space/profile',
     'response_type' => 'code',
-    'scope' => 'identify connections email'
+    'scope' => 'identify connections'
   );
   // Redirect the user to Discord's authorization page
   header('Location: https://discordapp.com/api/oauth2/authorize' . '?' . http_build_query($params));
@@ -368,11 +396,15 @@ if(get('code')) {
 $user = apiRequest($apiURLBase);
 if(session('access_token') and $dis['dsid'] == NULL) {
 		$user = apiRequest($apiURLBase);
-		$check = R::findOne ('usersbz', 'dsid = ?', [$user->id]);
+		$check = R::findOne ('usersbz', 'dsid = :dsid AND phase = :ph', [':dsid' => $user->id, ':ph' => $dis['phase']]);
 		if ($check == NULL) {
 			echo '<span class="find">Discord:<a href=""><img src="img/discord.png" style="height:50px;margin:5px;" />Подключено</a></span>';
 			echo '<a href="?action=logout" style="text-decoration:underline;">(Выйти)</a>';
 			$dis->dsid = $user->id;
+			$dis->dsav = $user->avatar;
+			$dis->dsnum = $user->discriminator;
+			$dis->dsname = $user->username;
+			$dis->dscol = $user->banner_color;
 			R::store($dis);
 		} else if ($check != NULL) {
 			echo '<br>';
@@ -399,6 +431,10 @@ if(get('action') == 'logout') {
     $dis['legion'] = NULL;
     $dis['rang'] = NULL;
     $dis['bigrang'] = NULL;
+	$dis['dsav'] = NULL;
+	$dis['dscol'] = NULL;
+	$dis['dsname'] = NULL;
+	$dis['dsnum'] = NULL;
     $roles['discordid'] = NULL;
     $roles['roleslist'] = NULL;
     header('Location: https://swrpngg.space/profile');
@@ -406,10 +442,10 @@ if(get('action') == 'logout') {
     R::store($roles);
     exit();
   }
-
+//   print_r($user);
 ?>
 				<br><br>
-				Легион: <?php $user = R::findOne('usersbz', 'number = ?', [$_SESSION['logged_user']->number]);
+				Легион: <?php $user = R::findOne('usersbz', 'number = :n AND phase = :ph', [':n' => $_SESSION['logged_user']->number, ':ph' => $dis['phase']]);
 					if (isset($roles['roleslist'])) {
 						$roles = $roles['roleslist'];
 						// $user['rang'] = NULL;
@@ -458,7 +494,7 @@ if(get('action') == 'logout') {
 					} elseif (strpos($roles, '636270468797562900')) {
 						$user->legion = "Солдат-клон";
 						R::store($user);
-						echo '<span class="legСТ">'. $user['legion'] . '</span>';
+						echo '<span class="legCT">'. $user['legion'] . '</span>';
 					} elseif (strpos($roles, '636271352591941632')) {
 						$user->legion = "Без легиона";
 						$user->rang = "Кадет";
@@ -475,7 +511,9 @@ if(get('action') == 'logout') {
 						$user->rang = "Советник";
 						R::store($user);
 						echo '<span class="N">'. $user['legion'] . '</span>';
-					} 
+					} else {
+						echo '<span class="N">Отсутствует</span>';
+					}
 					
 				} else if ($roles != NULL and $user['phase'] == "2") {
 						if (strpos($roles, '758369712106373150')) {
@@ -507,7 +545,8 @@ if(get('action') == 'logout') {
 							echo '<span class="legMED">'. $user['legion'] . '</span>';
 							R::store($user);
 						} else if (strpos($roles, '758375394667003974')) {
-							$user->legion = "Инструктора";
+							$user->legion = "Инструкторы";
+							$user->bigrang = "Инструкторы";
 							echo '<span class="legTREN">'. $user['legion'] . '</span>';
 							R::store($user);
 						} else if (strpos($roles, '758377044031176756')) {
@@ -522,8 +561,9 @@ if(get('action') == 'logout') {
 						} else if (strpos($roles, '758372584474804365')) { // Советник
 							$user->legion = "Без легиона";
 							$user->rang = "Советник";
+							echo '<span class="N">'. $user['legion'] . '</span>';
 							R::store($user);
-						} else if (strpos($roles, '758369670851067966')) { // Кадет
+						} else if (strpos($roles, '758369039994847312')) { // Кадет
 							$user->legion = "Без легиона";
 							$user->rang = "Кадет";
 							echo '<span class="N">'. $user['legion'] . '</span>';
@@ -537,6 +577,8 @@ if(get('action') == 'logout') {
 							$user->legion = "ЭРК";
 							echo '<span class="legERK">'. $user['legion'] . '</span>';
 							R::store($user);
+						} else {
+							echo '<span class="N">Отсутствует</span>';
 						}
 					} else {
 						echo '<span class="N">Отсутствует</span>';
@@ -549,7 +591,7 @@ if(get('action') == 'logout') {
 					if (strpos($roles, '636274085441044489')) {
 					// $user->rang = NULL; // Рядовой состав
 					$user->bigrang = "Рядовой состав";
-						if ($user['rang'] == "Рядовой состав") {
+						if ($user['rang'] == NULL) {
 							echo '<span class="N">Отсутствует</span>';
 							echo '<br><br><span style="border:2px solid green;margin:5px;padding:5px;border-radius:10px;display:inline-flex;">Уточните ваше звание ниже</span>';
 						}
@@ -575,11 +617,11 @@ if(get('action') == 'logout') {
 							echo '<br><br><span style="border:2px solid red;margin:5px;padding:5px;border-radius:10px;display:inline-flex;">Для отображения в списке игроков, уточните ваше звание ниже</span>';
 						}
 				} if (strpos($roles, '698240245149335583')) {
-					$user->rang = "Зам. начальнка";
+					$user->rang = "Зам. начальника";
 					$user->bigrang = NULL;
 					echo '<span class="K">'. $user['rang'] . '</span>';
 				} if (strpos($roles, '636268938631839765')) {
-					$user->rang = "Начальнк";
+					$user->rang = "Начальник";
 					$user->bigrang = NULL;
 					echo '<span class="K">'. $user['rang'] . '</span>';
 				} if (strpos($roles, '636268248186224700')) {
@@ -663,15 +705,17 @@ if(get('action') == 'logout') {
 						echo '<span class="N">'. $user['rang'] . '</span>'; 
 					} else if (($user['legion'] == "Без легиона" and $user['rang'] == "Советник") and ($user['number'] == "2563")) {
 						echo '<span class="A">'. $user['rang'] . '</span>'; 
-					} elseif ($user['rang'] == NULL) {
-						echo '<span class ="R">Отсутствует</span>';
+					} else {
+						echo '<span class="N">Отсутствует</span>';
 					}
-				}
-				} else if ($roles != NULL and $user['phase'] == "2") {
+				} 
+			 	} else if ($roles != NULL and $user['phase'] == "2") {
+					 $c = 1;
 					if (strpos($roles, '530382067167657984')) {
 					// $user->rang = NULL; // Рядовой состав
 					$user->bigrang = "Рядовой состав";
-						if ($user['rang'] == "Рядовой состав") {
+						if ($user['rang'] == NULL) {
+							$c = 0;
 							echo '<span class="N">Отсутствует</span>';
 							echo '<br><br><span style="border:2px solid green;margin:5px;padding:5px;border-radius:10px;display:inline-flex;">Уточните ваше звание ниже</span>';
 						}
@@ -679,6 +723,7 @@ if(get('action') == 'logout') {
 					// $user->rang = NULL; // Капральский состав
 					$user->bigrang = "Капральский состав";
 						if ($user['rang'] == NULL) {
+							$c = 0;
 							echo '<span class="N">Отсутствует</span>';
 							echo '<br><br><span style="border:2px solid red;margin:5px;padding:5px;border-radius:10px;display:inline-flex;">Для отображения в списке игроков, уточните ваше звание ниже</span>';
 						}
@@ -686,6 +731,7 @@ if(get('action') == 'logout') {
 					// $user->rang = NULL; // Сержантский состав
 					$user->bigrang = "Сержантский состав";
 						if ($user['rang'] == NULL) {
+							$c = 0;
 							echo '<span class="N">Отсутствует</span>';
 							echo '<br><br><span style="border:2px solid red;margin:5px;padding:5px;border-radius:10px;display:inline-flex;">Для отображения в списке игроков, уточните ваше звание ниже</span>';
 						}
@@ -693,6 +739,7 @@ if(get('action') == 'logout') {
 					// $user->rang = NULL; // Старше-сержантский состав
 					$user->bigrang = "Старше-сержантский состав";
 						if ($user['rang'] == NULL) {
+							$c = 0;
 							echo '<span class="N">Отсутствует</span>';
 							echo '<br><br><span style="border:2px solid red;margin:5px;padding:5px;border-radius:10px;display:inline-flex;">Для отображения в списке игроков, уточните ваше звание ниже</span>';
 						}
@@ -700,13 +747,23 @@ if(get('action') == 'logout') {
 					// $user->rang = NULL; // Мл. офицерский состав
 					$user->bigrang = "Мл. офицерский состав";
 						if ($user['rang'] == NULL) {
+							$c = 0;
 							echo '<span class="N">Отсутствует</span>';
 							echo '<br><br><span style="border:2px solid red;margin:5px;padding:5px;border-radius:10px;display:inline-flex;">Для отображения в списке игроков, уточните ваше звание ниже</span>';
 						}
-				} if (strpos($roles, '530381907163217926')) {
+				} if (strpos($roles, '530381907163217926') or strpos($roles, '944640382317240360')) {
 					// $user->rang = NULL; // Офицерский состав
 					$user->bigrang = "Офицерский состав";
 						if ($user['rang'] == NULL) {
+							$c = 0;
+							echo '<span class="N">Отсутствует</span>';
+							echo '<br><br><span style="border:2px solid red;margin:5px;padding:5px;border-radius:10px;display:inline-flex;">Для отображения в списке игроков, уточните ваше звание ниже</span>';
+						}
+				} if (strpos($roles, '758375394667003974')) {
+					// $user->rang = NULL; // Офицерский состав
+					$user->bigrang = "Инструкторы";
+						if ($user['rang'] == NULL) {
+							$c = 0;
 							echo '<span class="N">Отсутствует</span>';
 							echo '<br><br><span style="border:2px solid red;margin:5px;padding:5px;border-radius:10px;display:inline-flex;">Для отображения в списке игроков, уточните ваше звание ниже</span>';
 						}
@@ -727,17 +784,65 @@ if(get('action') == 'logout') {
 					$user->bigrang = NULL;
 					echo '<span class="K">'. $user['rang'] . '</span>';
 				} if (strpos($roles, '530531632172761119')) {
-					$user->rang = "Младший контр-адмирал";
-					$user->bigrang = "Адмиральский состав";
-					echo '<span class="K">'. $user['rang'] . '</span>';
+					if (strpos($roles, '780540907522883594')) {
+						$user->rang = "Адмирал";
+						$user->bigrang = NULL;
+						echo '<span class="K">'. $user['rang'] . '</span>';
+					} else {
+						$user->bigrang = "КМД ИПК";
+						if ($user['rang'] == NULL) {
+							$c = 0;
+							echo '<span class="K">Отсутствует</span>';
+							echo '<br><br><span style="border:2px solid green;margin:5px;padding:5px;border-radius:10px;display:inline-flex;">Уточните ваше звание ниже</span>';
+						} else {
+							echo '<span class="K">'. $user['rang'] . '</span>';
+						}
+					}
 				} if (strpos($roles, '538377815062478858')) {
-					$user->rang = "Главврач";
-					$user->bigrang = "Военврачебный состав";
-					echo '<span class="K">'. $user['rang'] . '</span>';
-				} if (strpos($roles, '530531787974246428')) {
-					$user->rang = "Адмирал флота";
-					$user->bigrang = NULL;
-					echo '<span class="K">'. $user['rang'] . '</span>';
+					if (strpos($roles, '780540907522883594')) {
+						$user->rang = "Военврач 1-го ранга";
+						$user->bigrang = NULL;
+						echo '<span class="K">'. $user['rang'] . '</span>';
+					} else {
+						$user->bigrang = "КМД МЕД";
+						if ($user['rang'] == NULL) {
+							$c = 0;
+							echo '<span class="K">Отсутствует</span>';
+							echo '<br><br><span style="border:2px solid green;margin:5px;padding:5px;border-radius:10px;display:inline-flex;">Уточните ваше звание ниже</span>';
+						} else {
+							echo '<span class="K">'. $user['rang'] . '</span>';
+						}
+					}
+				} if (strpos($roles, '538346330465239050')) {
+					if (strpos($roles, '780540907522883594')) {
+						$user->rang = "Начальник ОДИСБ";
+						$user->bigrang = NULL;
+						echo '<span class="K">'. $user['rang'] . '</span>';
+					} else {
+						$user->bigrang = 'КМД ОДИСБ';
+						if ($user['rang'] == NULL) {
+							$c = 0;
+							echo '<span class="K">Отсутствует</span>';
+							echo '<br><br><span style="border:2px solid green;margin:5px;padding:5px;border-radius:10px;display:inline-flex;">Уточните ваше звание ниже</span>';
+						} else {
+							echo '<span class="K">'. $user['rang'] . '</span>';
+						}
+					}
+				} if (strpos($roles, '530388056797216790')) { 
+					if (strpos($roles, '780540907522883594')) { // Глава подразделения
+						$user->rang = "Каминоанский инструктор 1-го ранга";
+						$user->bigrang = NULL;
+						echo '<span class="K">'. $user['rang'] . '</span>';
+					} else { // Другие кмд
+						$user->bigrang = 'КМД Инструкторы';
+						if ($user['rang'] == NULL) {
+							$c = 0;
+							echo '<span class="K">Отсутствует</span>';
+							echo '<br><br><span style="border:2px solid green;margin:5px;padding:5px;border-radius:10px;display:inline-flex;">Уточните ваше звание ниже</span>';
+						} else {
+							echo '<span class="K">'. $user['rang'] . '</span>';
+						}
+					}
 				} else {
 					if (($user['bigrang'] == "Рядовой состав" or $user['bigrang'] == "Капральский состав") and $user['rang'] != NULL) {
 						echo '<span class="R">'. $user['rang'] . '</span>'; 
@@ -753,12 +858,14 @@ if(get('action') == 'logout') {
 						echo '<span class="A">'. $user['rang'] . '</span>'; 
 					} else if ($user['legion'] == "Без легиона" and $user['rang'] == "Советник") {
 						echo '<span class="E">'. $user['rang'] . '</span>'; 
-					} elseif ($user['rang'] == NULL) {
-						echo '<span class ="R">Отсутствует</span>';
-					}
+					} else if ($user['bigrang'] == "Инструкторы" and $user['rang'] != NULL) {
+						echo '<span class="MO">'. $user['rang'] . '</span>'; 
+					} else if ($user['rang'] == NULL and $c == "1") {
+						echo '<span class="N">Отсутствует</span>';
+					} 
 				}
 				} else {
-					echo '<span class="N">Отсутствует</span>';
+					echo '<span class="R">Отсутствует</span>'; 
 				}
 				R::store($user);
 				
@@ -767,11 +874,30 @@ if(get('action') == 'logout') {
 				if ($user['rang'] == NULL and $user['legion'] == NULL) {
 					echo '<br>';
 					echo '<br>';
-					echo '<span class = "alert-box">Для получения легиона и звания напишите в дискорд сервер команду !verify (Для этого нужна привязка Steam и Discord) </span>';
+					if ($user['phase'] == 1) {
+						echo '<span style="display:inline-block;width:610px;max-width:100%;" class = "alert-box">Для получения легиона и звания напишите в дискорд сервер команду !verify в канале #4at (Для этого нужна привязка Steam и Discord) </span>';
+					} else {
+						echo '<span style="display:inline-block;width:610px;max-width:100%;" class = "alert-box">Для получения легиона и звания напишите в дискорд сервер команду !login в канале #команды-боту (Для этого нужна привязка Steam и Discord) </span>';
+					}
 				}  
 				?>
 				</p>
-			
+				<?php 
+				if ($user['phase'] == 1) {
+					$roles = R::findOne('roles', 'discordid = ?', [$user['dsid']]); 
+				} else {
+					$roles = R::findOne('roles2', 'discordid = ?', [$user['dsid']]);  
+				}
+				if ($roles != NULL and $user['dsav'] != NULL) {
+					$role = showdis($user, $roles, $user['phase'], true);
+					// if ($role == false) {
+					// 	$user['rang'] = NULL;
+					// 	R::store($user);
+						// header('Location: https://swrpngg.space/profile');
+						// $role = true;
+					// }
+				}
+				?>
 			</div>
 			<figure class="highcharts-figure">
 				<div id="container"></div>
@@ -785,7 +911,7 @@ if(get('action') == 'logout') {
 			</figure>
 			
 			
-			<?php if($user['bigrang'] == "Рядовой состав" or $user['bigrang'] == "Сержантский состав" or $user['bigrang'] == "Мл. офицерский состав" or $user['bigrang'] == "Офицерский состав") : ?>
+			<?php if($user['bigrang'] == "Капральский состав" or $user['bigrang'] == "Рядовой состав" or $user['bigrang'] == "Сержантский состав" or $user['bigrang'] == "Старше-сержантский состав" or $user['bigrang'] == "Мл. офицерский состав" or $user['bigrang'] == "Офицерский состав" or $user['bigrang'] == "КМД ОДИСБ" or $user['bigrang'] == "КМД ИПК" or $user['bigrang'] == "КМД Инструкторы" or $user['bigrang'] == "КМД МЕД" or $user['bigrang'] == "Инструкторы") : ?>
 			<h1 style="display:flex;justify-content:center;text-align:center;">Укажите свои данные на SWRP Phase <?php echo $_SESSION['logged_user']->phase ?></h1>
 			<div class ="alert-box" style="max-width:100%;">
 				
@@ -796,13 +922,12 @@ if(get('action') == 'logout') {
 				<div class="text-prof">
 				
 			<?php 
-				function saverang() {
+				function saverang($phase) {
 				$data = $_POST;
-				$user = R::findOne('usersbz', 'number = ?', [$_SESSION['logged_user']->number]);
+				$user = R::findOne('usersbz', 'number = :n AND phase = :ph', [':n' => $_SESSION['logged_user']->number, ':ph' => $phase]);
 					if(isset($data['save'])) {
 						$errors = array();
-						// print_r($user);
-						// print_r($data);
+						
 						if(trim($data['rang']) == "") {
 							$errors[] = 'Выберите звание!';
 						}
@@ -845,7 +970,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} else if ($user['legion'] == "Медик") {
@@ -864,7 +989,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} else if ($user['legion'] == "ИПК") {
@@ -886,7 +1011,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						}
@@ -925,7 +1050,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} else if ($user['legion'] == "Медик") {
@@ -944,7 +1069,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} else if ($user['legion'] == "ИПК") {
@@ -966,7 +1091,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} 
@@ -987,7 +1112,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} else if ($user['legion'] == "Медик") {
@@ -1006,7 +1131,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} else if ($user['legion'] == "ИПК") {
@@ -1025,7 +1150,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} else if ($user['legion'] == "Тренера") {
@@ -1053,7 +1178,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} else if ($user['legion'] == "ОДИСБ") {
@@ -1084,7 +1209,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						}
@@ -1111,7 +1236,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} else if ($user['legion'] == "Медик") {
@@ -1136,7 +1261,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} else if ($user['legion'] == "ИПК") {
@@ -1155,7 +1280,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} 
@@ -1181,7 +1306,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} else if ($user['legion'] == "Медик") {
@@ -1197,7 +1322,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} else if ($user['legion'] == "ИПК") {
@@ -1219,10 +1344,10 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
-						} else if ($user['legeion'] == "ОДИСБ") {
+						} else if ($user['legion'] == "ОДИСБ") {
 							echo '<form method="post" action="profile" class ="form-inp" style="flex-direction:column;">';
 							
 							echo '<div style="display:flex;flex-direction:column;text-align:center;">';
@@ -1235,7 +1360,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						}
@@ -1256,7 +1381,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} else if ($user['legion'] == "ИПК") {
@@ -1275,7 +1400,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} else if ($user['legion'] == "ОДИСБ") {
@@ -1284,14 +1409,14 @@ if(get('action') == 'logout') {
 							echo '<div style="display:flex;flex-direction:column;text-align:center;">';
 							echo '<div style="font-size:30px;border:2px solid white;padding:20px;background-color:black;">Выберите звание</div>';
 							
-							echo '<input type="checkbox" id="check-rang1" name="rang" value="Младший смотретритель">';
-							echo '<label for="check-rang1">Младший смотретритель</label>';
+							echo '<input type="checkbox" id="check-rang1" name="rang" value="Младший смотритель">';
+							echo '<label for="check-rang1">Младший смотритель</label>';
 
 							echo '</div>';
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						}
@@ -1306,7 +1431,7 @@ if(get('action') == 'logout') {
 							echo '<label for="check-rang1">Сержант</label>';
 							
 							echo '<input type="checkbox" id="check-rang2" name="rang" value="Штаб-сержант">';
-							echo '<label for="check-rang2">Рядовой</label>';
+							echo '<label for="check-rang2">Штаб-сержант</label>';
 							
 							echo '<input type="checkbox" id="check-rang3" name="rang" value="Мастер сержант">';
 							echo '<label for="check-rang3">Мастер сержант</label>';
@@ -1321,7 +1446,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} else if ($user['legion'] == "Медик") {
@@ -1340,7 +1465,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} else if ($user['legion'] == "ИПК") {
@@ -1368,7 +1493,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} else if ($user['legion'] == "ОДИСБ") {
@@ -1393,7 +1518,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} 
@@ -1414,7 +1539,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} else if ($user['legion'] == "Медик") {
@@ -1433,7 +1558,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} else if ($user['legion'] == "ИПК") {
@@ -1452,7 +1577,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} 
@@ -1473,7 +1598,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} else if ($user['legion'] == "Медик") {
@@ -1489,7 +1614,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} else if ($user['legion'] == "ИПК") {
@@ -1508,7 +1633,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} else if ($user['legion'] == "ОДИСБ") {
@@ -1524,10 +1649,10 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
-						} else if ($user['legion'] == "Инструктора") {
+						} else if ($user['legion'] == "Инструкторы") {
 							echo '<form method="post" action="profile" class ="form-inp" style="flex-direction:column;">';
 							
 							echo '<div style="display:flex;flex-direction:column;text-align:center;">';
@@ -1540,7 +1665,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} 
@@ -1567,7 +1692,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} else if ($user['legion'] == "Медик") {
@@ -1592,7 +1717,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} else if ($user['legion'] == "ИПК") {
@@ -1617,7 +1742,7 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} else if ($user['legion'] == "ОДИСБ") {
@@ -1626,26 +1751,17 @@ if(get('action') == 'logout') {
 							echo '<div style="display:flex;flex-direction:column;text-align:center;">';
 							echo '<div style="font-size:30px;border:2px solid white;padding:20px;background-color:black;">Выберите звание</div>';
 							
-							echo '<input type="checkbox" id="check-rang1" name="rang" value="Лейтенант">';
-							echo '<label for="check-rang1">Лейтенант</label>';
-							
-							echo '<input type="checkbox" id="check-rang2" name="rang" value="Лейтенант-коммандер">';
-							echo '<label for="check-rang2">Лейтенант-коммандер</label>';
-							
-							echo '<input type="checkbox" id="check-rang3" name="rang" value="Командир">';
-							echo '<label for="check-rang3">Командир</label>';
-							
-							echo '<input type="checkbox" id="check-rang4" name="rang" value="Капитан">';
-							echo '<label for="check-rang4">Капитан</label>';
+							echo '<input type="checkbox" id="check-rang1" name="rang" value="Надзиратель">';
+							echo '<label for="check-rang1">Надзиратель</label>';
 							
 							echo '</div>';
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
-						} else if ($user['legion'] == "Инструктора") {
+						} else if ($user['legion'] == "Инструкторы") {
 							echo '<form method="post" action="profile" class ="form-inp" style="flex-direction:column;">';
 							
 							echo '<div style="display:flex;flex-direction:column;text-align:center;">';
@@ -1664,10 +1780,120 @@ if(get('action') == 'logout') {
 							echo '<div>';
 								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
 							echo '</div>';
-							saverang();
+							saverang($user['phase']);
 							
 							echo '</form>';
 						} 
+					} elseif ($user['bigrang'] == "КМД ИПК") {
+							echo '<form method="post" action="profile" class ="form-inp" style="flex-direction:column;">';
+							
+							echo '<div style="display:flex;flex-direction:column;text-align:center;">';
+							echo '<div style="font-size:30px;border:2px solid white;padding:20px;background-color:black;">Выберите звание</div>';
+							
+							echo '<input type="checkbox" id="check-rang1" name="rang" value="Младший контр-адмирал">';
+							echo '<label for="check-rang1">Младший контр-адмирал</label>';
+							
+							echo '<input type="checkbox" id="check-rang2" name="rang" value="Контр-адмирал">';
+							echo '<label for="check-rang2">Контр-адмирал</label>';
+							
+							echo '<input type="checkbox" id="check-rang3" name="rang" value="Вице адмирал">';
+							echo '<label for="check-rang3">Вице адмирал</label>';
+							
+							echo '</div>';
+							echo '<div>';
+								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
+							echo '</div>';
+							saverang($user['phase']);
+							
+							echo '</form>';
+					} elseif ($user['bigrang'] == "КМД МЕД") {
+							echo '<form method="post" action="profile" class ="form-inp" style="flex-direction:column;">';
+							
+							echo '<div style="display:flex;flex-direction:column;text-align:center;">';
+							echo '<div style="font-size:30px;border:2px solid white;padding:20px;background-color:black;">Выберите звание</div>';
+							
+							echo '<input type="checkbox" id="check-rang1" name="rang" value="Главврач">';
+							echo '<label for="check-rang1">Главврач</label>';
+							
+							echo '<input type="checkbox" id="check-rang2" name="rang" value="Военрвач 3-го ранга">';
+							echo '<label for="check-rang2">Военрвач 3-го ранга</label>';
+							
+							echo '<input type="checkbox" id="check-rang3" name="rang" value="Военрвач 2-го ранга">';
+							echo '<label for="check-rang3">Военрвач 2-го ранга</label>';
+							
+							echo '</div>';
+							echo '<div>';
+								echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
+							echo '</div>';
+							saverang($user['phase']);
+							
+							echo '</form>';
+					} elseif ($user['bigrang'] == "КМД Инструкторы") {
+						echo '<form method="post" action="profile" class ="form-inp" style="flex-direction:column;">';
+							
+						echo '<div style="display:flex;flex-direction:column;text-align:center;">';
+						echo '<div style="font-size:30px;border:2px solid white;padding:20px;background-color:black;">Выберите звание</div>';
+						
+						echo '<input type="checkbox" id="check-rang1" name="rang" value="Каминоанский инструктор 3-го ранга">';
+						echo '<label for="check-rang1">Каминоанский инструктор 3-го ранга</label>';
+						
+						echo '<input type="checkbox" id="check-rang2" name="rang" value="Каминоанский инструктор 2-го ранга">';
+						echo '<label for="check-rang2">Каминоанский инструктор 2-го ранга</label>';
+						
+						echo '</div>';
+						echo '<div>';
+							echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
+						echo '</div>';
+						saverang($user['phase']);
+						
+						echo '</form>';
+					} elseif ($user['bigrang'] == "КМД ОДИСБ") {
+						echo '<form method="post" action="profile" class ="form-inp" style="flex-direction:column;">';
+							
+						echo '<div style="display:flex;flex-direction:column;text-align:center;">';
+						echo '<div style="font-size:30px;border:2px solid white;padding:20px;background-color:black;">Выберите звание</div>';
+						
+						echo '<input type="checkbox" id="check-rang1" name="rang" value="Первый заместитель начальника">';
+						echo '<label for="check-rang1">Первый заместитель начальника</label>';
+						
+						echo '<input type="checkbox" id="check-rang2" name="rang" value="Второй заместитель начальника">';
+						echo '<label for="check-rang2">Второй заместитель начальника</label>';
+						
+						echo '</div>';
+						echo '<div>';
+							echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
+						echo '</div>';
+						saverang($user['phase']);
+						
+						echo '</form>';
+					} elseif ($user['bigrang'] == "Инструкторы") {
+						echo '<form method="post" action="profile" class ="form-inp" style="flex-direction:column;">';
+							
+						echo '<div style="display:flex;flex-direction:column;text-align:center;">';
+						echo '<div style="font-size:30px;border:2px solid white;padding:20px;background-color:black;">Выберите звание</div>';
+						
+						echo '<input type="checkbox" id="check-rang1" name="rang" value="Инструктор практикант">';
+						echo '<label for="check-rang1">Инструктор практикант</label>';
+						
+						echo '<input type="checkbox" id="check-rang2" name="rang" value="Младший инструктор">';
+						echo '<label for="check-rang2">Младший инструктор</label>';
+						
+						echo '<input type="checkbox" id="check-rang3" name="rang" value="Инструктор">';
+						echo '<label for="check-rang3">Инструктор</label>';
+
+						echo '<input type="checkbox" id="check-rang4" name="rang" value="Старший инструктор">';
+						echo '<label for="check-rang4">Старший инструктор</label>';
+						
+						echo '<input type="checkbox" id="check-rang5" name="rang" value="Оперативный инструктор">';
+						echo '<label for="check-rang5">Оперативный инструктор</label>';
+
+						echo '</div>';
+						echo '<div>';
+							echo '<button class ="btn-reg" type="submit" name ="save">Сохранить</button>';
+						echo '</div>';
+						saverang($user['phase']);
+						
+						echo '</form>';
 					}
 				}
 			?>
