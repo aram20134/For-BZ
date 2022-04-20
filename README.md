@@ -10,7 +10,7 @@ https://swrpngg.space/ - Active
 Что используется:
 1) PHP
 2) CSS
-3) JS
+3) JS + JQ
 4) MySQL
 5) node API
 
