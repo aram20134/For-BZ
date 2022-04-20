@@ -1,7 +1,6 @@
 <?php
 $title="[SWRP] Главная";
-require "db.php";
-require __DIR__ . '/header.php';
+require __DIR__ . '/header2.php';
 $bz1 = R::getAssoc('SELECT * FROM bz1');
 $bz2 = R::getAssoc('SELECT * FROM bz2');
 ?>
@@ -156,294 +155,15 @@ if ($result2['map'] == "rp_corellia_ngg_winter" or $result2['map'] == "rp_corell
 map?$(".first").toggleClass("map-korriban"):"Geonosis"==map?$(".first").toggleClass("map-geonosis"):"Tatooine"==map?$(".first").toggleClass("map-tatooine"):"Takodana"==map?$(".first").toggleClass("map-takodana"):"Naboo"==map?$(".first").toggleClass("map-naboo"):"Mygeeto"==map&&$(".first").toggleClass("map-naboo");"Corellia"==map2?$(".second").toggleClass("map-corellia"):"Tatooine"==map2&&"1"==sim2?$(".second").toggleClass("map-tatooine_sim"):"Geonosis"==map2&&"1"==gen2?$(".second").toggleClass("map-geonosis2"):
 "Naboo"==map2&&"1"==nabo1?$(".second").toggleClass("map-naboo2"):"Korriban"==map2?$(".second").toggleClass("map-korriban"):"Naboo"==map2?$(".second").toggleClass("map-naboo"):"Tatooine"==map2?$(".second").toggleClass("map-tatooine"):"Takodana"==map2?$(".second").toggleClass("map-takodana"):"Geonosis"==map2?$(".second").toggleClass("map-geonosis"):"Mygeeto"==map2&&$(".second").toggleClass("map-mygeeto")});
     </script>
-<script>    
-$(document).ready(function(){
-    var online = [
-        <?php 
-            foreach ($bz1 as $key => $value) {
-                if (!(date("d").date("m").date("Y") == $value['d'].$value['m'].$value['y'])) {
-                    $value['m']--;
-                    echo '[Date.UTC('.$value['y'].','.$value['m'].','.$value['d'].'),'.$value['pick'].'],';
-                }
-            }  
-        ?>
-    ];
-
-    var online2 = [
-        <?php 
-            foreach ($bz2 as $key => $value) {
-                if (!(date("d").date("m").date("Y") == $value['d'].$value['m'].$value['y'])) {
-                    $value['m']--;
-                    echo '[Date.UTC('.$value['y'].','.$value['m'].','.$value['d'].'),'.$value['pick'].'],';
-                }
-            }  
-        ?>
-    ];
-    Highcharts.setOptions({
-    lang: {
-            loading: 'Загрузка...',
-            months: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-            weekdays: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
-            shortMonths: ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сент', 'Окт', 'Нояб', 'Дек'],
-            exportButtonTitle: "Экспорт",
-            printButtonTitle: "Печать",
-            rangeSelectorFrom: "С",
-            rangeSelectorTo: "По",
-            rangeSelectorZoom: "[Период]",
-            downloadPNG: 'Скачать PNG',
-            downloadJPEG: 'Скачать JPEG',
-            downloadPDF: 'Скачать PDF',
-            downloadSVG: 'Скачать SVG',
-            printChart: 'Напечатать график'   
-        }        
-});
-
-
-    var chart = Highcharts.stockChart('container', {
-    	chart: {
-    		useHTML: true,
-    		backgroundColor: 'transparent',
-    		width: 1000,
-    	},
-        legend: {
-            enabled: true,
-            backgroundColor: '#FCFFC5',
-            borderColor: 'black',
-            borderWidth: 2,
-            shadow: true,
-        },
-    	navigator: {
-    		enabled: true,
-            series: [{
-                data: online,
-                opacity: 0.5,
-                fillColor: {
-                linearGradient: {
-                    x1: 0,
-                    y1: 0,
-                    x2: 0,
-                    y2: 2
-                },
-                stops: [
-                    [0, Highcharts.getOptions().colors[5]],
-                    [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                ]
-            },
-            }, {
-                data: online2,
-                opacity: 0.5,
-                fillColor: {
-                linearGradient: {
-                    x1: 0,
-                    y1: 0,
-                    x2: 0,
-                    y2: 2
-                },
-                stops: [
-                    [0, Highcharts.getOptions().colors[4]],
-                    [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                ]
-            },
-            }],
-    	},
-    	scrollbar: {
-    		enabled: false,
-    	},
-        rangeSelector: {
-            enabled: true, // false by default
-            allButtonsEnabled: true,
-            selected: '0',
-            buttons: [{
-                type: 'week',
-                count: 1,
-                text: 'Неделя',
-            }, {
-                type: 'all',
-                text: 'Всё',
-            }],
-            buttonTheme: {
-            	width: 50,
-            	fill: 'none',
-            	r: 8,
-            	style: {
-            		color: 'white',
-                    fontWeight: 'bold'	
-            	},
-            	states: {
-                    hover: {
-                    	style : {
-                    		color: 'black'	
-                    	},
-                    },
-                    select: {
-                        fill: '#039',
-                        style: {
-                            color: 'white'
-                        }
-                    }
-                },
-            },
-            labelStyle: {
-			color: 'white',
-			fontWeight: 'bold'
-			},
-        },
-		credits: {
-    		enabled: false
-		},
-		
-        title: {
-            text: 'Пиковый онлайн Phase 1 и Phase 2',
-            style: {
-            	color: 'white',
-            	fontWeight: 'bold'
-            },
-        },
-        yAxis: {
-        	opposite: false,
-            offset: 15,
-            tickWidth: 1,
-            tickLength: 10,
-            tickAmount: 8,
-            min: 0,
-            max: 120,
-            lineWidth: 2,
-        	title: {
-            	style: {
-        			color: 'white',
-        			fontWeight: 'bold',
-        		},
-    	  },
-    		labels: {
-        		style: {
-        		color: 'white',
-        		fontSize:'15px'
-        		}
-			},
-    	},
-    	xAxis: {
-        	title: {
-            	style: {
-        			color: 'white',
-        			fontWeight: 'bold',
-        		},
-    	  },
-    		labels: {
-        		style: {
-        		color: 'white',
-        		fontSize:'13px'
-        		}
-			},
-    	},
-        responsive: {
-        	rules: [{
-        		condition: {
-        			maxWidth:1000
-        		},
-        		chartOptions: {
-        			
-        		},
-        	}]	
-        },
-    	plotOptions: {
-            area: {
-                opacity: 0.7,
-            },
-        	series: {
-            	borderWidth: 1,
-            	// color: 'green',
-            	lineWidth: 4,
-            	dataLabels: {
-                	enabled: true,
-                	format: '{y}'
-            	}
-        	}
-    	},
-        series: [{
-            name: 'Пиковый онлайн Phase 1',
-            type: 'area',
-            data: online,
-            // opacity: 0.5,
-            color: 'red',
-            tooltip: {
-                valueDecimals: 0,
-            },
-            marker: {
-                enabled: true,
-                lineWidth: 2,
-                radius: 4,
-                fillColor: 'red',
-            },
-            fillColor: {
-                linearGradient: {
-                    x1: 0,
-                    y1: 0,
-                    x2: 0,
-                    y2: 2
-                },
-                stops: [
-                    [0, Highcharts.getOptions().colors[5]],
-                    [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                ]
-            },
-        }, {
-            name: 'Пиковый онлайн Phase 2',
-            type: 'area',
-            // opacity: 0.5,
-            color: 'blue',
-            data: online2,
-            tooltip: {
-                valueDecimals: 0,
-            },
-            marker: {
-                enabled: true,
-                lineWidth: 2,
-                radius: 4,
-                fillColor: 'blue',
-            },
-            fillColor: {
-                linearGradient: {
-                    x1: 0,
-                    y1: 0,
-                    x2: 0,
-                    y2: 2
-                },
-                stops: [
-                    [0, Highcharts.getOptions().colors[4]],
-                    [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                ]
-            },
-        }]
-    });
-    if (window.matchMedia("(min-width: 1200px)").matches) {
-    	
-	} else {
-		chart.setSize(1000);
-	}
-    if (window.matchMedia("(min-width: 1024px)").matches) {
-    	
-	} else {
-		chart.setSize(800);
-	}
-    if (window.matchMedia("(min-width: 800px)").matches) {
-    	
-    } else {
-    	chart.setSize(600);
-    }
-    if (window.matchMedia("(min-width: 600px)").matches) {
-    	
-    } else {
-    	chart.setSize($(container).width());
-    }
-    });
-</script>
 <!--SCRYPT-->
 <!--STOP HERE--> <!--STOP HERE--> <!--STOP HERE-->
     <div class="content">
-
+		<!-- <div class="alert-box">
+			САЙТ НА ДАННЫЙ МОМЕНТ НЕ РАБОТАЕТ!!!
+		</div> -->
         <div class="menu-content">
             <h3>Добро пожаловать!</h3>
-            <p>Это экспериментальная версия сайта, неофициально связанная с проектами SWRP NGG. Главной его функцией является отображение статуса серверов, игроков на сервере и их онлайн. Регистрация позволит выводить ваше НПЗ вместо ника в стиме. Все данные обновляются в реальном времени.
+            <p>Сайт неофициально связан с проектами SWRP NGG. Главной его функцией является отображение статуса серверов, игроков на сервере и их онлайн. Регистрация позволит выводить ваше НПЗ вместо ника в стиме. Все данные обновляются в реальном времени.
                 
             </p>
         </div>
@@ -502,7 +222,7 @@ $(document).ready(function(){
                 	if ($result2['raw']['numplayers'] != NULL) {
                 		echo $result2['raw']['numplayers']."/128"; 
                 	} else {
-                		echo 'offline';
+                		echo 'Offline';
                 	}
                 	?>
                 </div>
@@ -516,7 +236,6 @@ $(document).ready(function(){
             </div>
             </a>
         </div>
-		<div style="margin:20px;" id ="container"></div>
     </div>
 <!--STOP HERE--> <!--STOP HERE--> <!--STOP HERE-->
 <?php 

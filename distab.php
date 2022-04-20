@@ -27,7 +27,7 @@
 
     .round {
         content: "";
-        width: 89px;
+        width: 90px;
         height: 90px;
         position: absolute;
         border-radius: 50%;
@@ -212,7 +212,7 @@ require __DIR__ . '/rolesph2.php';
                 }
             }
             // background-image: url(https://cdn.discordapp.com/avatars/<?php echo $user['dsid']."/".$user['dsav'].".png");
-                echo '<div class="dsav" style ="background-image: url(https://cdn.discordapp.com/avatars/'.$ds['dsid']."/".$ds['dsav'].'"></div>';
+                echo '<div class="dsav" style ="background-image: url(https://cdn.discordapp.com/avatars/'.$ds['dsid']."/".$ds['dsav'].'.png"></div>';
                 echo '<div class="round"></div>
             </div>
             <div class="dsname">';

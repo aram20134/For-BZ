@@ -74,7 +74,7 @@ $allroles2[941429955890397226] = array ("name" => "Обучающий персо
 $allroles2[567092190682152990] = array ("name" => "Отряд АИ", "color" => "#c08cb6", "pos" => 73);
 $allroles2[538385161197322251] = array ("name" => "Отделение AID", "color" => "#ff0000", "pos" => 74);
 $allroles2[577845115410710538] = array ("name" => "Отделение MSD", "color" => "#ff0000", "pos" => 75);
-$allroles2[933085904975839273] = array ("name" => "Отделение CM", "color" => "#ff0000", "pos" => 76);
+$allroles2[582680293446778897] = array ("name" => "Отделение CM", "color" => "#ff0000", "pos" => 76);
 $allroles2[732261707468111935] = array ("name" => "Отделение VDC", "color" => "#ff0000", "pos" => 77);
 $allroles2[933681516121317396] = array ("name" => "Отделение 89th", "color" => "#ff0000", "pos" => 78);
 $allroles2[933681579115552779] = array ("name" => "Отделение PSY", "color" => "#ff0000", "pos" => 79);

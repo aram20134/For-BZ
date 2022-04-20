@@ -1,7 +1,9 @@
 <?php
-require "db.php";
+$title = '[SWRP] Профиль игрока';
 $data = $_GET;
+require __DIR__ . '/header2.php';
 $user = R::findOne('usersbz', 'number = :n AND phase = :ph', [':n' => $data['number'], ':ph' => $data['phase']]);
+
 require __DIR__ . '/distab.php';
 if ($user['phase'] == 1) {
 	$roles = R::findOne('roles', 'discordid = ?', [$user['dsid']]);
@@ -14,13 +16,6 @@ if ($roles == NULL and $user != NULL) {
 	$user->legion = NULL;
 	R::store($user);
 }
-if ($user != NULL) {
-	$title="[SWRP] Профиль игрока ".$user['name'];
-} else {
-	$title="[SWRP] Игрок ".$data['steam'];
-}
-
-require __DIR__ . '/header.php';
 ?>
 <script src="https://code.highcharts.com/stock/highstock.js"></script>
 <script src="https://code.highcharts.com/stock/modules/data.js"></script>
@@ -390,7 +385,7 @@ Highcharts.setOptions({
 						R::store($user);
 						echo '<span class="legODISB">'. $user['legion'] . '</span>';
 					// } // убрать ->
-					} elseif (strpos($roles, '636115360910671892')) {
+					} elseif (strpos($roles, '650206724287889433') or strpos($roles, '636115360910671892')) {
 						$user->legion = "Без легиона";
 						$user->rang = "Советник";
 						R::store($user);
@@ -589,7 +584,7 @@ Highcharts.setOptions({
 						echo '<span class="N">'. $user['rang'] . '</span>'; 
 					} else if (($user['legion'] == "Без легиона" and $user['rang'] == "Советник") and ($user['number'] == "2563" or $user['number'] == "7266")) {
 						echo '<span class="A">'. $user['rang'] . '</span>'; 
-					} else {
+					} else if ($user['rang'] == NULL) {
 						echo '<span class="N">Отсутствует</span>';
 					}
 				} 

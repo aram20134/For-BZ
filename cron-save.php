@@ -1,6 +1,7 @@
 <?php
 
 set_time_limit(30);
+date_default_timezone_set('Europe/Moscow');
 
 require "db.php";
 
@@ -24,6 +25,109 @@ $d = date("d");
 $m = date("m");
 $y = date("Y");
 
+
+function recursive_array_search($needle,$haystack) {
+    foreach($haystack as $key=>$value) {
+        $current_key=$key;
+        if($needle===$value OR (is_array($value) && recursive_array_search($needle,$value) !== false)) {
+            return $current_key;
+        }
+    }
+    return false;
+}
+
+if (true) {
+    $off = array();
+    $players_last = array();
+    $pl_last = R::getAll('SELECT * FROM bufonl WHERE phase = 1'); // Игроки минуту назад
+    $pl_now = array();
+    $pl_now = $result['players']; // Игроки сейчас
+    $tt = array();
+    $tt[] = ['name' => 'test'];
+    array_unshift($pl_now, $tt);
+        foreach ($result['bots'] as $bots) {
+            $pl_now[] = ['name' => $bots['name']];
+        }
+    foreach ($pl_last as $pl_l)
+    if ((recursive_array_search($pl_l['name'], $pl_now))) {
+        $id = recursive_array_search($pl_l['name'], $pl_now);
+        unset($pl_now[$id]);
+    } else {
+        $off[] = ['name' => $pl_l['name']];
+    }
+    foreach($pl_now as $pl) { // Зашёл
+        if ($pl['name'] != NULL and $pl['name'] != 'test') {
+			$logs = R::dispense('logs');
+			$logs->name = $pl['name'];
+			$logs->status = 'Enter';
+			$logs->phase = '1';
+			$logs->date = date("Y-m-d H:i:s");
+			R::store($logs);
+		}
+    }
+    foreach ($off as $off_one) { // Вышел
+		$delbuf = R::findOne('bufonl', 'name = :n AND phase = :ph', [':n' => $off_one['name'], ':ph' => '1']);
+        if ($delbuf != NULL) {
+			R::trash($delbuf);
+		}
+		if ($off_one['name'] != NULL and $off_one['name'] != 'first') {
+			$logs = R::dispense('logs');
+			$logs->name = $off_one['name'];
+			$logs->status = 'Exit';
+			$logs->phase = '1';
+			$logs->date = date("Y-m-d H:i:s");
+			R::store($logs);
+		}
+    }
+} 
+if (true) {
+    $off = array();
+    $players_last = array();
+    $pl_last = R::getAll('SELECT * FROM bufonl WHERE phase = 2'); // Игроки минуту назад
+    $pl_now = array();
+    $pl_now = $result2['players']; // Игроки сейчас
+    $tt = array();
+    $tt[] = ['name' => 'test'];
+    array_unshift($pl_now, $tt);
+        foreach ($result2['bots'] as $bots) {
+            $pl_now[] = ['name' => $bots['name']];
+        }
+    foreach ($pl_last as $pl_l)
+    if ((recursive_array_search($pl_l['name'], $pl_now))) {
+        $id = recursive_array_search($pl_l['name'], $pl_now);
+        unset($pl_now[$id]);
+    } else {
+        $off[] = ['name' => $pl_l['name']];
+    }
+    foreach($pl_now as $pl) { // Зашёл
+        if ($pl['name'] != NULL and $pl['name'] != 'test') {
+			$logs = R::dispense('logs');
+			$logs->name = $pl['name'];
+			$logs->status = 'Enter';
+			$logs->phase = '2';
+			$logs->date = date("Y-m-d H:i:s");
+			R::store($logs);
+		}
+    }
+    foreach ($off as $off_one) { // Вышел
+		$delbuf = R::findOne('bufonl', 'name = :n AND phase = :ph', [':n' => $off_one['name'], ':ph' => '2']);
+        if ($delbuf != NULL) {
+			R::trash($delbuf);
+		}
+		if ($off_one['name'] != NULL and $off_one['name'] != 'second') {
+			$logs = R::dispense('logs');
+			$logs->name = $off_one['name'];
+			$logs->status = 'Exit';
+			$logs->phase = '2';
+			$logs->date = date("Y-m-d H:i:s");
+			R::store($logs);
+		}
+    }
+} 
+
+
+
+
 $online = R::getAssoc('SELECT * FROM online');
 $date = $online[array_key_first($online)];
 $dateDiff = date_diff(new DateTime(), new DateTime($date['y']."-".$date['m']."-".$date['d']))->days + 1;
@@ -34,8 +138,16 @@ $dateDiff = date_diff(new DateTime(), new DateTime($date['y']."-".$date['m']."-"
 		R::trashall($online2);
 		R::trashall($online);
 	}
-
+	R::wipe('bufonl');
+	$bufonl = R::dispense('bufonl');
+	$bufonl->name = 'first';
+	$bufonl->phase = 1;
+	R::store($bufonl);
 foreach($result['players'] as $player) {
+	$bufonl = R::dispense('bufonl');
+	$bufonl->name = $player['name'];
+	$bufonl->phase = 1;
+	R::store($bufonl);
 				$online = R::findOne('online', 'd = :d AND m = :m AND y = :y AND steamname = :st', [':d' => $d, ':m' => $m, ':y' => $y, ':st'=>$player['name']]);
 				if ($online != NULL) {
 					$online->time = $online['time'] + 1;
@@ -53,7 +165,15 @@ foreach($result['players'] as $player) {
 					R::store($online);
 				}
 }
+	$bufonl = R::dispense('bufonl');
+	$bufonl->name = 'second';
+	$bufonl->phase = 2;
+	R::store($bufonl);
 foreach($result2['players'] as $player2) {
+	$bufonl = R::dispense('bufonl');
+	$bufonl->name = $player2['name'];
+	$bufonl->phase = 2;
+	R::store($bufonl);
 				$online2 = R::findOne('online2', 'd = :d AND m = :m AND y = :y AND steamname = :st', [':d' => $d, ':m' => $m, ':y' => $y, ':st'=>$player2['name']]);
 				if ($online2 != NULL) {
 					$online2->time = $online2['time'] + 1;
@@ -101,6 +221,20 @@ if ($bz2 == NULL) {
 if ($bz2['pick'] < $result2['raw']['numplayers']) {
 	$bz2->pick = $result2['raw']['numplayers'];
     R::store($bz2);
+}
+
+foreach ($result['bots'] as $bots) {
+	$bufonl = R::dispense('bufonl');
+	$bufonl->name = $bots['name'];
+	$bufonl->phase = 1;
+	R::store($bufonl);
+}
+foreach ($result2['bots'] as $bots) {
+	$bufonl = R::dispense('bufonl');
+	$bufonl->name = $bots['name'];
+	$bufonl->phase = 2;
+	R::store($bufonl);
+
 }
 
 exit();

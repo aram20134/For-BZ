@@ -1,7 +1,6 @@
 <?php
 $title="[SWRP] Профиль";
-require "db.php";
-require __DIR__ . '/header.php';
+require __DIR__ . '/header2.php';
 require "steamauth/steamauth.php";
 require __DIR__ . '/distab.php';
 ?>
@@ -506,7 +505,7 @@ if(get('action') == 'logout') {
 						R::store($user);
 						echo '<span class="legODISB">'. $user['legion'] . '</span>';
 					// } // убрать ->
-					} elseif (strpos($roles, '636115360910671892')) {
+					} elseif (strpos($roles, '650206724287889433') or strpos($roles, '636115360910671892')) {
 						$user->legion = "Без легиона";
 						$user->rang = "Советник";
 						R::store($user);
@@ -703,9 +702,9 @@ if(get('action') == 'logout') {
 						echo '<span class="O">'. $user['rang'] . '</span>'; 
 					} else if ($user['legion'] == "Без легиона" and $user['rang'] == "Кадет") {
 						echo '<span class="N">'. $user['rang'] . '</span>'; 
-					} else if (($user['legion'] == "Без легиона" and $user['rang'] == "Советник") and ($user['number'] == "2563")) {
+					} else if (($user['legion'] == "Без легиона" and $user['rang'] == "Советник") and ($user['number'] == "2563" or $user['number'] == "7266")) {
 						echo '<span class="A">'. $user['rang'] . '</span>'; 
-					} else {
+					} else  {
 						echo '<span class="N">Отсутствует</span>';
 					}
 				} 
@@ -875,9 +874,9 @@ if(get('action') == 'logout') {
 					echo '<br>';
 					echo '<br>';
 					if ($user['phase'] == 1) {
-						echo '<span style="display:inline-block;width:610px;max-width:100%;" class = "alert-box">Для получения легиона и звания напишите в дискорд сервер команду !verify в канале #4at (Для этого нужна привязка Steam и Discord) </span>';
+						echo '<span style="display:inline-block;max-width:100%;" class = "alert-box">Для получения легиона и звания напишите в дискорд сервер команду !verify в канале #4at (Для этого нужна привязка Steam и Discord) </span>';
 					} else {
-						echo '<span style="display:inline-block;width:610px;max-width:100%;" class = "alert-box">Для получения легиона и звания напишите в дискорд сервер команду !login в канале #команды-боту (Для этого нужна привязка Steam и Discord) </span>';
+						echo '<span style="display:inline-block;max-width:100%;" class = "alert-box">Для получения легиона и звания напишите в дискорд сервер команду !login в канале #команды-боту (Для этого нужна привязка Steam и Discord) </span>';
 					}
 				}  
 				?>
@@ -1432,15 +1431,18 @@ if(get('action') == 'logout') {
 							
 							echo '<input type="checkbox" id="check-rang2" name="rang" value="Штаб-сержант">';
 							echo '<label for="check-rang2">Штаб-сержант</label>';
+
+							echo '<input type="checkbox" id="check-rang3" name="rang" value="Сержант первого класса">';
+							echo '<label for="check-rang3">Сержант первого класса</label>';
 							
-							echo '<input type="checkbox" id="check-rang3" name="rang" value="Мастер сержант">';
-							echo '<label for="check-rang3">Мастер сержант</label>';
+							echo '<input type="checkbox" id="check-rang4" name="rang" value="Мастер сержант">';
+							echo '<label for="check-rang4">Мастер сержант</label>';
 							
-							echo '<input type="checkbox" id="check-rang4" name="rang" value="Первый сержант">';
-							echo '<label for="check-rang4">Первый сержант</label>';
+							echo '<input type="checkbox" id="check-rang5" name="rang" value="Первый сержант">';
+							echo '<label for="check-rang5">Первый сержант</label>';
 							
-							echo '<input type="checkbox" id="check-rang5" name="rang" value="Сержант-майор">';
-							echo '<label for="check-rang5">Сержант-майор</label>';
+							echo '<input type="checkbox" id="check-rang6" name="rang" value="Сержант-майор">';
+							echo '<label for="check-rang6">Сержант-майор</label>';
 							
 							echo '</div>';
 							echo '<div>';
@@ -1478,16 +1480,19 @@ if(get('action') == 'logout') {
 							echo '<label for="check-rang1">Сержант</label>';
 							
 							echo '<input type="checkbox" id="check-rang2" name="rang" value="Штаб-сержант">';
-							echo '<label for="check-rang2">Рядовой</label>';
+							echo '<label for="check-rang2">Штаб-сержант</label>';
+
+							echo '<input type="checkbox" id="check-rang3" name="rang" value="Cержант первого класса">';
+							echo '<label for="check-rang3">Cержант первого класса</label>';
 							
-							echo '<input type="checkbox" id="check-rang3" name="rang" value="Мастер сержант">';
-							echo '<label for="check-rang3">Мастер сержант</label>';
+							echo '<input type="checkbox" id="check-rang4" name="rang" value="Мастер сержант">';
+							echo '<label for="check-rang4">Мастер сержант</label>';
 							
-							echo '<input type="checkbox" id="check-rang4" name="rang" value="Первый сержант">';
-							echo '<label for="check-rang4">Первый сержант</label>';
+							echo '<input type="checkbox" id="check-rang5" name="rang" value="Первый сержант">';
+							echo '<label for="check-rang5">Первый сержант</label>';
 							
-							echo '<input type="checkbox" id="check-rang5" name="rang" value="Сержант-майор">';
-							echo '<label for="check-rang5">Сержант-майор</label>';
+							echo '<input type="checkbox" id="check-rang6" name="rang" value="Сержант-майор">';
+							echo '<label for="check-rang6">Сержант-майор</label>';
 							
 							echo '</div>';
 							echo '<div>';

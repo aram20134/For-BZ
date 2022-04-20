@@ -1,7 +1,6 @@
 <?php
 $title="[SWRP] Регистрация";
-require "db.php";
-require __DIR__ . '/header.php';
+require __DIR__ . '/header2.php';
 ?>
 <script src="jquery-3.6.0.min.js"></script>
 <script>
@@ -49,7 +48,7 @@ require __DIR__ . '/header.php';
 		if (mb_strlen($data['name']) > 20) {
 			$errors[] = 'Позывной не может быть таким длинным!';
 		}
-		if (R::count('usersbz', "number = ?", array($data['number'])) > 0) {
+		if (R::count('usersbz', 'number = :n AND phase = :ph', [':n' => $data['number'], ':ph' => $data['phase']]) > 0) {
 			$errors[] = 'Пользователь с таким номером уже существует!';
 		}
 		if (empty($errors)) {

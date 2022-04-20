@@ -1,7 +1,6 @@
 <?php
 $title="[SWRP] Смена позывного";
-require "db.php";
-require __DIR__ . '/header.php';
+require __DIR__ . '/header2.php';
 ?>
 <div class = "content">
 	<?php if($_SESSION['logged_user'] != NULL) : ?>
@@ -30,7 +29,7 @@ require __DIR__ . '/header.php';
 			$errors[] = 'Позывной не может быть таким длинным!';
 		}
 		if (empty($errors)) {
-			$user = R::findOne('usersbz', 'number = ?', [$_SESSION['logged_user']->number]);
+			$user = R::findOne('usersbz', 'number = :n AND phase = :ph', [':n' => $_SESSION['logged_user']->number, ':ph' => $_SESSION['logged_user']->phase]);
 			$user->name = $data['name'];
 			
 			R::store($user);

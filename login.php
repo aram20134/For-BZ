@@ -1,7 +1,6 @@
 <?php
 $title="[SWRP] Вход";
-require "db.php";
-require __DIR__ . '/header.php';
+require __DIR__ . '/header2.php';
 ?>
 <?php
 	if(isset($_SESSION['logged_user'])) {
@@ -69,7 +68,8 @@ require __DIR__ . '/header.php';
 				if(!empty($errors)) {
 					echo '<div class="alert-box"><p>'. array_shift($errors) . '</p></div>';
 				}
-				$user = R::findOne('usersbz', 'number= ?', array($data['number']));
+				// $user = R::findOne('usersbz', 'number= ?', array($data['number']));
+				$user = R::findOne('usersbz', 'number = :n AND phase = :ph', [':n' => $data['number'], ':ph' => $data['phase']]);
 				
 				if ($user['number'] == $data['number']) {
 					if($user['phase'] == $data['phase']) {

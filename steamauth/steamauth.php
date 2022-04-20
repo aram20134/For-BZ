@@ -10,7 +10,7 @@ function loginbutton($buttonstyle = "square") {
 	$button['rectangle'] = "01";
 	$button['square'] = "02";
 	//$button = "<a href='?login'><img src='https://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_".$button[$buttonstyle].".png'></a>";
-	$button = "<a href='?login'style='color:white;text-decoration:underline;'>Подключить</a>";
+	$button = "<a href='?login' style='color:white;text-decoration:underline;'>Подключить</a>";
 	
 	echo $button;
 }

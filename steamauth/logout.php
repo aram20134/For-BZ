@@ -12,6 +12,7 @@ ob_start();
 	$user->steamid = NULL;
 	$user->avatar = NULL;
 	$user->profurl = NULL;
+	$user->steamname = NULL;
 	
 	R::store($user);
 

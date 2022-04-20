@@ -5,8 +5,7 @@ if ($data['phase'] == 1 or $data['phase'] == 2) {
 } else {
 	$title = "[SWRP] Ошибка";	
 }
-require "db.php";
-require __DIR__ . '/header.php';
+require __DIR__ . '/header2.php';
 ?>
 <?php
 	if ($data['phase'] == '1') {
@@ -25,8 +24,10 @@ require __DIR__ . '/header.php';
     return false;
 	}
 	$steam = array();
+	$steam[] = 'hasdqwe';
 	$top50 = array();
 	$itog = array();
+	$itog[] = ["time" => '1', "steamname" => 'hasdqwe'];
 	foreach ($online as $_arr) {
 		if (recursive_array_search($_arr['steamname'], $steam) == true) {
 			$id = recursive_array_search($_arr['steamname'], $steam);
@@ -40,10 +41,12 @@ require __DIR__ . '/header.php';
 	$top50 = array_slice($itog, 0, 50);
 ?>
 <?php 
-	$k = array_key_first($online);
 	$date = $online[array_key_first($online)];
 	$dateDiff = date_diff(new DateTime(), new DateTime($date['y']."-".$date['m']."-".$date['d']))->days + 1;
 ?>
+<!-- 
+	<?php print_r($itog); ?>
+ -->
 <script src="jquery-3.6.0.min.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 

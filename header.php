@@ -8,7 +8,7 @@ ob_start();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="yandex-verification" content="e4c9572b8cc0685c" />
     <title><?php echo $title; ?></title>
-	<link rel="stylesheet" href="glav.css?142">
+	<link rel="stylesheet" href="glav.css?144">
     <link rel="shortcut icon" href="img/logo.png" type="image/png">
     <!-- Yandex.Metrika counter -->
 <script type="text/javascript" >
@@ -20,7 +20,6 @@ ob_start();
         clickmap:false,
         trackLinks:true,
         accurateTrackBounce:true,
-        webvisor:true
    });
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/87038010" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
@@ -51,10 +50,10 @@ ob_start();
         	if(isset($_SESSION['logged_user'])) {
         		$a = " | ";
         		echo '<a href ="profile" class ="reg-head" style="border:2px dotted #00748e;">'. $_SESSION['logged_user']->number.$a.$_SESSION['logged_user']->name. '</a>';
-        		echo '<a href ="logout" class ="reg-logout"> Выйти </a>';
+        		echo '<a href ="logout" class ="reg-logout">Выйти</a>';
         	} else {
-        		echo '<a href="login" class="reg-head">Войти</a>';
-        		echo '<a href="signup" class="reg-head">Зарегистрироваться</a>';
+        		echo '<a href="login" class="reg-head">Вход</a>';
+        		echo '<a href="signup" class="reg-head">Регистрация</a>';
         	}
     	?>
     </div>
