@@ -21,7 +21,7 @@ https://swrpngg.space/ - Active
 4) Реализовано динамическое обновление данных на сайте
 5) Используются графики HighCharts для визуализации онлайна
 
-![image](https://user-images.githubusercontent.com/85961114/153407714-f9d04c2c-f13e-4582-a3a0-8f8294f8cb37.png)
+![image](https://user-images.githubusercontent.com/85961114/165454498-7c21fdd6-2c60-4ef6-86a5-6b4db24b193d.png)
 ![image](https://user-images.githubusercontent.com/85961114/153408025-93fc9dc1-9638-483e-9fb4-b6b9478951c2.png)
 ![image](https://user-images.githubusercontent.com/85961114/158866970-16c209f0-61fd-494d-b010-fc9c0fa167b1.png)
 ![image](https://user-images.githubusercontent.com/85961114/158866700-5b24fc98-a8f7-4ada-aa3a-8305a9861342.png)
