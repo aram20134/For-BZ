@@ -25,6 +25,18 @@ $d = date("d");
 $m = date("m");
 $y = date("Y");
 
+foreach ($result['players'] as $player) {
+	if ($player['name'] == NULL) {
+		die();
+	}
+	break;
+}
+foreach ($result2['players'] as $player) {
+	if ($player['name'] == NULL) {
+		die();
+	}
+	break;
+}
 
 function recursive_array_search($needle,$haystack) {
     foreach($haystack as $key=>$value) {
@@ -125,7 +137,17 @@ if (true) {
     }
 } 
 
-
+$logs = R::getAssoc('SELECT * FROM logs');
+$date2 = $logs[array_key_first($logs)];
+$dateDiff2 = date_diff(new DateTime(), new DateTime($date2['date']))->days + 1;
+if ($dateDiff2 > 3) {
+	$a = strtotime($date2['date']);
+	$datee = "%".date('Y', $a).'-'.date('m', $a).'-'.date('d', $a)."%";
+	echo $datee;
+	$logs = R::findAll('logs', 'date LIKE ?', [$datee]);
+	print_r($logs);
+	R::trashall($logs);
+}
 
 
 $online = R::getAssoc('SELECT * FROM online');

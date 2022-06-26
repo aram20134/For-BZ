@@ -8,8 +8,10 @@ require "db.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="yandex-verification" content="e4c9572b8cc0685c" />
+    <meta name="keywords" content="swrp, swrpngg, стар варс рп">
+    <meta name="description" content="Неофициальный информационный сайт по проектам SWRP NGG STARWARS">
     <title><?php echo $title; ?></title>
-	<link rel="stylesheet" href="glav.css?147">
+	<link rel="stylesheet" href="glav.css?156">
     <link rel="shortcut icon" href="img/logo.png" type="image/png">
     <script src="jquery-3.6.0.min.js"></script>
     <script>
@@ -69,20 +71,6 @@ require "db.php";
                 $("#btn-logo").appendTo($(".head-content"));
                 $(".menu").appendTo($(".head-content"));
             }
-            if ($('#ball').click(function () {
-                $('body').on('mouseup', function (e) {
-                        var pos = $('.content').offset();
-                        var posleft = pos.left;
-                        var posright = pos.top;
-                        var X = e.pageX;
-                        var Y = e.pageY;
-                        var Xi = X - posleft;
-                        var Yi = Y - posright;
-                    console.log(e.pageX, e.pageY);
-                    $('#ball').css('left', Xi - 50);
-                    $('#ball').css('top', Yi - 50);
-                });
-            }));
         });
     </script>
     <!-- Yandex.Metrika counter -->
@@ -569,6 +557,7 @@ require "db.php";
         	<div class="drop-cont">
         		<a href="swrp1">Игроки</a>
         		<a href="top-online?phase=1">Топ онлайн</a>
+                <a href="logs?phase=1&page=1">Логи</a>
         	</div>
         </div>
         <div id="drp2" class="drop-server">
@@ -576,15 +565,20 @@ require "db.php";
         	<div class="drop-cont">
         		<a href="swrp2">Игроки</a>
         		<a href="top-online?phase=2">Топ онлайн</a>
+                <a href="logs?phase=2&page=1">Логи</a>
         	</div>
         </div>
         <?php 
         	if(isset($_SESSION['logged_user'])) {
         		$a = " | ";
                 $user = R::findOne('usersbz', 'number = :n AND phase = :ph', [':n' => $_SESSION['logged_user']->number, ':ph' => $_SESSION['logged_user']->phase]);
-        		echo '<div style="display:flex;" id ="drp3" class="prof-head">
-                <a style="cursor:pointer;"><img src="'.$user['avatar'].'" class="img-prof-head2" /></a>
-                <div class="drop-profmenu not-drop">
+        		echo '<div style="display:flex;" id ="drp3" class="prof-head">';
+                if ($user['avatar'] != NULL) {
+                    echo '<a style="cursor:pointer;"><img src="'.$user['avatar'].'" class="img-prof-head2" /></a>';
+                } else {
+                    echo '<a style="cursor:pointer;"><img src="img/prof-logo.png" class="img-prof-head2" /></a>';
+                }
+                echo '<div class="drop-profmenu not-drop">
                     <div class="razdel" style="border-radius: 13px 13px 0px 0px;">Профиль</div>
                     <a id="l1" href="profile" class="link">'.$_SESSION['logged_user']->number.$a.$_SESSION['logged_user']->name.'</a>
                     <a id="l2" href="logout" class="link">Выйти</a>
@@ -612,9 +606,11 @@ require "db.php";
                 <div style="display:none;border-radius: 13px 13px 0px 0px;" class="razdel" id="m3">Phase 1</div>
                 <a style="display:none;" href="swrp1" class="link" id="m4">Игроки</a>
                 <a style="display:none;" href="top-online?phase=1" class="link" id="m5">Топ онлайн</a>
+                <a style="display:none" href="logs?phase=1&page=1" class="link" id ="m5">Логи</a>
                 <div style="display:none;" class="razdel" id="m6">Phase 2</div>
                 <a style="display:none;" href="swrp2" class="link" id="m7">Игроки</a>
                 <a style="display:none;" href="top-online?phase=2" class="link" id="m8">Топ онлайн</a>
+                <a style="display:none" href="logs?phase=2&page=1" class="link" id ="m8">Логи</a>
                 <div style="border-radius: 13px 13px 0px 0px;" class="razdel" id="m9">Прочее</div>
                 <a href="stats" class="link" id="m10">Статистика</a>
             </div>

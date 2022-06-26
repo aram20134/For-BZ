@@ -2,22 +2,42 @@
 $title = "test";
 require __DIR__.'/header2.php';
 ?>
-<script src="jquery-3.6.0.min.js"></script>
-<script src="https://code.highcharts.com/stock/highstock.js"></script>
-	<div style="color:white;">
-		<?php
-		R::wipe('bufonl');
-		// R::trashall($tr);
-		$bufonl = R::dispense('bufonl');
-		$bufonl->player = $player['name'];
-		$bufonl->phase = 1;
-		R::store($bufonl);
-		?>
-	</div>
+<script>
+	$(document).ready(function () {
+		$('input').keyup (function () {
+			var filter = $('#fil').val();
+			$.ajax ({
+				url: './refs/getFilterPlayers.php',
+				method: 'get',
+				dataType: 'html',
+				async: false,
+				data: {filter: filter},
+				success: function(data){
+					$('#asd').html(data);
+				}
+			});
+		});
+	});
+</script>
+<!-- Чё смотришь? закрывай давай и уроки делать -->
+<div class="content">
+	<h1 style="color:white;font-size:24px;">Поиск игроков</h1>
+	<input id="fil" type="text" placeholder="Никнейм или номер" />
+	<!-- <input type="checkbox" name="phase1" checked />
+	<label for="phase1">Phase 1</label>
+	<input type="checkbox" name="phase2" checked />
+	<label for="phase2">Phase 2</label> -->
+	<div style="min-width:50%;" id="asd"></div>
+</div>
     
 <?php 
 require __DIR__ . '/footer.php'; 
 ?>
+
+
+
+
+
 
 <!-- <?php
 			foreach($result2['players'] as $player) {

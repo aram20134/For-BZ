@@ -1,8 +1,8 @@
 <?
 $data = $_GET;
-if ($data['phase'] == 1) {
+if ($data['phase'] == 1 and $data['page'] != 0) {
 	$title = '[SWRP] Логи Phase 1'; 
-} else if ($data['phase'] == 2) {
+} else if ($data['phase'] == 2 and $data['page'] != 0) {
 	$title = '[SWRP] Логи Phase 2'; 
 } else {
 	$title = '[SWRP] Ошибка';
@@ -10,22 +10,27 @@ if ($data['phase'] == 1) {
 }
 require __DIR__ . '/header2.php';
 ?>
-<div class="content" style="color:white;">
+<h1 style="text-align:center">Логи Phase <? echo $data['phase'] ?> за последние 3 дня</h1>
+<div class="content" style="color:white;align-items:flex-start;">
+    <div style="margin:5px;">Для поиска по дате или по нику используйте поиск через сочетание клавиш [CTRL] + [F]</div>
+    
+    <div id ="logi"></div>
 	<?php if ($dead != true) : ?>
 		<script>
-        function getplayers () {
+        function getlogs () {
             $.ajax({
                 url: './refs/getlogs.php',
                 method: 'get',
                 dataType: 'html',
                 async: false,
-                data: {phase: <?php echo $data['phase']; ?>},
+                data: {phase: <?php echo $data['phase'];?>, page: <? echo $data['page'];?>},
                 success: function(data){
-					$('.content').html(data);
+					$('#logi').html(data);
+                    setTimeout(getlogs, 60000);
                 }
             });
         }
-        getplayers();
+        getlogs();
     </script>
 	<?php else : ?>
 		<div class="alert-box">Ошибка! Такой страницы не существует!</div>

@@ -472,6 +472,7 @@ Highcharts.setOptions({
 					$user->bigrang = "Рядовой состав";
 						if ($user['rang'] == NULL) {
 							echo '<span class="N">Отсутствует</span>';
+							$userRang = false;
 							// echo '<br><br><span style="border:2px solid green;margin:5px;padding:5px;border-radius:10px;display:inline-flex;">Уточните ваше звание ниже</span>';
 						}
 				} if (strpos($roles, '636273807589376012')) {
@@ -479,6 +480,7 @@ Highcharts.setOptions({
 					$user->bigrang = "Сержантский состав";
 						if ($user['rang'] == NULL) {
 							echo '<span class="N">Отсутствует</span>';
+							$userRang = false;
 							// echo '<br><br><span style="border:2px solid red;margin:5px;padding:5px;border-radius:10px;display:inline-flex;">Для отображения в списке игроков, уточните ваше звание ниже</span>';
 						}
 				} if (strpos($roles, '636273574352650240')) {
@@ -486,6 +488,7 @@ Highcharts.setOptions({
 					$user->bigrang = "Мл. офицерский состав";
 						if ($user['rang'] == NULL) {
 							echo '<span class="N">Отсутствует</span>';
+							$userRang = false;
 							// echo '<br><br><span style="border:2px solid red;margin:5px;padding:5px;border-radius:10px;display:inline-flex;">Для отображения в списке игроков, уточните ваше звание ниже</span>';
 						}
 				} if (strpos($roles, '636273329434656773')) {
@@ -493,6 +496,7 @@ Highcharts.setOptions({
 					$user->bigrang = "Офицерский состав";
 						if ($user['rang'] == NULL) {
 							echo '<span class="N">Отсутствует</span>';
+							$userRang = false;
 							// echo '<br><br><span style="border:2px solid red;margin:5px;padding:5px;border-radius:10px;display:inline-flex;">Для отображения в списке игроков, уточните ваше звание ниже</span>';
 						}
 				} if (strpos($roles, '698240245149335583')) {
@@ -584,7 +588,7 @@ Highcharts.setOptions({
 						echo '<span class="N">'. $user['rang'] . '</span>'; 
 					} else if (($user['legion'] == "Без легиона" and $user['rang'] == "Советник") and ($user['number'] == "2563" or $user['number'] == "7266")) {
 						echo '<span class="A">'. $user['rang'] . '</span>'; 
-					} else if ($user['rang'] == NULL) {
+					} else if ($user['rang'] == NULL and $userRang != false) {
 						echo '<span class="N">Отсутствует</span>';
 					}
 				} 

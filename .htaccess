@@ -19,3 +19,9 @@ RewriteBase /
 RewriteCond %{HTTP_HOST} (.*)
 RewriteCond %{REQUEST_URI} /$ [NC]
 RewriteRule ^(.*)(/)$ $1 [L,R=301]
+
+ErrorDocument 500 https://swrpngg.space/error
+ErrorDocument 502 https://swrpngg.space/error
+ErrorDocument 503 https://swrpngg.space/error
+ErrorDocument 504 https://swrpngg.space/error
+ErrorDocument 505 https://swrpngg.space/error
