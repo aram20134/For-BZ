@@ -1,5 +1,5 @@
 # SWRP NGG
-https://swrpngg.space/ - Active
+https://swrpngg.space/ - Not Active
 
 Возможности:
 1) Просмотр состояния серверов SWRP NGG, кол-ва игроков и карты.
